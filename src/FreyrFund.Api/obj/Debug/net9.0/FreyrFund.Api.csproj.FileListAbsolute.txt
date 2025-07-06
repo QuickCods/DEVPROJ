@@ -30,3 +30,4 @@ C:\Users\User\Desktop\FreyrFund\src\FreyrFund.Api\obj\Debug\net9.0\refint\FreyrF
 C:\Users\User\Desktop\FreyrFund\src\FreyrFund.Api\obj\Debug\net9.0\FreyrFund.Api.pdb
 C:\Users\User\Desktop\FreyrFund\src\FreyrFund.Api\obj\Debug\net9.0\FreyrFund.Api.genruntimeconfig.cache
 C:\Users\User\Desktop\FreyrFund\src\FreyrFund.Api\obj\Debug\net9.0\ref\FreyrFund.Api.dll
+C:\Users\User\Desktop\FreyrFund\src\FreyrFund.Api\obj\Debug\net9.0\FreyrFund.Api.sourcelink.json
