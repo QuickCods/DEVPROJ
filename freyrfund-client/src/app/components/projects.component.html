@@ -1,0 +1,85 @@
+<div class="projects-container">
+  <h1>Catálogo de Projetos - FreyrFund</h1>
+
+  <div *ngIf="loading" class="loading">
+    <p>Carregando projetos...</p>
+  </div>
+
+  <div *ngIf="error" class="error">
+    <p>{{ error }}</p>
+    <button (click)="loadProjects()" class="retry-btn">Tentar Novamente</button>
+  </div>
+
+  <div *ngIf="!loading && !error" class="projects-grid">
+    <div *ngFor="let project of projects" class="project-card">
+      <div class="project-header">
+        <h3>{{ project.title }}</h3>
+        <div class="project-status" [class.fully-funded]="project.isFullyFunded">
+          <span *ngIf="project.isFullyFunded">✓ Financiado</span>
+          <span *ngIf="!project.isFullyFunded">🔄 Ativo</span>
+        </div>
+      </div>
+
+      <div class="project-details">
+        <div class="detail-row">
+          <span class="label">Taxa de Retorno:</span>
+          <span class="value rate">{{ project.rate }}% ao ano</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="label">Prazo:</span>
+          <span class="value">{{ project.term }} meses</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="label">Objetivo:</span>
+          <span class="value target">{{ project.target | currency:'EUR':'symbol':'1.2-2' }}</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="label">Financiado:</span>
+          <span class="value funded">{{ project.funded | currency:'EUR':'symbol':'1.2-2' }}</span>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" [style.width.%]="project.fundingPercentage"></div>
+          </div>
+          <span class="progress-text">{{ project.fundingPercentage }}%</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="label">Restante:</span>
+          <span class="value remaining">{{ project.remainingAmount | currency:'EUR':'symbol':'1.2-2' }}</span>
+        </div>
+      </div>
+
+      <div class="investment-section" *ngIf="!project.isFullyFunded">
+        <h4>Investir neste projeto</h4>
+        <div class="investment-form">
+          <input
+            type="number"
+            #investmentAmount
+            placeholder="Valor a investir (€)"
+            min="1"
+            [max]="project.remainingAmount"
+            class="investment-input">
+          <button
+            (click)="invest(project, investmentAmount.value ? +investmentAmount.value : 0); investmentAmount.value = ''"
+            class="invest-btn">
+            Investir
+          </button>
+        </div>
+      </div>
+
+      <div class="project-footer">
+        <small>Criado em: {{ project.createdAt | date:'dd/MM/yyyy' }}</small>
+        <small>Atualizado em: {{ project.updatedAt | date:'dd/MM/yyyy HH:mm' }}</small>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error && projects.length === 0" class="no-projects">
+    <p>Nenhum projeto disponível no momento.</p>
+  </div>
+</div>
