@@ -1,6 +1,6 @@
 ## Para executar o projeto
 
-# Num terminar
+# Num terminal
 cd src\FreyrFund.Api
 dotnet run --launch-profile "https"
 
