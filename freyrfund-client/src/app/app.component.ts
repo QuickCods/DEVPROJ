@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from './services/api.service';
 import { CommonModule }  from '@angular/common';
 import { HttpClient }    from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, RouterOutlet } from '@angular/router';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,          
-  imports: [CommonModule],   // traz o NgIf, NgFor
-  template: `
-    <h1>FreyrFund</h1>
-    <p *ngIf="msg">{{ msg }}</p>
-  `
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, RouterOutlet],   // traz o NgIf, NgFor
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
 })
 
 export class AppComponent implements OnInit {

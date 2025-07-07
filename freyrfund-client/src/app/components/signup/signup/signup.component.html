@@ -1,0 +1,48 @@
+<div class="signup-page">
+    <div class="signup-card">
+      <h2>Sign up</h2>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <label>
+          <span>Full name</span>
+          <input type="text" formControlName="fullName" [class.invalid]="form.get('fullName')?.invalid && form.touched">
+        </label>
+        <label>
+          <span>Date of birth</span>
+          <input type="date" formControlName="birthDate" [class.invalid]="form.get('birthDate')?.invalid && form.touched">
+        </label>
+        <label>
+          <span>NIF</span>
+          <input type="text" formControlName="nif" placeholder="9 dígitos" [class.invalid]="form.get('nif')?.invalid && form.touched">
+        </label>
+        <label>
+          <span>Address</span>
+          <input type="text" formControlName="address" [class.invalid]="form.get('address')?.invalid && form.touched">
+        </label>
+        <label>
+          <span>Phone</span>
+          <input type="tel" formControlName="phone" placeholder="+351912345678" [class.invalid]="form.get('phone')?.invalid && form.touched">
+        </label>
+        <label>
+          <span>Email</span>
+          <input type="email" formControlName="email" [class.invalid]="form.get('email')?.invalid && form.touched">
+        </label>
+        <label>
+          <span>Password</span>
+          <input type="password" formControlName="password" [class.invalid]="form.get('password')?.invalid && form.touched">
+        </label>
+        <label class="agree">
+          <input type="checkbox" formControlName="agree">
+          <span>I agree to the Terms & Conditions</span>
+        </label>
+  
+        <button type="submit" [disabled]="loading || form.invalid">
+          {{ loading ? 'Signing up…' : 'Sign up' }}
+        </button>
+      </form>
+  
+      <p class="login-link">
+        Already have an account? <a href="/login">Sign in</a>
+      </p>
+    </div>
+  </div>
+  

@@ -1,0 +1,48 @@
+<div class="login-page">
+    <div class="login-side">
+      <img src="/assets/images/FreyrCoin.png" alt="Freyr Coin" class="logo">
+      <div class="headline">
+        <h1>Impact finance for everyday life.</h1>
+        <p>
+          Lend money to sustainable projects, aligned with the 2030 Agenda for
+          Sustainable Development by the United Nations.
+        </p>
+      </div>
+      <div class="hero">
+        <img src="assets/plant-circle.png" alt="" />
+      </div>
+     <!-- <a class="lang-toggle" href="#">🇬🇧 English</a> -->
+    </div>
+  
+    <div class="login-card">
+      <h2>Sign in</h2>
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <label>
+          <span>Email</span>
+          <input type="email" formControlName="email" [class.invalid]="form.get('email')?.invalid && form.touched">
+        </label>
+        <label>
+          <span>Password</span>
+          <input type="password" formControlName="password" [class.invalid]="form.get('password')?.invalid && form.touched">
+        </label>
+        <a class="forgot" href="#">Forgot Password?</a>
+  
+        <button type="submit" [disabled]="loading || form.invalid">
+          {{ loading ? 'Signing in…' : 'Sign in' }}
+        </button>
+      </form>
+  
+      <div class="divider"><span>Or login with</span></div>
+  
+      <div class="social-buttons">
+        <button aria-label="Google"><img src="assets/ic-google.svg" alt="G"></button>
+        <button aria-label="Facebook"><img src="assets/ic-facebook.svg" alt="f"></button>
+        <button aria-label="Apple"><img src="assets/ic-apple.svg" alt=""></button>
+      </div>
+  
+      <p class="register">
+        Don’t have an account? <a href="/signup">Register</a>
+      </p>
+    </div>
+  </div>
+  

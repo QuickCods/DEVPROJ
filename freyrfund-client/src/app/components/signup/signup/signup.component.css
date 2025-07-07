@@ -1,0 +1,98 @@
+.signup-page {
+  display: flex;
+  justify-content: center;   /* centraliza horizontalmente */
+  align-items: center;       /* centraliza verticalmente */
+  min-height: 100vh;         /* ocupa toda a altura da viewport */
+  background: #f5f7f0;
+  padding: 2rem;             /* um pouco de respiro nas laterais */
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+.signup-card {
+  width: 100%;
+  max-width: 420px;          /* não expande demais em telas largas */
+  background: #ffffff;
+  border-radius: 1.5rem;
+  padding: 2.5rem 2rem;      /* padding ajustado para topo/rodapé e laterais */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.signup-card h2 {
+  margin-bottom: 1.5rem;     /* espaçamento antes do form */
+  font-size: 1.5rem;
+  color: #1c3c50;
+}
+
+.signup-card form {
+  display: grid;
+  gap: 1rem;                 /* espaço uniforme entre os campos */
+  margin-bottom: 1.5rem;     /* espaço antes do link de login */
+}
+
+.signup-card form label {
+  display: block;
+  text-align: left;
+}
+
+.signup-card form label span {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #4a4a4a;
+  font-size: 0.875rem;
+}
+
+.signup-card form label input[type="text"],
+.signup-card form label input[type="email"],
+.signup-card form label input[type="password"],
+.signup-card form label input[type="tel"],
+.signup-card form label input[type="date"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: #f2f3f3;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.signup-card form input.invalid {
+  outline: 1px solid #d93025;
+}
+
+.signup-card form label.agree {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.signup-card form button {
+  width: 100%;
+  padding: 0.75rem;
+  background: #c09544;
+  color: #fff;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.signup-card form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.signup-card .login-link {
+  font-size: 0.875rem;
+}
+
+.signup-card .login-link a {
+  color: #c09544;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 0.25rem;
+}
