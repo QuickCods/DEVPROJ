@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.http.get<{ message: string }>(
-      'http://localhost:5218/Test'    
+      'https://localhost:7140/Test'    //'http://localhost:5218/Test' 
     )    
       .subscribe({
         next: resp => {
