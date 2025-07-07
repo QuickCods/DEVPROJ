@@ -9,3 +9,9 @@ dotnet run --launch-profile "https"
 cd freyrfund-client
 
 ng serve
+
+
+## Páginas de acesso
+Front: https://localhost:4200/
+
+Back: https://localhost:7140/Test
