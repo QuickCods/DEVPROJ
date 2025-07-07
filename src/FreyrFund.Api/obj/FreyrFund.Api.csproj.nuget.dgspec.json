@@ -1,25 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\liset\\Documents\\natixis_projeto\\DEVPROJ\\src\\FreyrFund.Api\\FreyrFund.Api.csproj": {}
+    "C:\\Users\\User\\Desktop\\DEVPROJ\\src\\FreyrFund.Api\\FreyrFund.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\liset\\Documents\\natixis_projeto\\DEVPROJ\\src\\FreyrFund.Api\\FreyrFund.Api.csproj": {
+    "C:\\Users\\User\\Desktop\\DEVPROJ\\src\\FreyrFund.Api\\FreyrFund.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\liset\\Documents\\natixis_projeto\\DEVPROJ\\src\\FreyrFund.Api\\FreyrFund.Api.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\DEVPROJ\\src\\FreyrFund.Api\\FreyrFund.Api.csproj",
         "projectName": "FreyrFund.Api",
-        "projectPath": "C:\\Users\\liset\\Documents\\natixis_projeto\\DEVPROJ\\src\\FreyrFund.Api\\FreyrFund.Api.csproj",
-        "packagesPath": "C:\\Users\\liset\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\liset\\Documents\\natixis_projeto\\DEVPROJ\\src\\FreyrFund.Api\\obj\\",
+        "projectPath": "C:\\Users\\User\\Desktop\\DEVPROJ\\src\\FreyrFund.Api\\FreyrFund.Api.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\DEVPROJ\\src\\FreyrFund.Api\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\liset\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -47,6 +53,10 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.6, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[9.0.1, )"
             }
           },
           "imports": [

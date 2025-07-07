@@ -6,7 +6,7 @@ interface TestResponse { message: string; }
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  private baseUrl = 'https://localhost:7243'; // ajuste se necessário
+  private baseUrl = 'http://localhost:7243'; 
 
   constructor(private http: HttpClient) {}
 

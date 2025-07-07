@@ -1,6 +1,6 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// 1) Registar política CORS
+// 1) CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularDev", policy =>
@@ -11,22 +11,38 @@ builder.Services.AddCors(options =>
     });
 });
 
-// 2) Adicionar Swagger/OpenAPI (opcional)
-builder.Services.AddOpenApi();
+// 2) Swagger (Swashbuckle)
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "FreyrFund API",
+        Version = "v1"
+    });
+});
+
+// 3) Controllers (se houver)
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
-// 3) Configurar pipeline
-if (app.Environment.IsDevelopment())
+// 4) Swagger UI — force para sempre subir, ou ao menos garanta que esteja em Development
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.MapOpenApi();          // Swagger UI em Development
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "FreyrFund API v1");
+});
 
-app.UseHttpsRedirection();    // Redireciona HTTP→HTTPS
+app.UseHttpsRedirection();
+app.UseCors("AllowAngularDev");
 
-app.UseCors("AllowAngularDev"); // *** Aplica aqui a política CORS ***
+// 5) Seu endpoint Test
+app.MapGet("/Test", () => Results.Ok(new { message = "API funciona!" }))
+   .WithName("Test")
+   .WithOpenApi();
 
-// Endpoint de exemplo
+// 6) WeatherForecast (exemplo existente)
 app.MapGet("/weatherforecast", () =>
 {
     var summaries = new[]
@@ -45,7 +61,8 @@ app.MapGet("/weatherforecast", () =>
 
     return forecast;
 })
-.WithName("GetWeatherForecast");
+.WithName("GetWeatherForecast")
+.WithOpenApi();
 
 app.Run();
 
