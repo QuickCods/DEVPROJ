@@ -62,6 +62,13 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "ssl": true,
+            "sslCert": "certs/localhost.pem",
+            "sslKey":  "certs/localhost-key.pem",
+            "port": 4200,
+            "open": true
+          },
           "configurations": {
             "production": {
               "buildTarget": "freyrfund-client:build:production"
