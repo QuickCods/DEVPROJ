@@ -8,5 +8,6 @@ src/FreyrFund.Api/obj/FreyrFund.Api.csproj.nuget.dgspec.json
 src/FreyrFund.Api/obj/project.assets.json
 src/FreyrFund.Api/obj/project.nuget.cache
 src/FreyrFund.Api/obj/Debug/net9.0/.NET*
-src/FreyrFund.Api/bin/Debug/net9.0/FreyrFund.Api.dll
-src/FreyrFund.Api/bin/Debug/net9.0/FreyrFund.Api.exe
+src/FreyrFund.Api/bin/Debug/net9.0/Freyr*
+src/FreyrFund.Api/obj/*.json
+src/FreyrFund.Api/obj/*.cache
