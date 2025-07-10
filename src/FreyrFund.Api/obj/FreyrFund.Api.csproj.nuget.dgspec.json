@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Desktop\\DEVPROJ\\src\\FreyrFund.Api\\FreyrFund.Api.csproj": {}
+    "C:\\Users\\User\\Desktop\\Projeto\\DEVPROJ\\src\\FreyrFund.Api\\FreyrFund.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Desktop\\DEVPROJ\\src\\FreyrFund.Api\\FreyrFund.Api.csproj": {
+    "C:\\Users\\User\\Desktop\\Projeto\\DEVPROJ\\src\\FreyrFund.Api\\FreyrFund.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Desktop\\DEVPROJ\\src\\FreyrFund.Api\\FreyrFund.Api.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\Projeto\\DEVPROJ\\src\\FreyrFund.Api\\FreyrFund.Api.csproj",
         "projectName": "FreyrFund.Api",
-        "projectPath": "C:\\Users\\User\\Desktop\\DEVPROJ\\src\\FreyrFund.Api\\FreyrFund.Api.csproj",
+        "projectPath": "C:\\Users\\User\\Desktop\\Projeto\\DEVPROJ\\src\\FreyrFund.Api\\FreyrFund.Api.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Desktop\\DEVPROJ\\src\\FreyrFund.Api\\obj\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\Projeto\\DEVPROJ\\src\\FreyrFund.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -61,6 +61,20 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.7, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
