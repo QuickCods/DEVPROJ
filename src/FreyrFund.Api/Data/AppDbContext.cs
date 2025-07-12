@@ -8,10 +8,25 @@ namespace FreyrFund.Server.Data
     public class AppDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
-            : base(options) { }
+            : base(options)
+        {
+        }
 
         public DbSet<User> Users { get; set; }
+
         public DbSet<Project> Projects { get; set; }
         public DbSet<Investment> Investments { get; set; }
+        
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            // Configura 1:1 IdentityUser ↔ User
+            builder.Entity<User>()
+                .HasOne(u => u.IdentityUser)
+                .WithOne()
+                .HasForeignKey<User>(u => u.IdentityUserId)
+                .IsRequired();
+        }
     }
 }

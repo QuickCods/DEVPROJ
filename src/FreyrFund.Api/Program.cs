@@ -9,11 +9,16 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // 1) CORS
-builder.Services.AddCors(o => o.AddPolicy("AllowAngularDev", p =>
-    p.WithOrigins("http://localhost:4200")
-     .AllowAnyHeader()
-     .AllowAnyMethod()
-));
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularDev", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:4200", "https://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 // 2) DbContext + Identity
 builder.Services.AddDbContext<AppDbContext>(opts =>
@@ -82,7 +87,25 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Opcional: seed de roles/admin aqui…
+async Task SeedRolesAsync(IServiceProvider services)
+{
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    string[] roles = new[] { "Admin", "User" };
+
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+}
+
+// Executa o seed
+using (var scope = app.Services.CreateScope())
+{
+    await SeedRolesAsync(scope.ServiceProvider);
+}
 
 // Middleware
 if (app.Environment.IsDevelopment())
