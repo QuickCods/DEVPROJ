@@ -1,11 +1,23 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
 import { LoginComponent } from './components/login/login/login.component';
-import { Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { SignupComponent } from './components/signup/signup/signup.component';
+import { HomeComponentComponent } from './home-component/home-component.component';
+import { AuthGuard } from './services/auth.guard';
+import { NgModule } from '@angular/core';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent},
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: '**', redirectTo: 'login' }
+  // 1) rotas públicas
+  { path: 'signup', component: SignupComponent },
+  { path: 'login',  component: LoginComponent },
+
+  // 2) rota protegida
+  {
+    path: '',
+    component: HomeComponentComponent,
+    canActivate: [AuthGuard]
+  },
+
+  // 3) coringa para todas as outras – só depois de todas as anteriores
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

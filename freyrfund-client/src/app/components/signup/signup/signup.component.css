@@ -57,9 +57,6 @@
   box-sizing: border-box;
 }
 
-.signup-card form input.invalid {
-  outline: 1px solid #d93025;
-}
 
 .signup-card form label.agree {
   display: flex;
