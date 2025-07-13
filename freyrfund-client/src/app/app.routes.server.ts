@@ -14,7 +14,7 @@ export const routes: Routes = [
   // 2) rota protegida
   {
     path: '',
-    component: HomeComponentComponent,
+    component: HomeComponentComponent, //colocar outras páginas (protegidas por rota)
     canActivate: [AuthGuard]
   },
 

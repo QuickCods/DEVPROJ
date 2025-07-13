@@ -97,9 +97,6 @@
   box-sizing: border-box;
 }
 
-.login-card form label input.invalid {
-  outline: 1px solid #d93025;
-}
 
 .login-card form .forgot {
   display: block;
