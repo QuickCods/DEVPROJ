@@ -1,0 +1,100 @@
+<button (click)="startCreate()">Novo Projeto</button>
+
+<!-- Tabela de projetos -->
+<table *ngIf="!editing">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Título</th>
+      <th>Descrição</th>
+      <th>Requerido</th>
+      <th>Financiado</th>
+      <th>Taxa (%)</th>
+      <th>Duração (meses)</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of projects">
+      <td>{{ p.id }}</td>
+      <td>{{ p.title }}</td>
+      <p> {{ p.description }}</p>
+      <td>{{ p.amountRequired | currency:'EUR':'symbol' }}</td>
+      <td>{{ p.returnRate }}%</td>
+      <td>{{ p.durationMonths }}</td>
+      <td>
+        <button (click)="startEdit(p)">✏️</button>
+        <button
+          (click)="remove(p.id!)"
+          [disabled]="removingId === p.id"
+        >
+          {{ removingId === p.id ? 'Removendo…' : '🗑️' }}
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Formulário de criação/edição -->
+<div *ngIf="editing">
+  <h3>{{ form.value.id ? 'Editar' : 'Criar' }} Projeto</h3>
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <!-- ID oculto para edição -->
+    <input type="hidden" formControlName="id">
+
+    <label>
+      Título
+      <input formControlName="title" />
+    </label>
+    <div *ngIf="form.get('title')?.invalid && form.touched">
+      Título obrigatório.
+    </div>
+
+    <label>
+      Descrição
+      <textarea formControlName="description"></textarea>
+    </label>
+    <div *ngIf="form.get('description')?.invalid && form.touched">
+      Descrição obrigatória.
+    </div>
+
+    <label>
+      Montante Requerido
+      <input type="number" formControlName="amountRequired" />
+    </label>
+    <div *ngIf="form.get('amountRequired')?.invalid && form.touched">
+      Montante requerido obrigatório e &gt; 0.
+    </div>
+
+    <label>
+      Montante Financiado
+      <input
+        type="number"
+        formControlName="amountFunded"
+        [readonly]="true"
+        placeholder="(será calculado no servidor)"
+      />
+    </label>
+
+    <label>
+      Taxa de Retorno (%)
+      <input type="number" formControlName="returnRate" />
+    </label>
+    <div *ngIf="form.get('returnRate')?.invalid && form.touched">
+      Taxa de retorno obrigatória.
+    </div>
+
+    <label>
+      Duração (meses)
+      <input type="number" formControlName="durationMonths" />
+    </label>
+    <div *ngIf="form.get('durationMonths')?.invalid && form.touched">
+      Duração obrigatória e &gt; 0.
+    </div>
+
+    <button type="submit" [disabled]="form.invalid">
+      {{ form.value.id ? 'Atualizar' : 'Criar' }}
+    </button>
+    <button type="button" (click)="cancel()">Cancelar</button>
+  </form>
+</div>

@@ -35,68 +35,48 @@ public class AuthController : ControllerBase
 
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(LoginRequest request)
+public async Task<IActionResult> Login(LoginRequest request)
+{
+    var identityUser = await _userManager.FindByEmailAsync(request.Email);
+    if (identityUser == null
+        || !await _userManager.CheckPasswordAsync(identityUser, request.Password))
+        return Unauthorized();
+
+    // → Novo código começa aqui
+    var roles = await _userManager.GetRolesAsync(identityUser);
+    var claims = new List<Claim> {
+        new Claim(ClaimTypes.Name, request.Email)
+    };
+    claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
+    // → Novo código termina aqui
+
+    var jwtSettings = _configuration.GetSection("JwtSettings");
+    var keyBytes    = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
+    var creds       = new SigningCredentials(new SymmetricSecurityKey(keyBytes),
+                                              SecurityAlgorithms.HmacSha256);
+
+    var expiresInString = jwtSettings["ExpiresInMinutes"]
+        ?? throw new InvalidOperationException("Configuração 'JwtSettings:ExpiresInMinutes' não encontrada.");
+
+    if (!double.TryParse(expiresInString, out var expiresIn))
+        throw new InvalidOperationException($"Configuração 'ExpiresInMinutes' inválida: {expiresInString}");
+
+    var expires = DateTime.UtcNow.AddMinutes(expiresIn);
+
+    var tokenDescriptor = new SecurityTokenDescriptor
     {
-            // ===> busca no AspNetUsers pelo e-mail
-        var identityUser = await _userManager.FindByEmailAsync(request.Email);
-        if (identityUser == null
-            || !await _userManager.CheckPasswordAsync(identityUser, request.Password))
-        {
-            // ou “Username” se usar FindByNameAsync(request.Username) …
-            return Unauthorized();
-        }
+        Subject            = new ClaimsIdentity(claims),
+        Expires            = expires,
+        Issuer             = jwtSettings["Issuer"],
+        Audience           = jwtSettings["Audience"],
+        SigningCredentials = creds
+    };
 
-        // 2) Gerar JWT
-        var jwtSettings = _configuration.GetSection("JwtSettings");
+    var token      = new JwtSecurityTokenHandler().CreateToken(tokenDescriptor);
+    var jwt        = new JwtSecurityTokenHandler().WriteToken(token);
 
-        // >>> Aqui começa o trecho de validação de null <<<
-
-        // tenta ler a chave; se não existir, lança imediatamente
-        var jwtKey = jwtSettings["Key"]
-                     ?? throw new InvalidOperationException("Configuração 'JwtSettings:Key' não encontrada.");
-
-        // converte para bytes
-        var keyBytes = Encoding.UTF8.GetBytes(jwtKey);
-
-        // cria as credenciais de assinatura
-        var creds = new SigningCredentials(
-            new SymmetricSecurityKey(keyBytes),
-            SecurityAlgorithms.HmacSha256
-        );
-
-        // >>> aqui termina o trecho de validação <<<
-
-        var tokenHandler = new JwtSecurityTokenHandler();
-
-        var claims = new[] { new Claim(ClaimTypes.Name, request.Email) };
-        // tenta ler o valor; se não existir, lança imediatamente
-        var expiresInString = jwtSettings["ExpiresInMinutes"]
-            ?? throw new InvalidOperationException("Configuração 'JwtSettings:ExpiresInMinutes' não encontrada.");
-
-        // tenta converter para double; se falhar, lança exceção clara
-        if (!double.TryParse(expiresInString, out var expiresIn))
-        {
-            throw new InvalidOperationException(
-                $"Configuração 'JwtSettings:ExpiresInMinutes' inválida: '{expiresInString}'.");
-        }
-
-        // Calcula a expiração
-        var expires = DateTime.UtcNow.AddMinutes(expiresIn);
-
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(claims),
-            Expires = expires,
-            Issuer = jwtSettings["Issuer"],
-            Audience = jwtSettings["Audience"],
-            SigningCredentials = creds
-        };
-
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        var jwt = tokenHandler.WriteToken(token);
-
-        return Ok(new { token = jwt, expires });
-    }
+    return Ok(new { token = jwt, expires });
+}
     
     [HttpPost("signup")]
     public async Task<IActionResult> Register([FromBody] RegisterRequest request)
@@ -182,17 +162,18 @@ public class AuthController : ControllerBase
 
         return Ok(new { seeded = roles });
     }
-    [HttpPost("promote/{username}")]
-    public async Task<IActionResult> PromoteToAdmin(string username)
+    /* [HttpPost("promote/{email}")] 
+    public async Task<IActionResult> PromoteToAdmin(string email)
     {
-        var user = await _userManager.FindByNameAsync(username);
+        var user = await _userManager.FindByNameAsync(email);
         if (user == null) return NotFound("Usuário não encontrado.");
 
         var result = await _userManager.AddToRoleAsync(user, "Admin");
         if (!result.Succeeded) return BadRequest(result.Errors);
 
-        return Ok($"{username} agora é Admin.");
-    }
+        return Ok($"{email} agora é Admin.");
+    } 
+    --> agora faz se no painel de admin*/ 
 
 
 }

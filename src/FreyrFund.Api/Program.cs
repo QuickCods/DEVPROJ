@@ -107,6 +107,13 @@ using (var scope = app.Services.CreateScope())
     await SeedRolesAsync(scope.ServiceProvider);
 }
 
+// após construir o app
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await SeedRolesAndAdminAsync(services);
+}
+
 // Middleware
 if (app.Environment.IsDevelopment())
 {
@@ -120,3 +127,47 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
+
+
+// método local para fazer o seed
+static async Task SeedRolesAndAdminAsync(IServiceProvider services)
+{
+    // resolve os managers
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+
+    // 1) garante os roles
+    string[] roles = new[] { "Admin", "User" };
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+            await roleManager.CreateAsync(new IdentityRole(role));
+    }
+
+    // 2) garante um Admin “hard-coded”
+    const string adminEmail    = "admin@freyrfund.com";
+    const string adminPassword = "Admin@123";  // escolhe uma senha forte
+
+    if (await userManager.FindByEmailAsync(adminEmail) is null)
+    {
+        var adminUser = new IdentityUser
+        {
+            UserName = adminEmail,
+            Email    = adminEmail,
+            EmailConfirmed = true
+        };
+
+        var createResult = await userManager.CreateAsync(adminUser, adminPassword);
+        if (createResult.Succeeded)
+        {
+            await userManager.AddToRoleAsync(adminUser, "Admin");
+        }
+        else
+        {
+            // opcional: logar erros de criação
+            var logger = services.GetRequiredService<ILogger<Program>>();
+            logger.LogError("Erro ao criar admin: {Errors}", 
+                string.Join(";", createResult.Errors.Select(e => e.Description)));
+        }
+    }
+}

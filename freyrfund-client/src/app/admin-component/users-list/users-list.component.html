@@ -1,0 +1,91 @@
+<button (click)="startCreate()">Novo Utilizador</button>
+
+<!-- Tabela de usuários -->
+<table *ngIf="!editing">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Data Nasc.</th>
+      <th>NIF</th>
+      <th>Endereço</th>
+      <th>Telefone</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let u of users">
+      <td>{{ u.id }}</td>
+      <td>{{ u.fullName }}</td>
+      <td>{{ u.email }}</td>
+      <td>{{ u.role }}</td>
+      <td>{{ u.dateOfBirth }}</td>
+      <td>{{ u.nif }}</td>
+      <td>{{ u.address }}</td>
+      <td>{{ u.phoneNumber }}</td>
+      <td>
+        <button (click)="startEdit(u)">✏️</button>
+        <button (click)="remove(u.id!)">🗑️</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Form de criação/edição -->
+<div *ngIf="editing">
+  <h3>{{ form.value.id ? 'Editar' : 'Criar' }} Utilizador</h3>
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <input type="hidden" formControlName="id">
+
+    <label>
+      Nome
+      <input formControlName="fullName" />
+    </label>
+
+    <label>
+      Data Nasc.
+      <input formControlName="dateOfBirth" placeholder="dd/MM/aaaa" />
+    </label>
+
+    <label>
+      NIF
+      <input formControlName="nif" />
+    </label>
+
+    <label>
+      Endereço
+      <input formControlName="address" />
+    </label>
+
+    <label>
+      Telefone
+      <input formControlName="phoneNumber" />
+    </label>
+
+    <label>
+      Email
+      <input formControlName="email" />
+    </label>
+
+    <label>
+      Role
+      <select formControlName="role">
+        <option>User</option>
+        <option>Admin</option>
+      </select>
+    </label>
+
+    <!-- Só aparece no create -->
+    <label *ngIf="!form.value.id">
+      Senha
+      <input type="password" formControlName="password" />
+    </label>
+
+    <button type="submit" [disabled]="form.invalid">
+      {{ form.value.id ? 'Atualizar' : 'Criar' }}
+    </button>
+    <button type="button" (click)="cancel()">Cancelar</button>
+  </form>
+</div>

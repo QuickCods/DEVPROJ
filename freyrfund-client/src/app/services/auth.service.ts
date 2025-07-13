@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 
 export interface SignupData {
@@ -49,6 +50,11 @@ export class AuthService {
     return null;
   }
 
+  setToken(token: string, remember: boolean) {
+    const storage = remember ? localStorage : sessionStorage;
+    storage.setItem(this.TOKEN_KEY, token);
+  }
+
   logout() {
     if (typeof window !== 'undefined' && window.localStorage) {
       localStorage.removeItem(this.TOKEN_KEY);
@@ -59,5 +65,19 @@ export class AuthService {
   isLoggedIn(): boolean {
     const token = this.getToken();
     return !!token;
+  }
+
+  public getUserRole(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    try {
+      const payload: any = jwtDecode(token);
+      // o claim pode vir em "role" ou no namespace padrão:
+      return payload.role
+          || payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+          || null;
+    } catch {
+      return null;
+    }
   }
 }

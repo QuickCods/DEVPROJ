@@ -1,6 +1,8 @@
-namespace FreyrFund.Server.Models
+using FreyrFund.Server.Models;
+
+namespace FreyrFund.Api.Models.Dtos
 {
-    public class Project
+    public class ProjectDto
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;

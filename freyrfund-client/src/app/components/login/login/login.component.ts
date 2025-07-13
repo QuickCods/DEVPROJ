@@ -48,9 +48,15 @@ export class LoginComponent {
 
     this.auth.login(payload).subscribe({
       next: () => {
-        this.loading = false;
-        this.router.navigate(['/home']);
-      },
+             this.loading = false;
+             // ler o role do token e redirecionar
+             const role = this.auth.getUserRole();
+             if (role === 'Admin') {
+               this.router.navigate(['/admin']);
+             } else {
+               this.router.navigate(['/']);
+             }
+           },
       error: () => {
         this.loading = false;
         this.error   = 'Credenciais inválidas';
