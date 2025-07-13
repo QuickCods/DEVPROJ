@@ -1,0 +1,108 @@
+:host {
+    display: block;
+    background: #ffffff;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    font-family: sans-serif;
+  }
+  
+  .admin-card-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+  }
+  
+  .btn-primary {
+    background: #c09544;
+    color: #fff;
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 0.95rem;
+  }
+  
+  th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    color: #4a4a4a;
+  }
+  
+  th {
+    background: #f2f3f3;
+    color: #1c3c50;
+    font-weight: 600;
+    border-bottom: 2px solid #e0e0e0;
+  }
+  
+  tbody tr:nth-child(odd) {
+    background: #fafbf9;
+  }
+  
+  tbody tr:hover {
+    background: rgba(193,149,68,0.1);
+  }
+  
+  td.desc-cell {
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  td.actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .icon-btn {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  
+  .icon-btn:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Responsivo */
+  @media (max-width: 600px) {
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
+    thead {
+      display: none;
+    }
+    tr {
+      margin-bottom: 1rem;
+    }
+    td {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+    }
+    td::before {
+      content: attr(data-label);
+      font-weight: 600;
+      color: #1c3c50;
+    }
+  }
+  

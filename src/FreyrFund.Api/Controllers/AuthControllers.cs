@@ -25,9 +25,9 @@ public class AuthController : ControllerBase
         { "utilizador1", "senha123" }
     };
 
-    public AuthController( AppDbContext dbContext,UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+    public AuthController(AppDbContext dbContext, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
     {
-        _dbContext      = dbContext;
+        _dbContext = dbContext;
         _userManager = userManager;
         _roleManager = roleManager;
         _configuration = configuration;
@@ -35,49 +35,49 @@ public class AuthController : ControllerBase
 
 
     [HttpPost("login")]
-public async Task<IActionResult> Login(LoginRequest request)
-{
-    var identityUser = await _userManager.FindByEmailAsync(request.Email);
-    if (identityUser == null
-        || !await _userManager.CheckPasswordAsync(identityUser, request.Password))
-        return Unauthorized();
+    public async Task<IActionResult> Login(LoginRequest request)
+    {
+        var identityUser = await _userManager.FindByEmailAsync(request.Email);
+        if (identityUser == null
+            || !await _userManager.CheckPasswordAsync(identityUser, request.Password))
+            return Unauthorized();
 
-    // → Novo código começa aqui
-    var roles = await _userManager.GetRolesAsync(identityUser);
-    var claims = new List<Claim> {
+        // → Novo código começa aqui
+        var roles = await _userManager.GetRolesAsync(identityUser);
+        var claims = new List<Claim> {
         new Claim(ClaimTypes.Name, request.Email)
     };
-    claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
-    // → Novo código termina aqui
+        claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
+        // → Novo código termina aqui
 
-    var jwtSettings = _configuration.GetSection("JwtSettings");
-    var keyBytes    = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
-    var creds       = new SigningCredentials(new SymmetricSecurityKey(keyBytes),
-                                              SecurityAlgorithms.HmacSha256);
+        var jwtSettings = _configuration.GetSection("JwtSettings");
+        var keyBytes = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);
+        var creds = new SigningCredentials(new SymmetricSecurityKey(keyBytes),
+                                                  SecurityAlgorithms.HmacSha256);
 
-    var expiresInString = jwtSettings["ExpiresInMinutes"]
-        ?? throw new InvalidOperationException("Configuração 'JwtSettings:ExpiresInMinutes' não encontrada.");
+        var expiresInString = jwtSettings["ExpiresInMinutes"]
+            ?? throw new InvalidOperationException("Configuração 'JwtSettings:ExpiresInMinutes' não encontrada.");
 
-    if (!double.TryParse(expiresInString, out var expiresIn))
-        throw new InvalidOperationException($"Configuração 'ExpiresInMinutes' inválida: {expiresInString}");
+        if (!double.TryParse(expiresInString, out var expiresIn))
+            throw new InvalidOperationException($"Configuração 'ExpiresInMinutes' inválida: {expiresInString}");
 
-    var expires = DateTime.UtcNow.AddMinutes(expiresIn);
+        var expires = DateTime.UtcNow.AddMinutes(expiresIn);
 
-    var tokenDescriptor = new SecurityTokenDescriptor
-    {
-        Subject            = new ClaimsIdentity(claims),
-        Expires            = expires,
-        Issuer             = jwtSettings["Issuer"],
-        Audience           = jwtSettings["Audience"],
-        SigningCredentials = creds
-    };
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(claims),
+            Expires = expires,
+            Issuer = jwtSettings["Issuer"],
+            Audience = jwtSettings["Audience"],
+            SigningCredentials = creds
+        };
 
-    var token      = new JwtSecurityTokenHandler().CreateToken(tokenDescriptor);
-    var jwt        = new JwtSecurityTokenHandler().WriteToken(token);
+        var token = new JwtSecurityTokenHandler().CreateToken(tokenDescriptor);
+        var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
-    return Ok(new { token = jwt, expires });
-}
-    
+        return Ok(new { token = jwt, expires });
+    }
+
     [HttpPost("signup")]
     public async Task<IActionResult> Register([FromBody] RegisterRequest request)
     {
@@ -86,7 +86,8 @@ public async Task<IActionResult> Login(LoginRequest request)
             var erros = ModelState
             // filtra só onde exista Value e tenha Errors
             .Where(kvp => kvp.Value?.Errors.Count > 0)
-            .Select(kvp => new {
+            .Select(kvp => new
+            {
                 // Key é string não-nula
                 Campo = kvp.Key,
                 // assegura ao compilador que Value não é null aqui
@@ -95,7 +96,7 @@ public async Task<IActionResult> Login(LoginRequest request)
                             .ToArray()
             });
 
-        return BadRequest(erros);
+            return BadRequest(erros);
         }
         // Converter dd/MM/aa ou dd/MM/aaaa para DateTime
         var formats = new[] { "d/M/yy", "dd/MM/yy", "d/M/yyyy", "dd/MM/yyyy" };
@@ -119,7 +120,7 @@ public async Task<IActionResult> Login(LoginRequest request)
         // 1) Cria o usuário no AspNetUsers via Identity
         var identityUser = new IdentityUser(request.Email)
         {
-            Email    = request.Email,
+            Email = request.Email,
             UserName = request.Email
         };
         var createResult = await _userManager.CreateAsync(identityUser, request.Password);
@@ -133,18 +134,18 @@ public async Task<IActionResult> Login(LoginRequest request)
         var domainUser = new User
         {
             IdentityUserId = identityUser.Id,  // FK para AspNetUsers.Id
-            FullName       = request.FullName,
-            DateOfBirth    = dob,
-            Nif            = request.Nif,
-            Address        = request.Address,
-            PhoneNumber    = request.PhoneNumber,
-            Email          = request.Email
+            FullName = request.FullName,
+            DateOfBirth = dob,
+            Nif = request.Nif,
+            Address = request.Address,
+            PhoneNumber = request.PhoneNumber,
+            Email = request.Email
         };
         _dbContext.Users.Add(domainUser);
         await _dbContext.SaveChangesAsync();
 
-            return Ok(new { message = "Utilizador registado com sucesso." });
-        }
+        return Ok(new { message = "Utilizador registado com sucesso." });
+    }
 
 
 
@@ -162,6 +163,7 @@ public async Task<IActionResult> Login(LoginRequest request)
 
         return Ok(new { seeded = roles });
     }
+    
     /* [HttpPost("promote/{email}")] 
     public async Task<IActionResult> PromoteToAdmin(string email)
     {
@@ -173,7 +175,7 @@ public async Task<IActionResult> Login(LoginRequest request)
 
         return Ok($"{email} agora é Admin.");
     } 
-    --> agora faz se no painel de admin*/ 
+    --> agora faz se no painel de admin*/
 
 
 }

@@ -1,8 +1,13 @@
-<h1>Painel Admin</h1>
-<nav>
-  <a routerLink="users">Usuários</a> |
-  <a routerLink="projects">Projetos</a>
-</nav>
-
-<!-- É aqui que caem as rotas-filhas -->
-<router-outlet></router-outlet>
+<!-- admin-layout.component.html -->
+<div class="admin-page">
+  <header class="admin-header">
+    <h1>Painel Admin</h1>
+    <nav class="admin-nav">
+      <a routerLink="users" routerLinkActive="active">Usuários</a>
+      <a routerLink="projects" routerLinkActive="active">Projetos</a>
+    </nav>
+  </header>
+  <main class="admin-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

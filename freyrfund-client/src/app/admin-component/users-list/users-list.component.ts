@@ -8,7 +8,8 @@ import { RouterModule }     from '@angular/router';
   selector: 'app-users-list',
   standalone: true,
   imports: [ CommonModule, ReactiveFormsModule, RouterModule ],
-  templateUrl: './users-list.component.html'
+  templateUrl: './users-list.component.html',
+  styleUrls: ['./users-list.component.css']
 })
 export class UsersListComponent implements OnInit {
   users: UserDto[] = [];

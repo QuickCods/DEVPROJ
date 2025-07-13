@@ -31,6 +31,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(opts =>
 })
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
+    
+
 
 // 3) JWT Auth + Authorization
 var jwt = builder.Configuration.GetSection("JwtSettings");

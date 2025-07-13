@@ -8,6 +8,7 @@ import { AdminService, ProjectDto } from '../../services/admin.service';
   standalone: true,
   imports: [ CommonModule, ReactiveFormsModule ],
   templateUrl: './projects-list.component.html',
+  styleUrls: ['./projects-list.component.css']
 })
 export class ProjectsListComponent implements OnInit {
   projects: ProjectDto[] = [];
