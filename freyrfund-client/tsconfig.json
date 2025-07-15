@@ -16,7 +16,11 @@
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "ES2022"
+    "module": "ES2022",
+    "baseUrl": "src",  //adicionado novo
+    "paths": {        //adicionado novo
+    "@app/*": ["app/*"]   //adicionado novo
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

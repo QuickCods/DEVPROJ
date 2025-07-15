@@ -43,7 +43,16 @@ namespace FreyrFund.Server.Models
         [Required]
         public string Role { get; set; } = "User";
 
+        // NOVO: Saldo atual do utilizador
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Balance { get; set; } = 0;
+
+        // NOVO: Marcação de eliminação lógica
+        public bool IsDeleted { get; set; } = false;
+
+
         public ICollection<Investment>? Investments { get; set; }
+        public ICollection<Transaction>? Transactions { get; set; }
 
         
     }

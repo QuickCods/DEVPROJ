@@ -1,30 +1,32 @@
-<!-- projects.component.html -->
 <div class="admin-card">
   <div class="admin-card-header">
     <button class="btn-primary" (click)="startCreate()">Novo Projeto</button>
   </div>
 
+  <!-- Lista de projetos -->
   <div *ngIf="!editing" class="admin-card-body">
     <table class="admin-table">
       <thead>
         <tr>
-          <th>ID</th><th>Título</th><th>Descrição</th>
-          <th>Requerido</th><th>Taxa</th><th>Duração</th><th>Ações</th>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Taxa (%)</th>
+          <th>Prazo (meses)</th>
+          <th>Meta (EUR)</th>
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let p of projects">
-          <td>{{p.id}}</td>
-          <td>{{p.title}}</td>
-          <td class="desc-cell">{{p.description}}</td>
-          <td>{{p.amountRequired | currency:'EUR':'symbol'}}</td>
-          <td>{{p.returnRate}}%</td>
-          <td>{{p.durationMonths}}</td>
+          <td>{{ p.id }}</td>
+          <td>{{ p.title }}</td>
+          <td>{{ p.rate| percent:'1.2-2' }}</td>
+          <td>{{ p.term }}</td>
+          <td>{{ p.target | currency:'EUR':'symbol' }}</td>
           <td class="actions">
             <button class="icon-btn" (click)="startEdit(p)">✏️</button>
-            <button class="icon-btn" (click)="remove(p.id!)" 
-                    [disabled]="removingId===p.id">
-              {{ removingId===p.id ? 'Removendo…' : '🗑️' }}
+            <button class="icon-btn" (click)="remove(p.id!)" [disabled]="removingId === p.id">
+              {{ removingId === p.id ? 'Removendo…' : '🗑️' }}
             </button>
           </td>
         </tr>
@@ -32,6 +34,7 @@
     </table>
   </div>
 
+  <!-- Formulário de criação/edição -->
   <div *ngIf="editing" class="admin-form-container">
     <h3>{{ form.value.id ? 'Editar' : 'Criar' }} Projeto</h3>
     <form [formGroup]="form" (ngSubmit)="save()">
@@ -42,20 +45,16 @@
         <input formControlName="title" />
       </label>
       <label>
-        Descrição
-        <textarea formControlName="description"></textarea>
+        Taxa de Juros (%)
+        <input type="number" formControlName="rate" />
       </label>
       <label>
-        Montante Requerido
-        <input type="number" formControlName="amountRequired" />
+        Prazo (meses)
+        <input type="number" formControlName="term" />
       </label>
       <label>
-        Taxa de Retorno (%)
-        <input type="number" formControlName="returnRate" />
-      </label>
-      <label>
-        Duração (meses)
-        <input type="number" formControlName="durationMonths" />
+        Meta de Financiamento (EUR)
+        <input type="number" formControlName="target" />
       </label>
 
       <div class="form-actions">

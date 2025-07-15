@@ -1,3 +1,4 @@
+using FreyrFund.Api.Models;
 namespace FreyrFund.Server.Models
 {
     public class Investment

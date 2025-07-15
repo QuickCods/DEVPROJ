@@ -21,12 +21,11 @@ export class ProjectsListComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.form = this.fb.group({
-      id:             [null],                                       // ← control para o id
+      id:             [null],  // Project identifier
       title:          ['', Validators.required],
-      description:    ['', Validators.required],
-      amountRequired: [null, [Validators.required, Validators.min(0.01)]],
-      returnRate:     [null, [Validators.required, Validators.min(0)]],
-      durationMonths: [null, [Validators.required, Validators.min(1)]]
+      rate:           [null, [Validators.required, Validators.min(0)]],
+      term:           [null, [Validators.required, Validators.min(1)]],
+      target:         [null, [Validators.required, Validators.min(0.01)]]
     });
   }
 

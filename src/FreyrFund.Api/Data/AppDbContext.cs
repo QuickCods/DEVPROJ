@@ -16,6 +16,7 @@ namespace FreyrFund.Server.Data
 
         public DbSet<Project> Projects { get; set; }
         public DbSet<Investment> Investments { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }  //adicionado novo
         
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -1,0 +1,13 @@
+<div class="withdraw-form">
+    <h2>Retrait d'argent</h2>
+  
+    <form (ngSubmit)="onWithdraw()">
+      <label for="amount">Valeur :</label>
+      <input type="number" [(ngModel)]="amount" name="amount" min="1" required />
+  
+      <button type="submit">Retrait l'argent</button>
+    </form>
+  
+    <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+  </div>

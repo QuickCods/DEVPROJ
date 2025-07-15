@@ -1,0 +1,18 @@
+<div class="delete-account">
+    <h2>Eliminar Conta</h2>
+  
+    <p>Cette action est irréversible. Êtes-vous sûr de vouloir supprimer votre compte ?</p>
+  
+    <div *ngIf="!confirming">
+      <button (click)="confirmDelete()">Oui, supprimer le compte</button>
+    </div>
+  
+    <div *ngIf="confirming">
+      <p>Confirmation finale : éliminer vraiment ?</p>
+      <button (click)="deleteAccount()">Supprimer</button>
+      <button (click)="cancel()">Annuler</button>
+    </div>
+  
+    <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+  </div>

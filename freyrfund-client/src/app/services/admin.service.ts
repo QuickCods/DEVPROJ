@@ -17,10 +17,15 @@ export interface UserDto {
 export interface ProjectDto {
   id?: number;
   title: string;
-  description: string;
-  amountRequired: number;
-  returnRate: number;
-  durationMonths: number;
+  rate: number;
+  term: number;
+  target: number;
+  funded: number;
+  fundingPercentage: number;
+  remainingAmount: number;
+  isFullyFunded: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 @Injectable({ providedIn: 'root' })

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FreyrFund.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250712164741_AddIdentityUserIdToUsers")]
-    partial class AddIdentityUserIdToUsers
+    [Migration("20250714220909_LinkUserToIdentityUser")]
+    partial class LinkUserToIdentityUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,25 +62,28 @@ namespace FreyrFund.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("AmountFunded")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Funded")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("AmountRequired")
+                    b.Property<decimal>("Rate")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("Target")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("DurationMonths")
+                    b.Property<int>("Term")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("ReturnRate")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -339,7 +342,7 @@ namespace FreyrFund.Api.Migrations
             modelBuilder.Entity("FreyrFund.Server.Models.Investment", b =>
                 {
                     b.HasOne("FreyrFund.Server.Models.Project", "Project")
-                        .WithMany("Investments")
+                        .WithMany()
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -415,11 +418,6 @@ namespace FreyrFund.Api.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("FreyrFund.Server.Models.Project", b =>
-                {
-                    b.Navigation("Investments");
                 });
 
             modelBuilder.Entity("FreyrFund.Server.Models.User", b =>

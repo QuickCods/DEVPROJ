@@ -1,5 +1,6 @@
 using System.Text;
 using FreyrFund.Server.Data;
+using FreyrFund.Server.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -60,13 +61,15 @@ builder.Services.AddAuthentication(opts =>
 });
 
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<IUserService, UserService>();   //nova inserção
 
 // 4) Controllers + Swagger
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "FreyrFund API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "FreyrFund API", Version = "v1" });   
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name         = "Authorization",
@@ -148,7 +151,7 @@ static async Task SeedRolesAndAdminAsync(IServiceProvider services)
 
     // 2) garante um Admin “hard-coded”
     const string adminEmail    = "admin@freyrfund.com";
-    const string adminPassword = "Admin@123";  // escolhe uma senha forte
+    const string adminPassword = "Admin@123";  // escolheR uma senha forte
 
     if (await userManager.FindByEmailAsync(adminEmail) is null)
     {

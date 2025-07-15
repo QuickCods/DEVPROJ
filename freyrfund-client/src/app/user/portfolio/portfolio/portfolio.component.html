@@ -1,0 +1,26 @@
+<div class="portfolio">
+    <h2>Le portefeuille</h2>
+  
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  
+    <table *ngIf="transactions.length > 0; else noData">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Valeur</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of transactions">
+          <td>{{ t.date | date: 'short' }}</td>
+          <td>{{ getTypeName(t.type) }}</td>
+          <td [ngClass]="{ 'negative': t.amount < 0 }">{{ t.amount | currency:'EUR' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <ng-template #noData>
+      <p>Il n'y a pas de transactions dans le portefeuille.</p>
+    </ng-template>
+  </div>

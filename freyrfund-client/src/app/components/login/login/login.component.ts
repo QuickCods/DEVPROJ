@@ -54,7 +54,7 @@ export class LoginComponent {
              if (role === 'Admin') {
                this.router.navigate(['/admin']);
              } else {
-               this.router.navigate(['/']);
+               this.router.navigate(['/projects']);
              }
            },
       error: () => {

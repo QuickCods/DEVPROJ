@@ -9,6 +9,12 @@ import { AdminComponentComponent } from './admin-component/admin-component.compo
 import { UsersListComponent } from './admin-component/users-list/users-list.component';
 import { ProjectsListComponent } from './admin-component/projects-list/projects-list.component';
 import { AdminGuard } from './services/admin.guard';
+import { ProjectsComponent } from './components/projects/projects.component';
+import { InvestComponent } from './user/invest/invest/invest.component';
+import { PortfolioComponent } from './user/portfolio/portfolio/portfolio.component';
+import { TopUpComponent } from './user/top-up/top-up/top-up.component';
+import { DeleteAccountComponent } from './user/delete-account/delete-account/delete-account.component';
+import { WithdrawComponent } from './user/withdraw/withdraw/withdraw.component';
 
 export const routes: Routes = [
   // 1) rotas públicas
@@ -17,9 +23,24 @@ export const routes: Routes = [
 
   // 2) rota protegida
   {
-    path: '',
-    component: HomeComponentComponent, //colocar outras páginas (protegidas por rota)
-    canActivate: [AuthGuard]
+    path: 'projects',
+    component: ProjectsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'invest', component: InvestComponent, canActivate: [AuthGuard],
+  },
+  {
+    path: 'portfolio', component: PortfolioComponent, canActivate: [AuthGuard],
+  },
+  {
+    path: 'top-up', component: TopUpComponent, canActivate: [AuthGuard],
+  },
+  {
+    path: 'delete-account', component: DeleteAccountComponent, canActivate: [AuthGuard],
+  },
+  {
+    path: 'withdraw', component: WithdrawComponent, canActivate: [AuthGuard],
   },
 
   {

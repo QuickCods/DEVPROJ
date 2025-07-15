@@ -14,7 +14,7 @@ namespace FreyrFund.Api.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : ControllerBase
     {
-        private readonly AppDbContext      _db;
+        private readonly AppDbContext _db;
         private readonly UserManager<IdentityUser> _userMgr;
         private readonly RoleManager<IdentityRole> _roleMgr;
 
@@ -23,9 +23,9 @@ namespace FreyrFund.Api.Controllers
             UserManager<IdentityUser> userMgr,
             RoleManager<IdentityRole> roleMgr)
         {
-            _db       = db;
-            _userMgr  = userMgr;
-            _roleMgr  = roleMgr;
+            _db = db;
+            _userMgr = userMgr;
+            _roleMgr = roleMgr;
         }
 
         // --- USUÁRIOS ---
@@ -35,10 +35,16 @@ namespace FreyrFund.Api.Controllers
         public async Task<IActionResult> GetUsers()
         {
             var list = await _db.Users
-                .Select(u => new {
-                    u.Id, u.FullName, u.Email, u.PhoneNumber, u.Nif,
+                .Select(u => new
+                {
+                    u.Id,
+                    u.FullName,
+                    u.Email,
+                    u.PhoneNumber,
+                    u.Nif,
                     DateOfBirth = u.DateOfBirth.ToString("dd/MM/yyyy"),
-                    u.Address, u.Role
+                    u.Address,
+                    u.Role
                 })
                 .ToListAsync();
             return Ok(list);
@@ -49,7 +55,8 @@ namespace FreyrFund.Api.Controllers
         public async Task<IActionResult> CreateUser([FromBody] CreateUserDto dto)
         {
             // 1) IdentityUser
-            var iu = new IdentityUser(dto.Email) {
+            var iu = new IdentityUser(dto.Email)
+            {
                 Email = dto.Email,
                 UserName = dto.Email
             };
@@ -69,15 +76,16 @@ namespace FreyrFund.Api.Controllers
                 return BadRequest("Formato de data inválido.");
             }
 
-            var domain = new User {
+            var domain = new User
+            {
                 IdentityUserId = iu.Id,
-                FullName       = dto.FullName,
-                DateOfBirth    = dob,
-                Nif            = dto.Nif,
-                Address        = dto.Address,
-                PhoneNumber    = dto.PhoneNumber,
-                Email          = dto.Email,
-                Role           = dto.Role
+                FullName = dto.FullName,
+                DateOfBirth = dob,
+                Nif = dto.Nif,
+                Address = dto.Address,
+                PhoneNumber = dto.PhoneNumber,
+                Email = dto.Email,
+                Role = dto.Role
             };
             _db.Users.Add(domain);
             await _db.SaveChangesAsync();
@@ -107,18 +115,18 @@ namespace FreyrFund.Api.Controllers
         }
 
 
-                // --- PROJETOS ---
+        // --- PROJETOS ---
 
-                // GET api/admin/projects
-                [HttpGet("projects")]
-                public async Task<IActionResult> GetProjects()
-                {
-                    var list = await _db.Projects.ToListAsync();
-                    return Ok(list);
-                }
+        // GET api/admin/projects
+        [HttpGet("projects")]
+        public async Task<IActionResult> GetProjects()
+        {
+            var list = await _db.Projects.ToListAsync();
+            return Ok(list);
+        }
 
-        // POST api/admin/projects
-        [HttpPost("projects")]
+        // POST api/admin/projects          A DAR ANTES DE COLCOAR O CODIGO DA LISETE
+        /*[HttpPost("projects")]
         public async Task<IActionResult> CreateProject([FromBody] ProjectDto dto)
         {
             var p = new FreyrFund.Server.Models.Project
@@ -149,7 +157,65 @@ namespace FreyrFund.Api.Controllers
             p.DurationMonths = dto.DurationMonths;
             await _db.SaveChangesAsync();
             return NoContent();
+        }*/
+
+
+        // GET api/admin/projects/{id}
+
+        [HttpGet("projects/{id}")]
+        public async Task<ActionResult<ProjectDto>> GetProject(int id)
+        {
+            var p = await _db.Projects.FindAsync(id);
+            if (p == null) return NotFound();
+
+            var dto = new ProjectDto
+            {
+                Id = p.Id,
+                Title = p.Title,
+                Rate = p.Rate,
+                Term = p.Term,
+                Target = p.Target,
+                Funded = p.Funded,
+            };
+
+            return Ok(dto);
         }
+
+        [HttpPost("projects")]
+        public async Task<IActionResult> CreateProject([FromBody] ProjectDto dto)
+        {
+            var p = new FreyrFund.Server.Models.Project
+            {
+                Title = dto.Title,
+                Target = dto.Target,
+                Funded = dto.Funded,
+                Rate = dto.Rate,
+                Term = dto.Term
+            };
+            _db.Projects.Add(p);
+            await _db.SaveChangesAsync();
+
+            // Agora GetProject existe neste controller
+            return CreatedAtAction(nameof(GetProject), new { id = p.Id }, dto);
+        }
+
+
+        [HttpPut("projects/{id}")]
+        public async Task<IActionResult> UpdateProject(int id, [FromBody] ProjectDto dto)
+        {
+            var p = await _db.Projects.FindAsync(id);
+            if (p == null) return NotFound();
+
+            p.Title = dto.Title;
+            p.Target = dto.Target;
+            p.Funded = dto.Funded;
+            p.Rate = dto.Rate;
+            p.Term = dto.Term;
+
+            await _db.SaveChangesAsync();
+            return NoContent();
+        }
+
 
         // DELETE api/admin/projects/{id}]
         [HttpDelete("projects/{id}")]
@@ -161,5 +227,6 @@ namespace FreyrFund.Api.Controllers
             await _db.SaveChangesAsync();
             return NoContent();
         }
+
     }
 }

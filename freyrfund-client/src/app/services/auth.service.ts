@@ -80,4 +80,19 @@ export class AuthService {
       return null;
     }
   }
+
+  public getUserId(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      const payload: any = jwtDecode(token);
+      // Normalmente o ID vem em 'sub', mas pode estar em outro claim
+      return payload.sub 
+          || payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
+          || null;
+    } catch {
+      return null;
+    }
+  }
 }
