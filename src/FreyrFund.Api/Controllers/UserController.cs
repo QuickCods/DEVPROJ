@@ -14,9 +14,9 @@ using Microsoft.EntityFrameworkCore;
 [Authorize(Roles = "User")]
 public class UserController : ControllerBase
 {
-    private readonly UserService _userService;
+    private readonly IUserService _userService;
 
-    public UserController(UserService userService)
+    public UserController(IUserService userService)
     {
         _userService = userService;
     }
@@ -49,12 +49,6 @@ public class UserController : ControllerBase
         return Ok(portfolio);
     }
 
-    [HttpPost("invest")]
-    public async Task<IActionResult> Invest([FromBody] InvestmentRequestDto dto)
-    {
-        var result = await _userService.InvestAsync(dto.UserId, dto.ProjectId, dto.Amount);
-        return result ? Ok() : BadRequest();
-    }
 
     [HttpGet("{userId}/balance")]
     public async Task<ActionResult<decimal>> GetBalance(int userId)

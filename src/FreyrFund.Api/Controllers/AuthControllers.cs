@@ -9,6 +9,7 @@ using System.Globalization;
 using FreyrFund.Server.Models;
 using BCrypt.Net;
 using FreyrFund.Server.Data;
+using Microsoft.EntityFrameworkCore;
 
 
 
@@ -43,12 +44,19 @@ public class AuthController : ControllerBase
             return Unauthorized();
 
         // → Novo código começa aqui
+        var domainUser = await _dbContext.Users
+        .SingleAsync(u => u.IdentityUserId == identityUser.Id);
+        // → Novo código termina aqui
+            
         var roles = await _userManager.GetRolesAsync(identityUser);
         var claims = new List<Claim> {
-        new Claim(ClaimTypes.Name, request.Email)
+            // aqui vai o teu User.Id, que o Angular vai ler como payload.sub
+        new Claim(JwtRegisteredClaimNames.Sub, domainUser.Id.ToString()),
+        new Claim("userId", domainUser.Id.ToString()),
+        new Claim(JwtRegisteredClaimNames.UniqueName, request.Email)                                // antes estava a funcionar com esta linha new Claim(ClaimTypes.Name, request.Email)
     };
         claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
-        // → Novo código termina aqui
+        
 
         var jwtSettings = _configuration.GetSection("JwtSettings");
         var keyBytes = Encoding.UTF8.GetBytes(jwtSettings["Key"]!);

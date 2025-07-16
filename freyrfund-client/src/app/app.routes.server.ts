@@ -27,9 +27,7 @@ export const routes: Routes = [
     component: ProjectsComponent,
     canActivate: [AuthGuard],
   },
-  {
-    path: 'invest', component: InvestComponent, canActivate: [AuthGuard],
-  },
+  //{path: 'invest', component: InvestComponent, canActivate: [AuthGuard],},
   {
     path: 'portfolio', component: PortfolioComponent, canActivate: [AuthGuard],
   },
@@ -42,7 +40,7 @@ export const routes: Routes = [
   {
     path: 'withdraw', component: WithdrawComponent, canActivate: [AuthGuard],
   },
-
+  
   {
     path: 'admin',
     component: AdminComponentComponent,

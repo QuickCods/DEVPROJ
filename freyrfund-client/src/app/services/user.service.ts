@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { TransactionDto } from '@app/user/portfolio/portfolio/portfolio.component';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -20,8 +21,8 @@ export class UserService {
     return this.http.delete<void>(`${this.baseUrl}/${userId}`);
   }
 
-  getPortfolio(userId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/${userId}/portfolio`);
+  getPortfolio(userId: number): Observable<TransactionDto[]> {
+    return this.http.get<TransactionDto[]>(`${this.baseUrl}/${userId}/portfolio`);
   }
 
   invest(userId: number, projectId: number, amount: number): Observable<void> {

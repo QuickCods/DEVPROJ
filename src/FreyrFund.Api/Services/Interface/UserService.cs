@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using FreyrFund.Server.Models;
 using FreyrFund.Server.Data;
+using FreyrFund.Api.Models.Dtos;
 
 namespace FreyrFund.Server.Services
 {
@@ -22,7 +23,7 @@ namespace FreyrFund.Server.Services
             user.Balance += amount;
             _context.Transactions.Add(new Transaction
             {
-                UserId = userId,
+                UserId = user.Id,
                 Amount = amount,
                 Date = DateTime.UtcNow,
                 Type = TransactionType.TopUp
@@ -40,7 +41,7 @@ namespace FreyrFund.Server.Services
             user.Balance -= amount;
             _context.Transactions.Add(new Transaction
             {
-                UserId = userId,
+                UserId = user.Id,
                 Amount = -amount,
                 Date = DateTime.UtcNow,
                 Type = TransactionType.Withdrawal
@@ -66,15 +67,26 @@ namespace FreyrFund.Server.Services
             return user?.Balance ?? 0;
         }
 
-        public async Task<List<Transaction>> GetPortfolioAsync(int userId)
+        public async Task<List<TransactionDto>> GetPortfolioAsync(int userId)
         {
-            return await _context.Transactions
-                .Where(t => t.UserId == userId)
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null || user.IsDeleted) return new List<TransactionDto>();
+
+            var transactions = await _context.Transactions
+                .Where(t => t.UserId == user.Id)
                 .OrderByDescending(t => t.Date)
+                .Select(t => new TransactionDto
+                {
+                    Amount = t.Amount,
+                    Date = t.Date,
+                    Type = t.Type.ToString()
+                })
                 .ToListAsync();
+
+            return transactions;
         }
         
-        public async Task<bool> InvestAsync(int userId, int projectId, decimal amount)
+        /*public async Task<bool> InvestAsync(int userId, int projectId, decimal amount)
         {
             var user = await _context.Users.FindAsync(userId);
             var project = await _context.Projects.FindAsync(projectId);
@@ -94,7 +106,7 @@ namespace FreyrFund.Server.Services
 
             _context.Transactions.Add(new Transaction
             {
-                UserId = userId,
+                UserId = user.Id,
                 Amount = -amount,
                 Date = DateTime.UtcNow,
                 Type = TransactionType.Investment
@@ -102,7 +114,7 @@ namespace FreyrFund.Server.Services
 
             await _context.SaveChangesAsync();
             return true;
-        }
+        }*/
 
 
     }

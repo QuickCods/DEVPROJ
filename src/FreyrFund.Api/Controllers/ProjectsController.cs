@@ -78,42 +78,47 @@ namespace FreyrFund.Api.Controllers
         }
 
         // PUT: api/projects/5/funding
-        [HttpPut("{id}/funding")]
-        public async Task<IActionResult> UpdateFunding(int id, [FromBody] UpdateFundingRequest request)
+        [HttpPost("{id}/invest")]
+        public async Task<IActionResult> InvestInProject(int id, [FromBody] InvestmentRequestDto request)
         {
             var project = await _db.Projects.FindAsync(id);
-            if (project == null)
-            {
-                return NotFound();
-            }
+            var user = await _db.Users.FindAsync(request.UserId);
 
-            // Validar se o valor não excede o target
+            if (project == null || user == null || user.IsDeleted)
+                return BadRequest("Projeto ou utilizador inválido.");
+
             if (request.Amount <= 0)
-            {
-                return BadRequest("O valor deve ser positivo");
-            }
+                return BadRequest("O valor deve ser positivo.");
+
+            if (user.Balance < request.Amount)
+                return BadRequest("Saldo insuficiente.");
 
             if (project.Funded + request.Amount > project.Target)
-            {
-                return BadRequest("O valor excede o objetivo do projeto");
-            }
+                return BadRequest("O valor excede o objetivo do projeto.");
 
+            // Atualizações
+            user.Balance -= request.Amount;
             project.Funded += request.Amount;
             project.UpdatedAt = DateTime.UtcNow;
 
-            try
+            _db.Investments.Add(new Investment
             {
-                await _db.SaveChangesAsync();
-                return NoContent();
-            }
-            catch (DbUpdateConcurrencyException)
+                UserId = user.Id,
+                ProjectId = project.Id,
+                Amount = request.Amount,
+                Date = DateTime.UtcNow
+            });
+
+            _db.Transactions.Add(new Transaction
             {
-                if (!ProjectExists(id))
-                {
-                    return NotFound();
-                }
-                throw;
-            }
+                UserId = user.Id,
+                Amount = -request.Amount,
+                Date = DateTime.UtcNow,
+                Type = TransactionType.Investment
+            });
+
+            await _db.SaveChangesAsync();
+            return Ok(new { message = "Investimento realizado com sucesso." });
         }
 
         private bool ProjectExists(int id)

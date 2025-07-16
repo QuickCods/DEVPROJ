@@ -39,4 +39,8 @@ export class ProjectService {
   updateFunding(id: number, request: UpdateFundingRequest): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${id}/funding`, request);
   }
+
+  invest(projectId: number, request: { userId: number; amount: number }): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/${projectId}/invest`, request);
+  }
 }

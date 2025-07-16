@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 
 export interface SignupData {
@@ -13,6 +13,12 @@ export interface SignupData {
   phoneNumber: string;
   email:       string;
   password:    string;
+}
+
+interface DecodedToken {
+  sub?: string;
+  'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'?: string;
+  id?: string;
 }
 
 export interface LoginData {
@@ -81,18 +87,27 @@ export class AuthService {
     }
   }
 
-  public getUserId(): string | null {
+  public getUserId(): number | null {
     const token = this.getToken();
     if (!token) return null;
-
+  
     try {
-      const payload: any = jwtDecode(token);
-      // Normalmente o ID vem em 'sub', mas pode estar em outro claim
-      return payload.sub 
-          || payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
-          || null;
+      const payload = jwtDecode<DecodedToken>(token);
+  
+      if (payload.sub) {
+        return Number(payload.sub);
+      }
+      const wsId = payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+      if (wsId) {
+        return Number(wsId);
+      }
+      if (payload.id) {
+        return Number(payload.id);
+      }
+      return null;
     } catch {
       return null;
     }
   }
 }
+

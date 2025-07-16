@@ -3,6 +3,12 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../../services/user.service';
 import { AuthService } from '../../../services/auth.service';
 
+export interface TransactionDto {
+  amount: number;
+  date: string;
+  type: string;
+}
+
 @Component({
   selector: 'app-portfolio',
   standalone: true,
@@ -11,7 +17,7 @@ import { AuthService } from '../../../services/auth.service';
   styleUrls: ['./portfolio.component.css']
 })
 export class PortfolioComponent implements OnInit {
-  transactions: any[] = [];
+  transactions: TransactionDto[] = [];
   errorMessage = '';
 
   constructor(
@@ -21,28 +27,27 @@ export class PortfolioComponent implements OnInit {
 
   ngOnInit(): void {
     const userId = this.authService.getUserId();
+    console.log('UserId que está a ser usado:', userId);
     if (!userId) {
       this.errorMessage = 'Não foi possível determinar o seu ID de utilizador.';
       return;
     }
-    const id = Number(userId);
-
-    this.userService.getPortfolio(id).subscribe({
+    this.userService.getPortfolio(userId).subscribe({
       next: (data) => {
         this.transactions = data;
-        this.errorMessage = '';
+        console.log('Transactions recebidas:', this.transactions); //  Verifica aqui
       },
-      error: () => {
-        this.errorMessage = 'Erro ao carregar portefólio.';
+      error: (err) => {
+        this.errorMessage = 'Erreur lors du chargement du portefeuille.';
       }
     });
   }
 
-  getTypeName(type: number): string {
+  getTypeName(type: string): string {
     switch (type) {
-      case 0: return 'Carregamento';
-      case 1: return 'Investimento';
-      case 2: return 'Levantamento';
+      case 'TopUp': return 'Carregamento';
+      case 'Investment': return 'Investimento';
+      case 'Withdrawal': return 'Levantamento';
       default: return 'Outro';
     }
   }

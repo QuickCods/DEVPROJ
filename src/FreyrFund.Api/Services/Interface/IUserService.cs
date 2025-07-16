@@ -1,3 +1,4 @@
+using FreyrFund.Api.Models.Dtos;
 using FreyrFund.Server.Models;
 
 namespace FreyrFund.Server.Services
@@ -8,8 +9,9 @@ namespace FreyrFund.Server.Services
         Task<bool> WithdrawAsync(int userId, decimal amount);
         Task<bool> DeleteAccountAsync(int userId);
         Task<decimal> GetBalanceAsync(int userId);
-        Task<List<Transaction>> GetPortfolioAsync(int userId);
-        Task<bool> InvestAsync(int userId, int projectId, decimal amount);
+        Task<List<TransactionDto>> GetPortfolioAsync(int userId);
+
+        //Task<bool> InvestAsync(int userId, int projectId, decimal amount);
     }
 
 }
