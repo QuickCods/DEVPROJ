@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using FreyrFund.Server.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +64,7 @@ builder.Services.AddAuthentication(opts =>
 
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<IUserService, UserService>();   //nova inserção
+builder.Services.AddScoped<ExcelExportService>();
 
 // 4) Controllers + Swagger
 
@@ -155,25 +158,38 @@ static async Task SeedRolesAndAdminAsync(IServiceProvider services)
     const string adminPassword = "Admin@123";  // escolheR uma senha forte
 
     if (await userManager.FindByEmailAsync(adminEmail) is null)
+{
+    var adminUser = new IdentityUser
     {
-        var adminUser = new IdentityUser
-        {
-            UserName = adminEmail,
-            Email    = adminEmail,
-            EmailConfirmed = true
-        };
+        UserName = adminEmail,
+        Email    = adminEmail,
+        EmailConfirmed = true
+    };
 
-        var createResult = await userManager.CreateAsync(adminUser, adminPassword);
-        if (createResult.Succeeded)
+    var createResult = await userManager.CreateAsync(adminUser, adminPassword);
+    if (createResult.Succeeded)
+    {
+        await userManager.AddToRoleAsync(adminUser, "Admin");
+
+        // Criar perfil na tabela Users
+        var dbContext = services.GetRequiredService<AppDbContext>();
+        dbContext.Users.Add(new User
         {
-            await userManager.AddToRoleAsync(adminUser, "Admin");
-        }
-        else
-        {
-            // opcional: logar erros de criação
-            var logger = services.GetRequiredService<ILogger<Program>>();
-            logger.LogError("Erro ao criar admin: {Errors}", 
-                string.Join(";", createResult.Errors.Select(e => e.Description)));
-        }
+            IdentityUserId = adminUser.Id,
+            FullName = "Administrador do Sistema",
+            DateOfBirth = new DateTime(1990, 1, 1),
+            Email = adminUser.Email,
+            Nif = "999999999",
+            Address = "Admin HQ",
+            PhoneNumber = "912345678"
+        });
+        await dbContext.SaveChangesAsync();
     }
+    else
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError("Erro ao criar admin: {Errors}",
+            string.Join(";", createResult.Errors.Select(e => e.Description)));
+    }
+}
 }

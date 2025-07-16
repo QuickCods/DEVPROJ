@@ -86,4 +86,22 @@ export class ProjectsListComponent implements OnInit {
       }
     });
   }
+
+  downloadExcel(): void {
+    this.admin.exportAll().subscribe({
+      next: blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `FreyrFund_Export_${new Date().toISOString().slice(0, 19)}.xlsx`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: err => {
+        console.error("Erro ao exportar:", err);
+        alert("Erro ao exportar. Verifica se estás autenticado como Admin.");
+      }
+    });
+  }
+  
 }

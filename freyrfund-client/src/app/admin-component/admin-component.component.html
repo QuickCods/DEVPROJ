@@ -3,8 +3,9 @@
   <header class="admin-header">
     <h1>Painel Admin</h1>
     <nav class="admin-nav">
-      <a routerLink="users" routerLinkActive="active">Usuários</a>
+      <a routerLink="users" routerLinkActive="active">Utilizadores</a>
       <a routerLink="projects" routerLinkActive="active">Projetos</a>
+      <button (click)="exportExcel()" class="export-button">Exportar Excel</button>
     </nav>
   </header>
   <main class="admin-content">

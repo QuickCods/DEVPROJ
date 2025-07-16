@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { log } from 'console';
 
 export interface UserDto {
   id?: number;
@@ -31,8 +32,27 @@ export interface ProjectDto {
 @Injectable({ providedIn: 'root' })
 export class AdminService {
   private base = 'https://localhost:7140/api/admin';
+  private TOKEN_KEY = 'authToken'; 
 
   constructor(private http: HttpClient) {}
+
+  exportAll(): Observable<Blob> {
+    const token = this.getToken() || '';
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  
+    return this.http.get(`${this.base}/export/all`, {
+      headers,
+      responseType: 'blob' as 'json' // <- truque necessário para evitar erro TS
+    }) as Observable<Blob>; // <- força tipo da resposta
+  }
+
+  getToken(): string | null {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      return localStorage.getItem(this.TOKEN_KEY);
+    }
+    return null;
+  }
+  
 
   // USERS
   getUsers(): Observable<UserDto[]> {
