@@ -1,18 +1,35 @@
-<div class="delete-account">
-    <h2>Eliminar Conta</h2>
-  
-    <p>Cette action est irréversible. Êtes-vous sûr de vouloir supprimer votre compte ?</p>
-  
-    <div *ngIf="!confirming">
-      <button (click)="confirmDelete()">Oui, supprimer le compte</button>
+<div class="delete-account-card">
+  <div class="card-header">
+    <h2><i class="fas fa-trash-alt"></i> Eliminar Conta</h2>
+  </div>
+  <div class="card-body">
+    <div class="warning-message">
+      <i class="fas fa-exclamation-triangle"></i>
+      <span>Esta ação é irreversível. Tem certeza que deseja eliminar sua conta?</span>
     </div>
-  
-    <div *ngIf="confirming">
-      <p>Confirmation finale : éliminer vraiment ?</p>
-      <button (click)="deleteAccount()">Supprimer</button>
-      <button (click)="cancel()">Annuler</button>
+
+    <div class="action-buttons">
+      <button class="btn btn-danger" *ngIf="!confirming" (click)="confirmDelete()">
+        <i class="fas fa-trash-alt"></i> Eliminar Conta
+      </button>
     </div>
-  
+
+    <div class="confirmation-section" *ngIf="confirming">
+      <p class="final-warning">
+        <i class="fas fa-exclamation-triangle"></i>
+        Por favor, confirme que deseja eliminar sua conta permanentemente.
+      </p>
+      <div class="button-group">
+        <button class="btn btn-danger" (click)="deleteAccount()">
+          <i class="fas fa-check"></i> Confirmar
+        </button>
+        <button class="btn btn-outline" (click)="cancel()">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="message-container">
     <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
     <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
   </div>

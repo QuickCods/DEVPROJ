@@ -15,6 +15,7 @@ import { PortfolioComponent } from './user/portfolio/portfolio/portfolio.compone
 import { TopUpComponent } from './user/top-up/top-up/top-up.component';
 import { DeleteAccountComponent } from './user/delete-account/delete-account/delete-account.component';
 import { WithdrawComponent } from './user/withdraw/withdraw/withdraw.component';
+import { DashboardComponent } from './user/dashboard/dashboard.component';
 
 export const routes: Routes = [
   // 1) rotas públicas
@@ -40,6 +41,9 @@ export const routes: Routes = [
   {
     path: 'withdraw', component: WithdrawComponent, canActivate: [AuthGuard],
   },
+  {
+    path: 'home', component: DashboardComponent, canActivate: [AuthGuard],
+  },
   
   {
     path: 'admin',
@@ -55,4 +59,6 @@ export const routes: Routes = [
 
   // 3) coringa para todas as outras – só depois de todas as anteriores
   { path: '**', redirectTo: '', pathMatch: 'full' }
+
+  
 ];

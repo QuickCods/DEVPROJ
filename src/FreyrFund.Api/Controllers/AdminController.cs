@@ -119,10 +119,31 @@ namespace FreyrFund.Api.Controllers
 
         // GET api/admin/projects
         [HttpGet("projects")]
-        public async Task<IActionResult> GetProjects()
+        public async Task<ActionResult<IEnumerable<ProjectViewDto>>> GetProjects()
         {
             var list = await _db.Projects.ToListAsync();
-            return Ok(list);
+
+            var result = list.Select(p => new ProjectViewDto {
+                Id = p.Id,
+                Title = p.Title,
+                Rate = p.Rate,
+                Term = p.Term,
+                Target = p.Target,
+                Funded = p.Funded,
+                FundingPercentage = p.Target == 0 ? 0 : Math.Round((p.Funded / p.Target) * 100, 2),
+                RemainingAmount = p.Target - p.Funded,
+                IsFullyFunded = p.Funded >= p.Target,
+                CreatedAt = p.CreatedAt,
+                UpdatedAt = p.UpdatedAt,
+                Risk = p.Risk,
+                RiskDescription = p.Risk == RiskLevel.A ? "Seguro"
+                                : p.Risk == RiskLevel.B ? "Mais ou menos"
+                                : "Inseguro",
+                Description = p.Description
+            }).ToList();
+
+            return Ok(result);
+
         }
 
         // POST api/admin/projects          A DAR ANTES DE COLCOAR O CODIGO DA LISETE
@@ -176,6 +197,8 @@ namespace FreyrFund.Api.Controllers
                 Term = p.Term,
                 Target = p.Target,
                 Funded = p.Funded,
+                Description = p.Description,
+                Risk = p.Risk
             };
 
             return Ok(dto);
@@ -184,13 +207,19 @@ namespace FreyrFund.Api.Controllers
         [HttpPost("projects")]
         public async Task<IActionResult> CreateProject([FromBody] ProjectDto dto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var p = new FreyrFund.Server.Models.Project
             {
                 Title = dto.Title,
                 Target = dto.Target,
                 Funded = dto.Funded,
                 Rate = dto.Rate,
-                Term = dto.Term
+                Term = dto.Term,
+                Description = dto.Description,
+                Risk = dto.Risk
             };
             _db.Projects.Add(p);
             await _db.SaveChangesAsync();
@@ -203,6 +232,11 @@ namespace FreyrFund.Api.Controllers
         [HttpPut("projects/{id}")]
         public async Task<IActionResult> UpdateProject(int id, [FromBody] ProjectDto dto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var p = await _db.Projects.FindAsync(id);
             if (p == null) return NotFound();
 
@@ -211,6 +245,8 @@ namespace FreyrFund.Api.Controllers
             p.Funded = dto.Funded;
             p.Rate = dto.Rate;
             p.Term = dto.Term;
+            p.Description = dto.Description;
+            p.Risk = dto.Risk;
 
             await _db.SaveChangesAsync();
             return NoContent();

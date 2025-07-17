@@ -11,7 +11,8 @@ import { TokenInterceptor } from './services/token.interceptor';
   standalone: true,          
   imports: [CommonModule, ReactiveFormsModule, RouterModule, RouterOutlet],   // traz o NgIf, NgFor
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'] // Note que é plural: styleUrls
+  //styleUrl: './app.component.css'
 })
 
 
@@ -21,6 +22,14 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    
+    this.loadTheme();
+  }
+  private loadTheme(): void {
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', initialTheme);
+    }
   }
 }

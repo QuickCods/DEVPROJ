@@ -1,0 +1,51 @@
+<div class="dashboard">
+ <!-- Cabeçalho do dashboard com opções adicionais -->
+ <div class="dashboard-header">
+    <div class="header-left">
+        <h1>Dashboard</h1>
+        <div class="header-subtitle">Visão geral do seu portfólio e atividades</div>
+    </div>
+    <div class="header-right" style="display: flex; align-items: center; gap: 1rem;">
+        <button (click)="goToProjects()" class="btn-invest">Investir</button>
+        <button id="themeToggle" class="theme-toggle" title="Alternar tema">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+</div>
+ <!-- Barra de status -->
+ <div class="status-bar">
+    <div class="status-item">
+        <div class="status-label">Projetos ativos</div>
+        <div class="status-value">12</div>
+    </div>
+    <div class="status-item">
+        <div class="status-label">Valor total</div>
+        <div class="status-value">€45,230</div>
+    </div>
+    <div class="status-item">
+        <div class="status-label">Retorno médio</div>
+        <div class="status-value">8.2%</div>
+    </div>
+</div>
+<!-- Grade principal do dashboard -->
+<div class="dashboard-grid">
+    <!-- Componente de Eliminar Conta -->
+    <div class="dashboard-item delete-account-container">
+        <app-delete-account></app-delete-account>
+    </div>
+
+    <!-- Componente de Top-up -->
+    <div class="dashboard-item top-up-container">
+        <app-top-up></app-top-up>
+    </div>
+
+    <!-- Componente de Withdraw -->
+    <div class="dashboard-item withdraw-container">
+        <app-withdraw></app-withdraw>
+    </div>
+
+    <!-- Componente de Portfolio -->
+    <div class="dashboard-item portfolio-container">
+        <app-portfolio></app-portfolio>
+    </div>
+</div></div>

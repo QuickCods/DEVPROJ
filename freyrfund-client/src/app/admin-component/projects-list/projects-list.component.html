@@ -10,9 +10,11 @@
         <tr>
           <th>ID</th>
           <th>Título</th>
+          <th>Descrição</th> <!-- novo -->
           <th>Taxa (%)</th>
           <th>Prazo (meses)</th>
           <th>Meta (EUR)</th>
+          <th>Risco</th> <!-- novo -->
           <th>Ações</th>
         </tr>
       </thead>
@@ -20,9 +22,14 @@
         <tr *ngFor="let p of projects">
           <td>{{ p.id }}</td>
           <td>{{ p.title }}</td>
-          <td>{{ p.rate| percent:'1.2-2' }}</td>
+          <td>{{ p.description }}</td> <!-- novo -->
+          <td>{{ p.rate | percent:'1.2-2' }}</td>
           <td>{{ p.term }}</td>
           <td>{{ p.target | currency:'EUR':'symbol' }}</td>
+          <td>
+            <!-- opcional: traduzir o nível -->
+            {{ p.risk === 0 ? 'A - Seguro' : p.risk === 1 ? 'B - Moderado' : 'C - Arriscado' }}
+          </td>
           <td class="actions">
             <button class="icon-btn" (click)="startEdit(p)">✏️</button>
             <button class="icon-btn" (click)="remove(p.id!)" [disabled]="removingId === p.id">
@@ -44,14 +51,31 @@
         Título
         <input formControlName="title" />
       </label>
+
+      <label>
+        Descrição
+        <textarea formControlName="description" rows="3"></textarea>
+      </label>
+
       <label>
         Taxa de Juros (%)
         <input type="number" formControlName="rate" />
       </label>
+
+      <label>
+        Nível de Risco
+        <select formControlName="risk">
+          <option [ngValue]="0">A - Seguro</option>
+          <option [ngValue]="1">B - Moderado</option>
+          <option [ngValue]="2">C - Arriscado</option>
+        </select>
+      </label>
+
       <label>
         Prazo (meses)
         <input type="number" formControlName="term" />
       </label>
+
       <label>
         Meta de Financiamento (EUR)
         <input type="number" formControlName="target" />
@@ -59,6 +83,8 @@
 
       <div class="form-actions">
         <button type="submit" class="btn-primary" [disabled]="form.invalid">
+          {{ form.get('risk')?.value }} - {{ form.get('risk')?.valid ? '✅' : '❌' }}
+
           {{ form.value.id ? 'Atualizar' : 'Criar' }}
         </button>
         <button type="button" class="btn-secondary" (click)="cancel()">Cancelar</button>

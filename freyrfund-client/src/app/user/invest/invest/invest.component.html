@@ -1,16 +1,26 @@
-<div class="invest-form">
-    <h2>Investissement dans les projets</h2>
-  
-    <form (ngSubmit)="onInvest()">
-      <label for="projectId">ID du projet :</label>
-      <input type="number" [(ngModel)]="projectId" name="projectId" min="1" required />
-  
-      <label for="amount">Valeur à investir :</label>
-      <input type="number" [(ngModel)]="amount" name="amount" min="1" required />
-  
-      <button type="submit">Investir</button>
-    </form>
-  
-    <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
-    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+<div class="invest-container">
+  <div class="invest-form-card">
+    <div class="card-header">
+      <h2>Investissement dans les projets</h2>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="onInvest()">
+        <div class="form-group">
+          <label for="projectId">ID du projet :</label>
+          <input type="number" id="projectId" [(ngModel)]="projectId" name="projectId" class="form-control" min="1" required />
+        </div>
+        <div class="form-group">
+          <label for="amount">Valeur à investir :</label>
+          <input type="number" id="amount" [(ngModel)]="amount" name="amount" class="form-control" min="1" required />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-success">Investir</button>
+        </div>
+      </form>
+      <div class="message-container">
+        <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+        <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </div>
+    </div>
   </div>
+</div>

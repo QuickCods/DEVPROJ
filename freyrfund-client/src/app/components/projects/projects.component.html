@@ -1,85 +1,180 @@
 <div class="projects-container">
+  <div class="header-section" style="display: flex; justify-content: space-between; align-items: center;">
     <h1>Catálogo de Projetos - FreyrFund</h1>
-     
-      <div *ngIf="loading" class="loading">
-    <p>Carregando projetos...</p>
-    </div>
-     
-      <div *ngIf="error" class="error">
-    <p>{{ error }}</p>
-    <button (click)="loadProjects()" class="retry-btn">Tentar Novamente</button>
-    </div>
-     
-      <div *ngIf="!loading && !error" class="projects-grid">
-    <div *ngFor="let project of projects" class="project-card">
-    <div class="project-header">
-    <h3>{{ project.title }}</h3>
-    <div class="project-status" [class.fully-funded]="project.isFullyFunded">
-    <span *ngIf="project.isFullyFunded">✓ Financiado</span>
-    <span *ngIf="!project.isFullyFunded">🔄 Ativo</span>
-    </div>
-    </div>
-     
-          <div class="project-details">
-    <div class="detail-row">
-    <span class="label">Taxa de Retorno:</span>
-    <span class="value rate">{{ project.rate }}% ao ano</span>
-    </div>
-     
-            <div class="detail-row">
-    <span class="label">Prazo:</span>
-    <span class="value">{{ project.term }} meses</span>
-    </div>
-     
-            <div class="detail-row">
-    <span class="label">Objetivo:</span>
-    <span class="value target">{{ project.target | currency:'EUR':'symbol':'1.2-2' }}</span>
-    </div>
-     
-            <div class="detail-row">
-    <span class="label">Financiado:</span>
-    <span class="value funded">{{ project.funded | currency:'EUR':'symbol':'1.2-2' }}</span>
-    </div>
-     
-            <div class="progress-container">
-    <div class="progress-bar">
-    <div class="progress-fill" [style.width.%]="project.fundingPercentage"></div>
-    </div>
-    <span class="progress-text">{{ project.fundingPercentage }}%</span>
-    </div>
-     
-            <div class="detail-row">
-    <span class="label">Restante:</span>
-    <span class="value remaining">{{ project.remainingAmount | currency:'EUR':'symbol':'1.2-2' }}</span>
-    </div>
-    </div>
-     
-          <div class="investment-section" *ngIf="!project.isFullyFunded">
-    <h4>Investir neste projeto</h4>
-    <div class="investment-form">
-    <input
+    <button (click)="goHome()" class="btn-home">Voltar ao Início</button>
+  </div>
+       
+          <!-- Barra de Pesquisa -->
+          <div class="search-section">
+            <div class="search-input-container">
+              <input
+                type="text"
+                [(ngModel)]="searchTerm"
+                (input)="onSearchChange()"
+                placeholder="Pesquisar projetos..."
+                class="search-input"
+              />
+              <span class="search-icon">🔍</span>
+            </div>
+       
+            <!-- Informações da pesquisa -->
+            <div class="search-info" *ngIf="!loading">
+              <p>
+                <span *ngIf="searchTerm">Resultados para "<strong>{{searchTerm}}</strong>": </span>
+                {{totalCount}} projeto(s) encontrado(s)
+              </p>
+            </div>
+          </div>
+        </div>
+       
+        <!-- Loading -->
+        <div *ngIf="loading" class="loading">
+          <div class="spinner"></div>
+          <p>Carregando projetos...</p>
+        </div>
+       
+        <!-- Error -->
+        <div *ngIf="error" class="error">
+          <p>{{ error }}</p>
+          <button (click)="loadProjects()" class="retry-btn">Tentar Novamente</button>
+        </div>
+       
+        <!-- Projects Grid -->
+        <div *ngIf="!loading && !error" class="projects-content">
+          <div class="projects-grid" *ngIf="projects.length > 0">
+            <div *ngFor="let project of projects" class="project-card">
+       
+              <!-- Project Header -->
+              <div class="project-header">
+                <h3>{{ project.title }}</h3>
+                <div class="project-badges">
+                  <span class="risk-badge" [ngClass]="getRiskClass(project.risk)">
+                    {{ getRiskDescription(project.risk) }}
+                  </span>
+                  <span class="status-badge" [class.fully-funded]="project.isFullyFunded">
+                    <span *ngIf="project.isFullyFunded">✓ Financiado</span>
+                    <span *ngIf="!project.isFullyFunded">🔄 Ativo</span>
+                  </span>
+                </div>
+              </div>
+       
+              <!-- Project Description -->
+              <div class="project-description">
+                <p>{{ project.description }}</p>
+              </div>
+       
+              <!-- Project Details -->
+              <div class="project-details">
+                <div class="detail-row">
+                  <span class="label">Taxa de Retorno:</span>
+                  <span class="value rate">{{ project.rate }}% ao ano</span>
+                </div>
+       
+                <div class="detail-row">
+                  <span class="label">Prazo:</span>
+                  <span class="value">{{ project.term }} meses</span>
+                </div>
+       
+                <div class="detail-row">
+                  <span class="label">Objetivo:</span>
+                  <span class="value target">{{ formatCurrency(project.target) }}</span>
+                </div>
+       
+                <div class="detail-row">
+                  <span class="label">Financiado:</span>
+                  <span class="value funded">{{ formatCurrency(project.funded) }}</span>
+                </div>
+       
+                <div class="detail-row">
+                  <span class="label">Falta investir:</span>
+                  <span class="value remaining">{{ formatCurrency(project.remainingAmount) }}</span>
+                </div>
+       
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                  <div class="progress-bar">
+                    <div class="progress-fill" [style.width.%]="project.fundingPercentage"></div>
+                  </div>
+                  <span class="progress-text">{{ project.fundingPercentage | number:'1.1-1' }}%</span>
+                </div>
+              </div>
+       
+              <!-- Project Actions -->
+              <div class="project-actions">
+                <input
                 type="number"
-                #investmentAmount
-                placeholder="Valor a investir (€)"
+                [(ngModel)]="project.investmentAmount"
                 min="1"
                 [max]="project.remainingAmount"
-                class="investment-input">
-    <button
-                (click)="invest(project, investmentAmount.value ? +investmentAmount.value : 0); investmentAmount.value = ''"
-                class="invest-btn">
-                Investir
-    </button>
-    </div>
-    </div>
-     
-          <div class="project-footer">
-    <small>Criado em: {{ project.createdAt | date:'dd/MM/yyyy' }}</small>
-    <small>Atualizado em: {{ project.updatedAt | date:'dd/MM/yyyy HH:mm' }}</small>
-    </div>
-    </div>
-    </div>
-     
-      <div *ngIf="!loading && !error && projects.length === 0" class="no-projects">
-    <p>Nenhum projeto disponível no momento.</p>
-    </div>
-    </div>
+                placeholder="Montante a investir"
+                [disabled]="project.isFullyFunded"
+              />
+              <button
+                class="btn-invest"
+                [disabled]="project.isFullyFunded || !project.investmentAmount"
+                (click)="invest(project, project.investmentAmount || 0)">
+                <span *ngIf="!project.isFullyFunded">💰 Investir</span>
+                <span *ngIf="project.isFullyFunded">✅ Financiado</span>
+              </button>
+
+                <!-- Botão para alternar detalhes -->
+                <button class="btn-details" (click)="toggleDetails(project.id)">
+                  {{ isDetailsOpen(project.id) ? 'Esconder Detalhes' : 'Ver Detalhes' }}
+                </button>
+              </div>
+
+              <!-- Descrição detalhada, só visível se o detalhe estiver aberto -->
+              <div *ngIf="isDetailsOpen(project.id)" class="project-description-detalhada">
+                <p>{{ project.description }}</p>
+              </div>
+       
+              <!-- Project Footer -->
+              <div class="project-footer">
+                <small>Criado em: {{ project.createdAt | date:'dd/MM/yyyy' }}</small>
+              </div>
+            </div>
+          </div>
+       
+          <!-- No Results -->
+          <div *ngIf="projects.length === 0" class="no-results">
+            <div class="no-results-icon">📋</div>
+            <h3>Nenhum projeto encontrado</h3>
+            <p *ngIf="searchTerm">Tente ajustar sua pesquisa ou <a href="#" (click)="searchTerm=''; onSearchChange()">limpar filtros</a>.</p>
+            <p *ngIf="!searchTerm">Não há projetos disponíveis no momento.</p>
+          </div>
+       
+          <!-- Pagination -->
+          <div class="pagination-container" *ngIf="totalPages > 1">
+            <div class="pagination-info">
+              <p>
+                Página {{ currentPage }} de {{ totalPages }}
+                ({{ (currentPage - 1) * pageSize + 1 }} - {{ Math.min(currentPage * pageSize, totalCount) }} de {{ totalCount }} projetos)
+              </p>
+            </div>
+       
+            <div class="pagination-controls">
+              <button
+                class="pagination-btn"
+                [disabled]="!hasPreviousPage"
+                (click)="previousPage()">
+                ‹ Anterior
+              </button>
+       
+              <button
+                *ngFor="let page of getPageNumbers()"
+                class="pagination-btn page-number"
+                [class.active]="page === currentPage"
+                (click)="goToPage(page)">
+                {{ page }}
+              </button>
+       
+              <button
+                class="pagination-btn"
+                [disabled]="!hasNextPage"
+                (click)="nextPage()">
+                Próxima ›
+              </button>
+            </div>
+          </div>
+        </div>
+      

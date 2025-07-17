@@ -1,0 +1,89 @@
+.delete-account-container {
+    grid-column: span 2;
+  }
+  
+  .delete-account-card {
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .delete-account-card .card-header {
+    background-color: var(--danger-light);
+    color: var(--danger-color);
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .delete-account-card .card-header h2 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.3rem;
+  }
+
+  .delete-account-card .card-body {
+    padding: 25px;
+  }
+  
+  .warning-message {
+    background-color: rgba(255, 193, 7, 0.1);
+    border-left: 4px solid var(--warning-color);
+    color: var(--warning-color);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    margin-top: 20px;
+  }
+
+  .btn-danger:hover {
+    background-color: var(--danger-dark);
+    transform: translateY(-2px);
+  }
+
+  .confirmation-section {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: rgba(255, 235, 238, 0.3);
+    border-radius: var(--border-radius);
+    text-align: center;
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .delete-account-container {
+      grid-column: span 1;
+    }
+  
+    .button-group {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }

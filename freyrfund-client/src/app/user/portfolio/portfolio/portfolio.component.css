@@ -1,3 +1,120 @@
-.negative {
-    color: red;
+.portfolio-container {
+  grid-column: span 2;
+}
+ 
+.portfolio-card {
+  background-color: var(--surface-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
+  overflow: hidden;
+  height: 100%;
+}
+.portfolio-card .card-header {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 15px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+ 
+.portfolio-card .card-body {
+  padding: 25px;
+}
+ 
+.portfolio-summary {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+ 
+.summary-item {
+  background-color: rgba(0, 0, 0, 0.03);
+  padding: 15px;
+  border-radius: var(--border-radius);
+  flex: 1;
+  min-width: 150px;
+  text-align: center;
+}
+ 
+.summary-label {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  margin-bottom: 5px;
+}
+ 
+.summary-value {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--dark-color);
+}
+ 
+.summary-value.positive {
+  color: var(--success-color);
+}
+ 
+.summary-value.negative {
+  color: var(--danger-color);
+}
+ 
+.styled-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
+  background-color: var(--surface-color);
+}
+.styled-table th {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 15px;
+  text-align: left;
+  font-weight: 500;
+}
+ 
+.styled-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  color: var(--text-color);
+}
+.styled-table tr:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.status-badge.active {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: var(--success-color);
+}
+ 
+.status-badge.inactive {
+  background-color: rgba(244, 67, 54, 0.1);
+  color: var(--danger-color);
+}
+ 
+@media (max-width: 768px) {
+  .portfolio-container {
+    grid-column: span 1;
   }
+ 
+  .portfolio-summary {
+    flex-direction: column;
+  }
+ 
+  .summary-item {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+ 
+  .styled-table {
+    display: block;
+    overflow-x: auto;
+  }
+}

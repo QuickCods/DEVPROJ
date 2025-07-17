@@ -1,13 +1,22 @@
-<div class="withdraw-form">
-    <h2>Retrait d'argent</h2>
-  
-    <form (ngSubmit)="onWithdraw()">
-      <label for="amount">Valeur :</label>
-      <input type="number" [(ngModel)]="amount" name="amount" min="1" required />
-  
-      <button type="submit">Retrait l'argent</button>
-    </form>
-  
-    <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
-    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+<div class="withdraw-container">
+  <div class="withdraw-form-card">
+    <div class="card-header">
+      <h2>Retrait d'argent</h2>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="onWithdraw()">
+        <div class="form-group">
+          <label for="amount">Valeur :</label>
+          <input type="number" id="amount" [(ngModel)]="amount" name="amount" class="form-control" min="1" required />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-warning">Retrait l'argent</button>
+        </div>
+      </form>
+      <div class="message-container">
+        <p class="success" *ngIf="successMessage">{{ successMessage }}</p>
+        <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </div>
+    </div>
   </div>
+</div>

@@ -15,18 +15,31 @@ export interface UserDto {
   password?: string;    // só no create
 }
 
+// Para criação/edição (DTO enviado para o backend)
 export interface ProjectDto {
   id?: number;
   title: string;
   rate: number;
   term: number;
   target: number;
+  description: string;
+  risk: RiskLevel;
+}
+
+// Para leitura de projetos (GET do backend)
+export interface ProjectView extends ProjectDto {
   funded: number;
   fundingPercentage: number;
   remainingAmount: number;
   isFullyFunded: boolean;
   createdAt: string;
   updatedAt: string;
+  riskDescription: string;
+}
+export enum RiskLevel {
+  A = 0, // Seguro
+  B = 1, // Mais ou menos
+  C = 2  // Inseguro
 }
 
 @Injectable({ providedIn: 'root' })
@@ -69,8 +82,8 @@ export class AdminService {
   }
 
   // PROJECTS
-  getProjects(): Observable<ProjectDto[]> {
-    return this.http.get<ProjectDto[]>(`${this.base}/projects`);
+  getProjects(): Observable<ProjectView[]> {
+    return this.http.get<ProjectView[]>(`${this.base}/projects`);
   }
   createProject(dto: ProjectDto): Observable<ProjectDto> {
     return this.http.post<ProjectDto>(`${this.base}/projects`, dto);

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AdminService, ProjectDto } from '../../services/admin.service';
+import { AdminService, ProjectDto, ProjectView } from '../../services/admin.service';
+import { error } from 'node:console';
 
 @Component({
   selector: 'app-projects-list',
@@ -11,7 +12,7 @@ import { AdminService, ProjectDto } from '../../services/admin.service';
   styleUrls: ['./projects-list.component.css']
 })
 export class ProjectsListComponent implements OnInit {
-  projects: ProjectDto[] = [];
+  projects: ProjectView[] = [];
   form: FormGroup;
   editing = false;
   removingId: number | null = null;
@@ -25,7 +26,10 @@ export class ProjectsListComponent implements OnInit {
       title:          ['', Validators.required],
       rate:           [null, [Validators.required, Validators.min(0)]],
       term:           [null, [Validators.required, Validators.min(1)]],
-      target:         [null, [Validators.required, Validators.min(0.01)]]
+      target:         [null, [Validators.required, Validators.min(0.01)]],
+      description:    ['', Validators.required], // 👈 novo
+      risk:           [0]
+
     });
   }
 
@@ -42,7 +46,7 @@ export class ProjectsListComponent implements OnInit {
     this.form.reset({ id: null });
   }
 
-  startEdit(p: ProjectDto): void {
+  startEdit(p: ProjectView): void {
     this.editing = true;
     this.form.patchValue(p);   // ← popula também o id
   }
@@ -53,17 +57,31 @@ export class ProjectsListComponent implements OnInit {
 
   save(): void {
     this.form.markAllAsTouched();
+    console.log('Form value:', this.form.value);
+    console.log('Form valid:', this.form.valid);
     if (this.form.invalid) return;
 
     const dto: ProjectDto = this.form.value;
     if (dto.id != null) {
       // UPDATE
       this.admin.updateProject(dto.id, dto)
-           .subscribe(() => this.onSaved());
+        .subscribe({
+          next: () => this.onSaved(),
+          error: err => {
+            console.log('Erro de validação:', err.error.errors);
+            alert("Erro ao atualizar projeto");
+          }
+        });
     } else {
       // CREATE
       this.admin.createProject(dto)
-           .subscribe(() => this.onSaved());
+        .subscribe({
+          next: () => this.onSaved(),
+          error: err => {
+            console.log('Erro de validação:', err.error.errors);
+            alert("Erro ao criar projeto");
+          }
+        });
     }
   }
 
