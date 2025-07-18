@@ -149,9 +149,14 @@ export class ProjectsComponent implements OnInit {
 
   getProjectImage(project: Project): string {
     const title = project.title.toLowerCase();
-    if (title.includes('projeto beatriz')) return 'assets/images/ParqueAlentejanoP1.png';
-    if (title.includes('primeiro projeto') || title.includes('wind')) return 'assets/images/DouroP3.png';
-    if (title.includes('novo projeto111') || title.includes('biogas')) return 'assets/images/NeuralForgeP2.png';
+    if (title.includes('parc')) return 'assets/images/ParqueAlentejanoP1.png';
+    if (title.includes('neural') || title.includes('wind')) return 'assets/images/NeuralForgeP2.png';
+    if (title.includes('douro reserva') || title.includes('biogas')) return 'assets/images/DouroP3.png';
+    if (title.includes('pollution') || title.includes('biogas')) return 'assets/images/OceanShield.png';
+    if (title.includes('ocean 11') || title.includes('biogas')) return 'assets/images/ocean11.png';
+    if (title.includes('nativo') || title.includes('biogas')) return 'assets/images/resort.png';
+    if (title.includes('edu') || title.includes('biogas')) return 'assets/images/EduFuture.png';
+    if (title.includes('sakura') || title.includes('biogas')) return 'assets/images/imo.png';
     return 'assets/images/images.png'; // fallback
   }
 

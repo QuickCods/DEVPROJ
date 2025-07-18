@@ -110,6 +110,11 @@ export class ProjectsListComponent implements OnInit {
   onImageUploaded(imageUrl: string) {
     this.form.patchValue({ imageUrl });
   }
+
+  formatPercent(rate: number): string {
+    return rate.toFixed(2) + '%';
+  }
+  
   
 
   downloadExcel(): void {
