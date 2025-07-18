@@ -15,6 +15,8 @@
         </div>
       </div>
     </header>
+
+    <script src="assets/scripts/theme.js"></script>
   
     <!-- Status Cards -->
     <section class="status-cards">
@@ -55,8 +57,15 @@
     <!-- Latest Activities -->
     <section class="dashboard-item latest-activities">
       <h2>Últimas Atividades</h2>
+      <div class="filter-buttons">
+        <button (click)="setFilter('All')" [class.active]="selectedFilter === 'All'">Todos</button>
+        <button (click)="setFilter('Investment')" [class.active]="selectedFilter === 'Investment'">Investimentos</button>
+        <button (click)="setFilter('TopUp')" [class.active]="selectedFilter === 'TopUp'">Top-Ups</button>
+        <button (click)="setFilter('Withdrawal')" [class.active]="selectedFilter === 'Withdrawal'">Levantamentos</button>
+      </div>
+      
       <ul class="activity-list">
-        <li class="activity-item" *ngFor="let tx of latestTransactions">
+        <li class="activity-item" *ngFor="let tx of filteredTransactions">
           <div class="activity-icon">
             <i class="fas"
               [ngClass]="{

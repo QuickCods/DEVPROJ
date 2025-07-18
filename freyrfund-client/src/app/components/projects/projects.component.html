@@ -38,6 +38,7 @@
   <div *ngIf="!loading && !error" class="projects-content">
     <div class="projects-grid" *ngIf="projects.length > 0">
       <div *ngFor="let project of projects" class="project-card">
+        <img [src]="getProjectImage(project)" alt="{{ project.title }}" class="project-image" />
         <div class="project-header">
           <h3>{{ project.title }}</h3>
           <div class="project-badges">

@@ -19,7 +19,10 @@ public class UserController : ControllerBase
     public UserController(IUserService userService)
     {
         _userService = userService;
+        
     }
+
+
 
     [HttpPost("{userId}/topup")]
     public async Task<IActionResult> TopUp(int userId, [FromBody] decimal amount)

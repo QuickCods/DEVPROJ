@@ -1,0 +1,12 @@
+<div class="contact-form">
+    <button class="close-btn" (click)="fechar()">✖</button>
+    <h2>Contacto</h2>
+  
+    <form (ngSubmit)="enviarFormulario()">
+      <input type="text" placeholder="Nome" [(ngModel)]="nome" name="nome" required />
+      <input type="email" placeholder="Email" [(ngModel)]="email" name="email" required />
+      <textarea placeholder="Mensagem" [(ngModel)]="mensagem" name="mensagem" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+  

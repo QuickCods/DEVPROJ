@@ -147,6 +147,14 @@ export class ProjectsComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  getProjectImage(project: Project): string {
+    const title = project.title.toLowerCase();
+    if (title.includes('projeto beatriz')) return 'assets/images/ParqueAlentejanoP1.png';
+    if (title.includes('primeiro projeto') || title.includes('wind')) return 'assets/images/DouroP3.png';
+    if (title.includes('novo projeto111') || title.includes('biogas')) return 'assets/images/NeuralForgeP2.png';
+    return 'assets/images/images.png'; // fallback
+  }
+
   goToTopUp(): void {
     this.router.navigate(['/top-up']);
   }

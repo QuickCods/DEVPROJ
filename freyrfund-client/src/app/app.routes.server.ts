@@ -16,6 +16,7 @@ import { TopUpComponent } from './user/top-up/top-up/top-up.component';
 import { DeleteAccountComponent } from './user/delete-account/delete-account/delete-account.component';
 import { WithdrawComponent } from './user/withdraw/withdraw/withdraw.component';
 import { DashboardComponent } from './user/dashboard/dashboard.component';
+import { FaqComponent } from './components/faq/faq.component';
 
 export const routes: Routes = [
   // 1) rotas públicas
@@ -44,7 +45,9 @@ export const routes: Routes = [
   {
     path: 'home', component: DashboardComponent, canActivate: [AuthGuard],
   },
-  
+  { 
+    path: 'faq', component:FaqComponent, canActivate: [AuthGuard],
+  },
   {
     path: 'admin',
     component: AdminComponentComponent,

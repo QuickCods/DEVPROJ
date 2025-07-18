@@ -81,6 +81,10 @@
         <input type="number" formControlName="target" />
       </label>
 
+      <label>Imagem do Projeto</label>
+      <app-upload-image (imageUploaded)="onImageUploaded($event)"></app-upload-image>
+
+
       <div class="form-actions">
         <button type="submit" class="btn-primary" [disabled]="form.invalid">
           {{ form.get('risk')?.value }} - {{ form.get('risk')?.valid ? '✅' : '❌' }}

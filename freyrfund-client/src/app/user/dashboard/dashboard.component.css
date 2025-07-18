@@ -175,3 +175,26 @@
 .btn-topup:hover {
   background-color: #218838;
 }
+
+.filter-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.filter-buttons button {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #ccc;
+  background-color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+.filter-buttons button.active {
+  background-color: #1e88e5;
+  color: white;
+  border-color: #1e88e5;
+}

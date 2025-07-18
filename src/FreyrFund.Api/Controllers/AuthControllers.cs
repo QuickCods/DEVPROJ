@@ -54,7 +54,8 @@ public class AuthController : ControllerBase
         new Claim(JwtRegisteredClaimNames.Sub, domainUser.Id.ToString()),
         new Claim("userId", domainUser.Id.ToString()),
         new Claim(JwtRegisteredClaimNames.UniqueName, request.Email)
-                                        // antes estava a funcionar com esta linha new Claim(ClaimTypes.Name, request.Email)
+        
+        // antes estava a funcionar com esta linha new Claim(ClaimTypes.Name, request.Email)
     };
         claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
         

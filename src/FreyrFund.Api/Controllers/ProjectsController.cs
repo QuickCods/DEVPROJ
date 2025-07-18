@@ -23,29 +23,6 @@ namespace FreyrFund.Api.Controllers
         }
 
 
-        // GET: api/projects
-        /*[HttpGet]
-        public async Task<ActionResult<IEnumerable<object>>> GetProjects()
-        {
-            var projects = await _db.Projects
-                .Select(p => new
-                {
-                    p.Id,
-                    p.Title,
-                    p.Rate,
-                    p.Term,
-                    p.Target,
-                    p.Funded,
-                    FundingPercentage = p.Target > 0 ? Math.Round((p.Funded / p.Target) * 100, 2) : 0,
-                    RemainingAmount = p.Target - p.Funded,
-                    IsFullyFunded = p.Funded >= p.Target,
-                    p.CreatedAt,
-                    p.UpdatedAt
-                })
-                .ToListAsync();
-
-            return Ok(projects);
-        }*/
         [HttpGet]
         public async Task<ActionResult<PagedResponse<ProjectViewDto>>> GetProjects(
             [FromQuery] int page = 1,
@@ -137,6 +114,35 @@ namespace FreyrFund.Api.Controllers
             return Ok(project);
         }
 
+
+        [HttpPost("upload-image")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UploadImage(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("Nenhum ficheiro foi enviado.");
+
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+
+            if (!Directory.Exists(uploadsFolder))
+                Directory.CreateDirectory(uploadsFolder);
+
+            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            var relativeUrl = Path.Combine("uploads", fileName).Replace("\\", "/");
+            return Ok(new { imageUrl = relativeUrl });
+        }
+
+
+
+
+
         // PUT: api/projects/5/funding
         [HttpPost("{id}/invest")]
         public async Task<IActionResult> InvestInProject(int id, [FromBody] InvestmentRequestDto request)
@@ -175,7 +181,8 @@ namespace FreyrFund.Api.Controllers
                 UserId = user.Id,
                 Amount = -request.Amount,
                 Date = DateTime.UtcNow,
-                Type = TransactionType.Investment
+                Type = TransactionType.Investment,
+                ProjectId = project.Id
             });
 
 

@@ -7,7 +7,7 @@ namespace FreyrFund.Server.Models
         public int Id { get; set; }
 
         public int UserId { get; set; }
-         [ForeignKey(nameof(UserId))]
+        [ForeignKey(nameof(UserId))]
         public User? User { get; set; }
 
 
@@ -17,6 +17,8 @@ namespace FreyrFund.Server.Models
         public DateTime Date { get; set; }
 
         public TransactionType Type { get; set; }
+        
+        public int? ProjectId { get; set; }
     }
 
     public enum TransactionType

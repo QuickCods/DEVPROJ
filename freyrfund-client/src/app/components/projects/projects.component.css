@@ -296,3 +296,11 @@ body {
 .btn-topup:hover {
   background-color: #0056b3;
 }
+
+.project-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}

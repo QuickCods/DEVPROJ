@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { AdminService, ProjectDto, ProjectView } from '../../services/admin.service';
 import { error } from 'node:console';
+import { UploadImageComponent } from "@app/components/upload-image/upload-image.component";
 
 @Component({
   selector: 'app-projects-list',
   standalone: true,
-  imports: [ CommonModule, ReactiveFormsModule ],
+  imports: [CommonModule, ReactiveFormsModule, UploadImageComponent, NgIf],
   templateUrl: './projects-list.component.html',
   styleUrls: ['./projects-list.component.css']
 })
@@ -27,8 +28,9 @@ export class ProjectsListComponent implements OnInit {
       rate:           [null, [Validators.required, Validators.min(0)]],
       term:           [null, [Validators.required, Validators.min(1)]],
       target:         [null, [Validators.required, Validators.min(0.01)]],
-      description:    ['', Validators.required], // 👈 novo
-      risk:           [0]
+      description:    ['', Validators.required], //  novo
+      risk:           [0],
+      imageUrl: [''] 
 
     });
   }
@@ -104,6 +106,11 @@ export class ProjectsListComponent implements OnInit {
       }
     });
   }
+
+  onImageUploaded(imageUrl: string) {
+    this.form.patchValue({ imageUrl });
+  }
+  
 
   downloadExcel(): void {
     this.admin.exportAll().subscribe({

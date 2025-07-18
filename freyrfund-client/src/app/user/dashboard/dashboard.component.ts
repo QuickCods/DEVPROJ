@@ -33,6 +33,18 @@ export class DashboardComponent implements OnInit {
   availableBalance = 0;
 
   latestTransactions: TransactionDto[] = [];
+  selectedFilter: string = 'All';
+
+  get filteredTransactions(): TransactionDto[] {
+    if (this.selectedFilter === 'All') {
+      return this.latestTransactions;
+    }
+    return this.latestTransactions.filter(tx => tx.type === this.selectedFilter);
+  }
+
+  setFilter(type: string): void {
+    this.selectedFilter = type;
+  }
 
   constructor(
     private router: Router,
@@ -55,7 +67,7 @@ export class DashboardComponent implements OnInit {
       this.latestTransactions = transactions
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         .slice(0, 5);
-  
+
         //  Total de Assets (somatório de investimentos)
         const investments = transactions.filter(t => t.type === 'Investment' && t.projectId != null);
         this.totalAssets = Math.abs(

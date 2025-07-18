@@ -1,17 +1,21 @@
 import { NgIf } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { FormularioContactoComponent } from '@app/components/formulario-contacto/formulario-contacto.component';
 import { UserService } from '@app/services/user.service';
 
 @Component({
   selector: 'app-navbar',
-  imports: [ NgIf, RouterModule ],
+  standalone: true,
+  imports: [ NgIf, RouterModule, FormularioContactoComponent   ],
   templateUrl: './menu-component.component.html',
   styleUrls: ['./menu-component.component.css']
 })
 export class MenuComponent {
   email: string = 'Utilizador';
   menuOpen: boolean = false;
+  showContactForm: boolean = false;
+
 
   constructor(private router: Router, private userService: UserService) {}
   
@@ -38,6 +42,26 @@ export class MenuComponent {
   goToWithdraw() {
     this.router.navigate(['/withdraw']);
   }
+
+  goToTopUp(): void {
+    this.router.navigate(['/top-up']);
+  }
+
+  getUserName(email: string): string {
+    return email?.split('@')[0] || '';
+  }
+  openContactForm() {
+    this.showContactForm = true;
+    this.closeMenu(); // fecha dropdown
+  }
+  closeContactForm() {
+    this.showContactForm = false;
+  }
+  
+  goToFaq(): void {
+    this.router.navigate(['/faq']);
+  }
+  
 
   logout() {
     // Lógica de logout

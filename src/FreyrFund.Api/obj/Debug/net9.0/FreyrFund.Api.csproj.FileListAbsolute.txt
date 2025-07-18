@@ -383,3 +383,4 @@ C:\Users\User\Desktop\DEVPROJ\src\FreyrFund.Api\obj\Debug\net9.0\refint\FreyrFun
 C:\Users\User\Desktop\DEVPROJ\src\FreyrFund.Api\obj\Debug\net9.0\FreyrFund.Api.pdb
 C:\Users\User\Desktop\DEVPROJ\src\FreyrFund.Api\obj\Debug\net9.0\FreyrFund.Api.genruntimeconfig.cache
 C:\Users\User\Desktop\DEVPROJ\src\FreyrFund.Api\obj\Debug\net9.0\ref\FreyrFund.Api.dll
+C:\Users\User\Desktop\DEVPROJ\src\FreyrFund.Api\bin\Debug\net9.0\FreyrFund.Api.staticwebassets.runtime.json
