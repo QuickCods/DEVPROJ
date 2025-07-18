@@ -73,9 +73,13 @@ export class ProjectService {
     return this.http.get<PagedResponse<Project[]>>(this.apiUrl,{params: httpParams });
   }
 
-  getAllProjects(): Observable<Project[]> { //novo
+  /*getAllProjects(): Observable<Project[]> { //novo
     return this.http.get<Project[]>(`${this.apiUrl}?pageSize=1000`);
+  }*/
+  getAllProjects(): Observable<{ data: Project[] }> {
+    return this.http.get<{ data: Project[] }>('https://localhost:7140/api/projects');
   }
+  
  
  
   getProject(id: number): Observable<Project[]> {

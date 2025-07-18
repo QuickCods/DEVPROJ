@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-top-up',
@@ -21,7 +22,8 @@ export class TopUpComponent {
 
   constructor(
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   onTopUp() {
@@ -37,11 +39,15 @@ export class TopUpComponent {
         this.successMessage = 'Saldo carregado com sucesso!';
         this.errorMessage = '';
         this.amount = 0;
+
+        setTimeout(() => {
+          this.router.navigate(['/home']);
+        }, 1000);
       },
       error: () => {
         this.successMessage = '';
         this.errorMessage = 'Erro ao carregar saldo.';
-      },
+      }
     });
   }
 }

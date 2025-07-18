@@ -4,12 +4,13 @@ import { HttpClient, HTTP_INTERCEPTORS }    from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { TokenInterceptor } from './services/token.interceptor';
+import { MenuComponent } from './menu-component/menu-component.component';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,          
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, RouterOutlet],   // traz o NgIf, NgFor
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, RouterOutlet ],   // traz o NgIf, NgFor
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'] // Note que é plural: styleUrls
   //styleUrl: './app.component.css'

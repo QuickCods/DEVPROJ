@@ -1,51 +1,86 @@
-<div class="dashboard">
- <!-- Cabeçalho do dashboard com opções adicionais -->
- <div class="dashboard-header">
-    <div class="header-left">
-        <h1>Dashboard</h1>
-        <div class="header-subtitle">Visão geral do seu portfólio e atividades</div>
-    </div>
-    <div class="header-right" style="display: flex; align-items: center; gap: 1rem;">
-        <button (click)="goToProjects()" class="btn-invest">Investir</button>
-        <button id="themeToggle" class="theme-toggle" title="Alternar tema">
-          <i class="fas fa-moon"></i>
-        </button>
+<app-navbar></app-navbar>
+
+<div class="dashboard-wrapper">
+    <!-- Header -->
+    <header class="dashboard-header">
+      <div class="header-content">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <h1>Home Page</h1>
+          <button (click)="goToTopUp()" class="btn-topup">Top-Up</button>
+        </div>
+        <div class="actions">
+          <button id="themeToggle" class="btn-icon" title="Alternar tema">
+            <i class="fas fa-moon"></i>
+          </button>
+        </div>
       </div>
-</div>
- <!-- Barra de status -->
- <div class="status-bar">
-    <div class="status-item">
-        <div class="status-label">Projetos ativos</div>
-        <div class="status-value">12</div>
-    </div>
-    <div class="status-item">
-        <div class="status-label">Valor total</div>
-        <div class="status-value">€45,230</div>
-    </div>
-    <div class="status-item">
-        <div class="status-label">Retorno médio</div>
-        <div class="status-value">8.2%</div>
-    </div>
-</div>
-<!-- Grade principal do dashboard -->
-<div class="dashboard-grid">
-    <!-- Componente de Eliminar Conta -->
-    <div class="dashboard-item delete-account-container">
-        <app-delete-account></app-delete-account>
-    </div>
+    </header>
+  
+    <!-- Status Cards -->
+    <section class="status-cards">
+      <div class="status-card">
+        <i class="fas fa-briefcase"></i>
+        <div>
+          <div class="label">Projetos investidos</div>
+          <div class="value">{{ totalProjectsInvested }}</div>
+        </div>
+      </div>
+      <div class="status-card">
+        <i class="fas fa-wallet"></i>
+        <div>
+          <div class="label">Dinheiro disponível</div>
+          <div class="value">€{{ availableBalance | number:'1.0-0' }}</div>
+        </div>
+      </div>
+      <div class="status-card">
+        <i class="fas fa-euro-sign"></i>
+        <div>
+          <div class="label">Total de Assets:</div>
+          <div class="value">€{{ totalAssets | number:'1.0-0' }}</div>
+        </div>
+      </div>
+      <div class="status-card">
+        <i class="fas fa-percentage"></i>
+        <div>
+          <div class="label">Retorno médio</div>
+          <div class="value">{{ averageReturn | number:'1.1-1' }}%</div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Grid com componentes -->
+    <main class="dashboard-grid">
+    </main>
 
-    <!-- Componente de Top-up -->
-    <div class="dashboard-item top-up-container">
-        <app-top-up></app-top-up>
-    </div>
+    <!-- Latest Activities -->
+    <section class="dashboard-item latest-activities">
+      <h2>Últimas Atividades</h2>
+      <ul class="activity-list">
+        <li class="activity-item" *ngFor="let tx of latestTransactions">
+          <div class="activity-icon">
+            <i class="fas"
+              [ngClass]="{
+                'fa-arrow-down': tx.type === 'Investment',
+                'fa-plus': tx.type === 'TopUp',
+                'fa-arrow-up': tx.type === 'Withdrawal'
+              }"></i>
+          </div>
+          <div class="activity-details">
+            <span class="activity-title">
+              {{
+                tx.type === 'Investment'
+                  ? 'Investimento - "' + (tx.projectTitle || 'Projeto') + '"'
+                  : (tx.type === 'TopUp' ? 'Depósito' : 'Levantamento')
+              }}
+            </span>
+            <span class="activity-meta">
+              €{{ tx.amount | number:'1.2-2' }} • {{ tx.date | date:'dd MMM yyyy' }}
+            </span>
+          </div>
+        </li>
+      </ul>
+    </section>
+    
 
-    <!-- Componente de Withdraw -->
-    <div class="dashboard-item withdraw-container">
-        <app-withdraw></app-withdraw>
-    </div>
-
-    <!-- Componente de Portfolio -->
-    <div class="dashboard-item portfolio-container">
-        <app-portfolio></app-portfolio>
-    </div>
-</div></div>
+  </div>
+  

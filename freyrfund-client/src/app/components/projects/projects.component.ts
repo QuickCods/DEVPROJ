@@ -4,12 +4,13 @@ import { ProjectService, Project, PagedResponse, RiskLevel } from '../../service
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '@app/services/auth.service';
 import { response } from 'express';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { MenuComponent } from '@app/menu-component/menu-component.component';
  
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule, MenuComponent],
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css']
 })
@@ -144,6 +145,10 @@ export class ProjectsComponent implements OnInit {
 
   goHome(): void {
     this.router.navigate(['/home']);
+  }
+
+  goToTopUp(): void {
+    this.router.navigate(['/top-up']);
   }
 
 
