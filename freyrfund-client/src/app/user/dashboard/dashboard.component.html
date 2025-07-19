@@ -1,95 +1,132 @@
 <app-navbar></app-navbar>
 
 <div class="dashboard-wrapper">
-    <!-- Header -->
-    <header class="dashboard-header">
-      <div class="header-content">
-        <div style="display: flex; align-items: center; gap: 1rem;">
-          <h1>Home Page</h1>
-          <button (click)="goToTopUp()" class="btn-topup">Top-Up</button>
-        </div>
-        <div class="actions">
-          <button id="themeToggle" class="btn-icon" title="Alternar tema">
-            <i class="fas fa-moon"></i>
-          </button>
-        </div>
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <h1>Home Page</h1>
+      <div class="topupbutton">
+        <button class="btn-topup" (click)="openTopUpModal()">Top-Up</button>
+        <button class="btn-topup" (click)="openWithdrawModal()">Withdraw</button>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <script src="../../../../assets/scripts/theme.js"></script>
-  
-    <!-- Status Cards -->
-    <section class="status-cards">
-      <div class="status-card">
-        <i class="fas fa-briefcase"></i>
-        <div>
-          <div class="label">Projetos investidos</div>
-          <div class="value">{{ totalProjectsInvested }}</div>
-        </div>
-      </div>
-      <div class="status-card">
-        <i class="fas fa-wallet"></i>
-        <div>
-          <div class="label">Dinheiro disponível</div>
-          <div class="value">€{{ availableBalance | number:'1.0-0' }}</div>
-        </div>
-      </div>
-      <div class="status-card">
-        <i class="fas fa-euro-sign"></i>
-        <div>
-          <div class="label">Total de Assets:</div>
-          <div class="value">€{{ totalAssets | number:'1.0-0' }}</div>
-        </div>
-      </div>
-      <div class="status-card">
-        <i class="fas fa-percentage"></i>
-        <div>
-          <div class="label">Retorno médio</div>
-          <div class="value">{{ averageReturn | number:'1.1-1' }}%</div>
-        </div>
-      </div>
-    </section>
-  
-    <!-- Grid com componentes -->
-    <main class="dashboard-grid">
-    </main>
+  <script src="../../../../assets/scripts/theme.js"></script>
 
-    <!-- Latest Activities -->
-    <section class="dashboard-item latest-activities">
-      <h2>Últimas Atividades</h2>
-      <div class="filter-buttons">
-        <button (click)="setFilter('All')" [class.active]="selectedFilter === 'All'">Todos</button>
-        <button (click)="setFilter('Investment')" [class.active]="selectedFilter === 'Investment'">Investimentos</button>
-        <button (click)="setFilter('TopUp')" [class.active]="selectedFilter === 'TopUp'">Top-Ups</button>
-        <button (click)="setFilter('Withdrawal')" [class.active]="selectedFilter === 'Withdrawal'">Levantamentos</button>
+  <!-- Status Cards -->
+  <section class="status-cards">
+    <div class="status-card">
+      <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+      <div class="card-info">
+        <div class="label">Projetos investidos</div>
+        <div class="value">{{ totalProjectsInvested }}</div>
       </div>
-      
-      <ul class="activity-list">
-        <li class="activity-item" *ngFor="let tx of filteredTransactions">
-          <div class="activity-icon">
-            <i class="fas"
-              [ngClass]="{
-                'fa-arrow-down': tx.type === 'Investment',
-                'fa-plus': tx.type === 'TopUp',
-                'fa-arrow-up': tx.type === 'Withdrawal'
-              }"></i>
-          </div>
-          <div class="activity-details">
-            <span class="activity-title">
-              {{
-                tx.type === 'Investment'
-                  ? 'Investimento - "' + (tx.projectTitle || 'Projeto') + '"'
-                  : (tx.type === 'TopUp' ? 'Depósito' : 'Levantamento')
-              }}
-            </span>
-            <span class="activity-meta">
-              €{{ tx.amount | number:'1.2-2' }} • {{ tx.date | date:'dd MMM yyyy' }}
-            </span>
-          </div>
-        </li>
-      </ul>
-    </section>
-    
+    </div>
 
+    <div class="status-card">
+      <div class="card-icon"><i class="fas fa-wallet"></i></div>
+      <div class="card-info">
+        <div class="label">Dinheiro disponível</div>
+        <div class="value">€{{ availableBalance | number:'1.0-0' }}</div>
+      </div>
+    </div>
+
+    <div class="status-card">
+      <div class="card-icon"><i class="fas fa-piggy-bank"></i></div>
+      <div class="card-info">
+        <div class="label">Total de Assets</div>
+        <div class="value">€{{ totalAssets | number:'1.0-0' }}</div>
+      </div>
+    </div>
+
+    <div class="status-card">
+      <div class="card-icon"><i class="fas fa-percentage"></i></div>
+      <div class="card-info">
+        <div class="label">Retorno médio</div>
+        <div class="value">{{ averageReturn | number:'1.1-1' }}%</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Grid com componentes -->
+  <main class="dashboard-grid">
+    <!-- Conteúdo extra aqui -->
+  </main>
+
+  <!-- Últimas Atividades -->
+  <section class="dashboard-item latest-activities">
+    <h2>Últimas Atividades</h2>
+    <div class="filter-buttons">
+      <button (click)="setFilter('All')" [class.active]="selectedFilter === 'All'">Todos</button>
+      <button (click)="setFilter('Investment')" [class.active]="selectedFilter === 'Investment'">Investimentos</button>
+      <button (click)="setFilter('TopUp')" [class.active]="selectedFilter === 'TopUp'">Top-Ups</button>
+      <button (click)="setFilter('Withdrawal')" [class.active]="selectedFilter === 'Withdrawal'">Levantamentos</button>
+    </div>
+
+    <ul class="activity-list">
+      <li class="activity-item" *ngFor="let tx of filteredTransactions">
+        <div class="activity-icon">
+          <i class="fas"
+             [ngClass]="{
+              'fa-arrow-down': tx.type === 'Investment',
+              'fa-plus': tx.type === 'TopUp',
+              'fa-arrow-up': tx.type === 'Withdrawal'
+            }"></i>
+        </div>
+        <div class="activity-details">
+          <span class="activity-title">
+            {{
+              tx.type === 'Investment'
+                ? 'Investimento - "' + (tx.projectTitle || 'Projeto') + '"'
+                : (tx.type === 'TopUp' ? 'Depósito' : 'Levantamento')
+            }}
+          </span>
+          <span class="activity-meta">
+            €{{ tx.amount | number:'1.2-2' }} • {{ tx.date | date:'dd MMM yyyy' }}
+          </span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- MODAL TOP-UP -->
+  <div class="modal-overlay" *ngIf="showTopUpModal" (click)="closeModals()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h2>Adicionar Fundos</h2>
+      <form (ngSubmit)="submitTopUp()" #topUpForm="ngForm">
+        <input
+          type="number"
+          [(ngModel)]="topUpAmount"
+          name="topUpAmount"
+          min="1"
+          required
+          placeholder="Valor"
+          class="modal-input"
+        />
+        <button type="submit" class="btn-primary" [disabled]="!topUpForm.valid">Confirmar</button>
+      </form>
+      <button class="btn-secondary" (click)="closeModals()">Cancelar</button>
+    </div>
   </div>
-  
+
+  <!-- MODAL WITHDRAW -->
+  <div class="modal-overlay" *ngIf="showWithdrawModal" (click)="closeModals()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h2>Levantamento</h2>
+      <form (ngSubmit)="submitWithdraw()" #withdrawForm="ngForm">
+        <input
+          type="number"
+          [(ngModel)]="withdrawAmount"
+          name="withdrawAmount"
+          min="1"
+          required
+          placeholder="Valor"
+          class="modal-input"
+        />
+        <button type="submit" class="btn-primary" [disabled]="!withdrawForm.valid">Confirmar</button>
+      </form>
+      <button class="btn-secondary" (click)="closeModals()">Cancelar</button>
+    </div>
+  </div>
+</div>

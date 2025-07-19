@@ -1,8 +1,17 @@
+/* Fonte global */
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Wrapper geral */
 .dashboard-wrapper {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  font-family: 'Poppins', sans-serif;
 }
+
+
 
 /* Header */
 .dashboard-header {
@@ -10,23 +19,20 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
-}
-
-.dashboard-header .header-content {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+  font-family: 'Poppins', sans-serif;
 }
 
 .dashboard-header h1 {
   margin: 0;
   font-size: 2rem;
   color: #1a237e;
+  font-weight: 600;
 }
 
 .dashboard-header p {
   margin: 0.25rem 0 0;
   color: #5c6bc0;
+  font-weight: 400;
 }
 
 .dashboard-header .actions {
@@ -43,6 +49,8 @@
   border: none;
   cursor: pointer;
   transition: background 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
 }
 
 .btn:hover {
@@ -57,8 +65,49 @@
   cursor: pointer;
 }
 
-/* Status Cards */
 .status-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.status-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: transform 0.3s;
+}
+
+.status-card:hover {
+  transform: translateY(-4px);
+}
+
+.card-icon {
+  font-size: 1.8rem;
+  color: #00508d;
+  flex-shrink: 0;
+}
+
+.card-info .label {
+  font-size: 0.95rem;
+  color: #607d8b;
+  margin-bottom: 0.25rem;
+}
+
+.card-info .value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #263238;
+}
+
+
+/* Status Cards */
+/* .status-cards {
   display: flex;
   gap: 1.5rem;
   margin-bottom: 2rem;
@@ -66,18 +115,36 @@
 
 .status-card {
   flex: 1;
-  background: #e8eaf6;
+  background: #ffffff;
   border-radius: 1rem;
   padding: 1rem;
   display: flex;
   align-items: center;
   gap: 1rem;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  font-family: 'Poppins', sans-serif;
+} */
+
+.status-card:hover {
+  transform: translateY(-4px);
 }
 
-.status-card i {
+.card-icon {
   font-size: 1.8rem;
-  color: #3f51b5;
+  color: #70c4ff;
+  flex-shrink: 0;
+}
+
+.card-info .label {
+  font-size: 0.95rem;
+  color: #607d8b;
+  margin-bottom: 0.25rem;
+}
+
+.card-info .value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #263238;
 }
 
 .status-card .label {
@@ -89,7 +156,8 @@
   font-size: 1.3rem;
   font-weight: bold;
   color: #1a237e;
-}
+/*   margin-left: 28px;
+ */}
 
 /* Dashboard Grid */
 .dashboard-grid {
@@ -107,6 +175,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  font-family: 'Poppins', sans-serif;
 }
 
 .latest-activities h2 {
@@ -162,18 +231,20 @@
 }
 
 .btn-topup {
+  margin-left: 10px;
   padding: 0.5rem 1rem;
-  background-color: #007bff;
+  background-color: #24699d;
   color: white;
   border: none;
   border-radius: 6px;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  font-family: 'Poppins', sans-serif;
 }
 
 .btn-topup:hover {
-  background-color: #218838;
+  background-color: #19407a;
 }
 
 .filter-buttons {
@@ -190,11 +261,109 @@
   cursor: pointer;
   font-weight: 500;
   color: #333;
+  font-family: 'Poppins', sans-serif;
   transition: all 0.2s ease;
 }
 
 .filter-buttons button.active {
-  background-color: #1e88e5;
+  background-color: #00508e;
   color: white;
   border-color: #1e88e5;
+}
+
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 1rem 2rem;
+}
+
+.header-content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.header-content h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #00508d;
+}
+
+.topupbutton {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-topup {
+  background-color: #2285b7;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.btn-topup:hover {
+  background-color: #00508d;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  color: #00508d;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.btn-primary {
+  background-color: #00508d;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background-color: #ccc;
+  color: black;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  cursor: pointer;
 }

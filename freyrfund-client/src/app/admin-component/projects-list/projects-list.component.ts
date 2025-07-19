@@ -15,7 +15,7 @@ import { UploadImageComponent } from "@app/components/upload-image/upload-image.
 export class ProjectsListComponent implements OnInit {
   projects: ProjectView[] = [];
   form: FormGroup;
-  editing = false;
+  editing: boolean = false;
   removingId: number | null = null;
 
   constructor(
@@ -53,9 +53,9 @@ export class ProjectsListComponent implements OnInit {
     this.form.patchValue(p);   // ← popula também o id
   }
 
-  cancel(): void {
+  /* cancel(): void {
     this.editing = false;
-  }
+  } */
 
   save(): void {
     this.form.markAllAsTouched();
@@ -116,6 +116,10 @@ export class ProjectsListComponent implements OnInit {
   }
   
   
+  cancel() {
+    this.editing = false;
+    this.form.reset();
+  }
 
   downloadExcel(): void {
     this.admin.exportAll().subscribe({

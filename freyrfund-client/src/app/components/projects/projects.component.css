@@ -5,18 +5,38 @@
   box-sizing: border-box;
 }
 
+/* Fonte global */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f7fa;
-  color: #2c3e50;
+  font-family: 'Poppins', sans-serif;
 }
 
+/* Aplicação consistente da Poppins */
+.projects-container,
+.header-section,
+.search-section,
+.projects-grid,
+.project-card,
+.project-footer,
+.pagination-container,
+.btn-home,
+.btn-topup,
+.btn-invest,
+.btn-details,
+.pagination-btn,
+.project-actions input,
+.badge,
+.project-badges span {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Container principal */
 .projects-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
 }
 
+/* Header */
 .header-section {
   display: flex;
   justify-content: space-between;
@@ -27,6 +47,8 @@ body {
 .header-section h1 {
   font-size: 2rem;
   color: #1a237e;
+  font-weight: 600;
+  letter-spacing: -0.25px;
 }
 
 .btn-home {
@@ -37,12 +59,14 @@ body {
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.3s;
+  font-weight: 500;
 }
 
 .btn-home:hover {
   background-color: #303f9f;
 }
 
+/* Search */
 .search-section {
   background-color: #e3eafc;
   padding: 1rem;
@@ -73,17 +97,19 @@ body {
 }
 
 .search-info {
-  text-align: center;
+  text-align: right;
   margin-top: 0.5rem;
   color: #607d8b;
 }
 
+/* Projects Grid */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: 1.5rem;
 }
 
+/* Card */
 .project-card {
   background-color: #ffffff;
   border: 1px solid #cfd8dc;
@@ -101,29 +127,22 @@ body {
 .project-header h3 {
   font-size: 1.2rem;
   color: #1a237e;
+  font-weight: 600;
 }
 
-.badge {
+/* Badges */
+.badge,
+.project-badges span {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0.3rem 0.6rem;
   font-size: 0.75rem;
   border-radius: 4px;
-  font-weight: 600; /* força bold consistente */
+  font-weight: 600;
   margin-right: 0.5rem;
-  min-height: 28px; /* garante mesma altura */
+  min-height: 28px;
   line-height: 1;
-}
-
-
-.project-badges span {
-  display: inline-block;
-  padding: 0.3rem 0.6rem;
-  font-size: 0.75rem;
-  border-radius: 4px;
-  font-weight: bold;
-  margin-right: 0.5rem;
 }
 
 .risk-badge {
@@ -134,13 +153,16 @@ body {
 .status-badge {
   background-color: #c8e6c9;
   color: #1b5e20;
+  padding: 0.2px !important;
 }
 
 .status-badge.fully-funded {
   background-color: #81c784;
   color: white;
+  padding: 20px;
 }
 
+/* Description */
 .project-description {
   background-color: #f1f8ff;
   padding: 1rem;
@@ -155,6 +177,7 @@ body {
   height: 40px;
 }
 
+/* Details */
 .project-details .detail-row {
   display: flex;
   justify-content: space-between;
@@ -172,6 +195,7 @@ body {
   color: #263238;
 }
 
+/* Progress */
 .progress-container {
   margin-top: 0.75rem;
 }
@@ -196,6 +220,7 @@ body {
   margin-top: 0.25rem;
 }
 
+/* Ações */
 .project-actions {
   margin-top: 1rem;
   display: flex;
@@ -210,38 +235,53 @@ body {
   font-size: 0.9rem;
 }
 
-.btn-invest, .btn-details {
+/* Botões */
+.btn-invest,
+.btn-details,
+.btn-topup {
   padding: 0.6rem 1rem;
   border: none;
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
   font-size: 0.9rem;
+  letter-spacing: 0.2px;
 }
 
 .btn-invest {
-  background-color: #1e88e5;
+  background-color: #2285b7;
   color: white;
 }
 
 .btn-invest:hover {
-  background-color: #1565c0;
+  background-color: #409dcc;
 }
 
 .btn-invest:disabled {
-  background-color: #90a4ae;
+  background-color: #2285b7;
   cursor: not-allowed;
 }
 
 .btn-details {
-  background-color: #5c6bc0;
+  background-color: #00508d;
   color: white;
 }
 
 .btn-details:hover {
-  background-color: #3f51b5;
+  background-color: #2285b7;
 }
 
+.btn-topup {
+  background-color: #004f8c;
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+.btn-topup:hover {
+  background-color: #0056b3;
+}
+
+/* Footer */
 .project-footer {
   text-align: right;
   margin-top: 1rem;
@@ -249,6 +289,7 @@ body {
   color: #90a4ae;
 }
 
+/* Paginação */
 .pagination-container {
   margin-top: 2rem;
   text-align: center;
@@ -268,6 +309,7 @@ body {
   color: #1a237e;
   cursor: pointer;
   font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .pagination-btn.active {
@@ -282,25 +324,137 @@ body {
   cursor: not-allowed;
 }
 
-.btn-topup {
-  padding: 0.5rem 1rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.2s ease;
-}
-
-.btn-topup:hover {
-  background-color: #0056b3;
-}
-
+/* Imagem do projeto */
 .project-image {
   width: 100%;
   height: 180px;
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 1rem;
+}
+
+/* Garante que todos os cards têm altura uniforme */
+.project-card {
+  background-color: #ffffff;
+  border: 1px solid #cfd8dc;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s, transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 550px; /* define uma altura base consistente */
+}
+
+/* Grelha com altura e alinhamento uniforme */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+/* Título truncado com "..." */
+.project-header h3 {
+  font-size: 1.2rem;
+  color: #1a237e;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+
+.header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.catalog-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a237e;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.search-input-container {
+  position: relative;
+  width: 250px;
+}
+
+.project-header h3 {
+  font-size: 1.2rem;
+  color: #1a237e;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  width: 100%;
+}
+
+.invest-full-row {
+  display: flex;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.invest-full-row input {
+  flex: 1;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.9rem;
+  border: 1px solid #cfd8dc;
+  border-radius: 6px;
+}
+
+.invest-full-row .btn-invest {
+  white-space: nowrap;
+  padding: 0.55rem 1rem;
+  flex-shrink: 0;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+}
+
+.modal-close {
+  margin-top: 1rem;
+  background-color: #1e88e5;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
 }

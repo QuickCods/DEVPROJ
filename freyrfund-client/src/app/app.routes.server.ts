@@ -19,49 +19,36 @@ import { DashboardComponent } from './user/dashboard/dashboard.component';
 import { FaqComponent } from './components/faq/faq.component';
 
 export const routes: Routes = [
-  // 1) rotas públicas
-  { path: 'signup', component: SignupComponent },
-  { path: 'login',  component: LoginComponent },
 
-  // 2) rota protegida
-  {
-    path: 'projects',
-    component: ProjectsComponent,
-    canActivate: [AuthGuard],
-  },
-  //{path: 'invest', component: InvestComponent, canActivate: [AuthGuard],},
-  {
-    path: 'portfolio', component: PortfolioComponent, canActivate: [AuthGuard],
-  },
-  {
-    path: 'top-up', component: TopUpComponent, canActivate: [AuthGuard],
-  },
-  {
-    path: 'delete-account', component: DeleteAccountComponent, canActivate: [AuthGuard],
-  },
-  {
-    path: 'withdraw', component: WithdrawComponent, canActivate: [AuthGuard],
-  },
-  {
-    path: 'home', component: DashboardComponent, canActivate: [AuthGuard],
-  },
-  { 
-    path: 'faq', component:FaqComponent, canActivate: [AuthGuard],
-  },
-  {
-    path: 'admin',
-    component: AdminComponentComponent,
-    canActivate: [AuthGuard, AdminGuard],
-    children: [
-      { path: 'users',    component: UsersListComponent },
-      { path: 'projects', component: ProjectsListComponent },
-      // <-- redireciona vazio para users
-      { path: '', redirectTo: 'users', pathMatch: 'full' }
-    ]
-  },
-
-  // 3) coringa para todas as outras – só depois de todas as anteriores
-  { path: '**', redirectTo: '', pathMatch: 'full' }
-
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+  
+    { path: 'signup', component: SignupComponent },
+    { path: 'login',  component: LoginComponent },
+  
+    {
+      path: 'projects',
+      component: ProjectsComponent,
+      canActivate: [AuthGuard],
+    },
+    { path: 'portfolio', component: PortfolioComponent, canActivate: [AuthGuard] },
+    { path: 'top-up', component: TopUpComponent, canActivate: [AuthGuard] },
+    { path: 'delete-account', component: DeleteAccountComponent, canActivate: [AuthGuard] },
+    { path: 'withdraw', component: WithdrawComponent, canActivate: [AuthGuard] },
+    { path: 'home', component: DashboardComponent, canActivate: [AuthGuard] },
+    { path: 'faq', component: FaqComponent, canActivate: [AuthGuard] },
+  
+    {
+      path: 'admin',
+      component: AdminComponentComponent,
+      canActivate: [AuthGuard, AdminGuard],
+      children: [
+        { path: 'users',    component: UsersListComponent },
+        { path: 'projects', component: ProjectsListComponent },
+        { path: '', redirectTo: 'users', pathMatch: 'full' }
+      ]
+    },
+  
+    { path: '**', redirectTo: '', pathMatch: 'full' }
+  
   
 ];

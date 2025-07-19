@@ -8,6 +8,7 @@ import { provideRouter }                    from '@angular/router';
 import { routes }                           from './app/app.routes.server';
 import { TokenInterceptor }                 from './app/services/token.interceptor';
 
+
 bootstrapApplication(AppComponent, {
   providers: [
     // 1) Registra BrowserModule + HttpClientModule
@@ -21,6 +22,6 @@ bootstrapApplication(AppComponent, {
     },
 
     // 3) Rotas
-    provideRouter(routes)
+    provideRouter(routes),
   ]
 }).catch(err => console.error(err));

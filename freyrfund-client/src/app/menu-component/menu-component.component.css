@@ -1,5 +1,5 @@
 .main-navbar {
-    background: #ffffff;
+    background: #e3f2fd;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     padding: 1rem 2rem;
     display: flex;
@@ -10,6 +10,8 @@
     top: 0;
     z-index: 1000;
   }
+
+
   
   .navbar-left {
     display: flex;
@@ -42,7 +44,7 @@
   
   .navbar-center a:hover,
   .navbar-center .active-link {
-    color: #007bff;
+    color: #0056b3;
   }
   
   .navbar-right {
@@ -50,7 +52,7 @@
   }
   
   .user-avatar {
-    background: #007bff;
+    background: #00508c;
     color: white;
     font-weight: bold;
     border-radius: 50%;
@@ -100,3 +102,42 @@
     to { opacity: 1; transform: translateY(0); }
   }
   
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .modal-close {
+    margin-top: 1rem;
+    background-color: #00508d;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .modal-close:hover {
+    background-color: #2285b7;
+  }

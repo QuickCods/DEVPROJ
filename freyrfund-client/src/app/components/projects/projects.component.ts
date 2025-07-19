@@ -4,7 +4,7 @@ import { ProjectService, Project, PagedResponse, RiskLevel } from '../../service
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '@app/services/auth.service';
 import { response } from 'express';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { MenuComponent } from '@app/menu-component/menu-component.component';
  
 @Component({
@@ -19,6 +19,16 @@ export class ProjectsComponent implements OnInit {
   toggleDetails(projectId: number): void {
     this.detailsOpen[projectId] = !this.detailsOpen[projectId];
   }
+
+  selectedProject: Project | null = null;
+
+openModal(project: Project): void {
+  this.selectedProject = project;
+}
+
+closeModal(): void {
+  this.selectedProject = null;
+}
 
   // Função para saber se detalhes estão visíveis
   isDetailsOpen(projectId: number): boolean {

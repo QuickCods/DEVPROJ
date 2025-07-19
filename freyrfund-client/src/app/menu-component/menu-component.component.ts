@@ -1,13 +1,13 @@
 import { NgIf } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { FormularioContactoComponent } from '@app/components/formulario-contacto/formulario-contacto.component';
 import { UserService } from '@app/services/user.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [ NgIf, RouterModule, FormularioContactoComponent   ],
+  imports: [ NgIf, RouterModule, FormularioContactoComponent, RouterLink ],
   templateUrl: './menu-component.component.html',
   styleUrls: ['./menu-component.component.css']
 })
@@ -18,6 +18,8 @@ export class MenuComponent {
 
 
   constructor(private router: Router, private userService: UserService) {}
+
+
   
   ngOnInit(): void {
     this.email = this.userService.getUserEmail() ?? '';

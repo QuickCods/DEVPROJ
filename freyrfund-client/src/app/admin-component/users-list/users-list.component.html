@@ -1,21 +1,34 @@
-<!-- users.component.html -->
 <div class="admin-card">
   <div class="admin-card-header">
-    <button class="btn-primary" (click)="startCreate()">Novo Utilizador</button>
+    <button class="btn-primary" *ngIf="!editing" (click)="startCreate()">Novo Utilizador</button>
   </div>
 
+  <!-- Lista de utilizadores -->
   <div *ngIf="!editing" class="admin-card-body">
     <table class="admin-table">
       <thead>
         <tr>
-          <th>ID</th><th>Nome</th><th>Email</th><th>Role</th>
-          <th>Nasc.</th><th>NIF</th><th>Endereço</th><th>Telefone</th><th>Ações</th>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Nasc.</th>
+          <th>NIF</th>
+          <th>Endereço</th>
+          <th>Telefone</th>
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let u of users">
-          <td>{{u.id}}</td><td>{{u.fullName}}</td><td>{{u.email}}</td><td>{{u.role}}</td>
-          <td>{{u.dateOfBirth}}</td><td>{{u.nif}}</td><td>{{u.address}}</td><td>{{u.phoneNumber}}</td>
+          <td>{{ u.id }}</td>
+          <td class="ellipsis" [title]="u.fullName">{{ u.fullName }}</td>
+          <td class="ellipsis" [title]="u.email">{{ u.email }}</td>
+          <td>{{ u.role }}</td>
+          <td>{{ u.dateOfBirth }}</td>
+          <td>{{ u.nif }}</td>
+          <td class="ellipsis" [title]="u.address">{{ u.address }}</td>
+          <td>{{ u.phoneNumber }}</td>
           <td class="actions">
             <button class="icon-btn" (click)="startEdit(u)">✏️</button>
             <button class="icon-btn" (click)="remove(u.id!)">🗑️</button>
@@ -25,45 +38,25 @@
     </table>
   </div>
 
+  <!-- Formulário de criação/edição -->
   <div *ngIf="editing" class="admin-form-container">
     <h3>{{ form.value.id ? 'Editar' : 'Criar' }} Utilizador</h3>
     <form [formGroup]="form" (ngSubmit)="save()">
       <input type="hidden" formControlName="id" />
 
-      <label>
-        Nome
-        <input formControlName="fullName" />
-      </label>
-      <label>
-        Data Nasc.
-        <input formControlName="dateOfBirth" placeholder="dd/MM/aaaa" />
-      </label>
-      <label>
-        NIF
-        <input formControlName="nif" />
-      </label>
-      <label>
-        Endereço
-        <input formControlName="address" />
-      </label>
-      <label>
-        Telefone
-        <input formControlName="phoneNumber" />
-      </label>
-      <label>
-        Email
-        <input formControlName="email" />
-      </label>
-      <label>
-        Role
+      <label>Nome <input formControlName="fullName" /></label>
+      <label>Data Nasc. <input formControlName="dateOfBirth" placeholder="dd/MM/aaaa" /></label>
+      <label>NIF <input formControlName="nif" /></label>
+      <label>Endereço <input formControlName="address" /></label>
+      <label>Telefone <input formControlName="phoneNumber" /></label>
+      <label>Email <input formControlName="email" /></label>
+      <label>Role
         <select formControlName="role">
-          <option>User</option><option>Admin</option>
+          <option>User</option>
+          <option>Admin</option>
         </select>
       </label>
-      <label *ngIf="!form.value.id">
-        Senha
-        <input type="password" formControlName="password" />
-      </label>
+      <label *ngIf="!form.value.id">Senha <input type="password" formControlName="password" /></label>
 
       <div class="form-actions">
         <button type="submit" class="btn-primary" [disabled]="form.invalid">

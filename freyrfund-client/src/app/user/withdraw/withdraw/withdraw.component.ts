@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import { MenuComponent } from '@app/menu-component/menu-component.component';
 
 @Component({
   selector: 'app-withdraw',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MenuComponent],
   templateUrl: './withdraw.component.html',
   styleUrls: ['./withdraw.component.css']
 })

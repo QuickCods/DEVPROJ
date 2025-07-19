@@ -1,44 +1,55 @@
 .contact-form {
-    max-width: 500px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-  }
-  
-  .contact-form h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: #1a237e;
-  }
-  
-  .contact-form label {
-    display: block;
-    margin-top: 1rem;
-    margin-bottom: 0.25rem;
-    font-weight: bold;
-    color: #2c3e50;
-  }
-  
-  .contact-form input,
-  .contact-form textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-  }
-  
-  .contact-form button {
-    margin-top: 1.5rem;
-    width: 100%;
-    padding: 0.75rem;
-    background-color: #1e88e5;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: not-allowed; /* por enquanto, desativado */
-  }
-  
+  background-color: #ffffff;
+  max-width: 500px;
+  margin: 4rem auto;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  font-family: 'Poppins', sans-serif;
+  color: #263238;
+}
+
+.contact-form h2 {
+  font-size: 1.8rem;
+  color: #00508d;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #cfd8dc;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #2285b7;
+  outline: none;
+}
+
+.btn-enviar {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #00508d;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-enviar:hover {
+  background-color: #2285b7;
+}

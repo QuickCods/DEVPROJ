@@ -1,7 +1,8 @@
+<app-navbar></app-navbar>
+
 <div class="faq-container">
     <h2>FAQ </h2>
 
-    <button class="btn-voltar" (click)="goHome()">← Voltar à Home</button>
     <div *ngFor="let faq of faqs; let i = index" class="faq-item">
       <div class="faq-question" (click)="toggleFaq(i)">
         <span>{{ faq.question }}</span>

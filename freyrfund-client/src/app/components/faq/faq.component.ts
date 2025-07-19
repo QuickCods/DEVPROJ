@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
+import { MenuComponent } from '@app/menu-component/menu-component.component';
  
 interface FaqItem {
   question: string;
@@ -10,7 +11,7 @@ interface FaqItem {
  
 @Component({
   selector: 'app-faq',
-  imports: [ NgIf, RouterModule, NgFor   ],
+  imports: [ NgIf, RouterModule, NgFor, MenuComponent],
   templateUrl: './faq.component.html',
   styleUrls: ['./faq.component.css']
 })

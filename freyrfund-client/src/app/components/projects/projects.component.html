@@ -1,28 +1,28 @@
 <app-navbar></app-navbar>
 
 <div class="projects-container">
-  <div class="header-section" style="display: flex; justify-content: space-between; align-items: center;">
-    <h1>Catálogo de Projetos - FreyrFund</h1>
-    <button (click)="goToTopUp()" class="btn-topup">Top-Up</button>
+  <div class="header-flex">
+    <h1 class="catalog-title">Catálogo de Projetos</h1>
+    <div class="header-right">
+      <div class="search-input-container">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (input)="onSearchChange()"
+          placeholder="Pesquisar projetos..."
+          class="search-input"
+        />
+        <span class="search-icon"><i class="fas fa-search"></i></span>
+      </div>
+      <button (click)="goToTopUp()" class="btn-topup">Top-Up</button>
+    </div>
   </div>
 
-  <div class="search-section">
-    <div class="search-input-container">
-      <input
-        type="text"
-        [(ngModel)]="searchTerm"
-        (input)="onSearchChange()"
-        placeholder="Pesquisar projetos..."
-        class="search-input"
-      />
-      <span class="search-icon">🔍</span>
-    </div>
-    <div class="search-info" *ngIf="!loading">
-      <p>
-        <span *ngIf="searchTerm">Resultados para "<strong>{{searchTerm}}</strong>": </span>
-        {{totalCount}} projeto(s) encontrado(s)
-      </p>
-    </div>
+  <div class="search-info" *ngIf="!loading">
+    <p>
+      <span *ngIf="searchTerm">Resultados para "<strong>{{searchTerm}}</strong>": </span>
+      {{totalCount}} projeto(s) encontrado(s)
+    </p>
   </div>
 
   <div *ngIf="loading" class="loading">
@@ -39,28 +39,26 @@
     <div class="projects-grid" *ngIf="projects.length > 0">
       <div *ngFor="let project of projects" class="project-card">
         <img [src]="getProjectImage(project)" alt="{{ project.title }}" class="project-image" />
+
         <div class="project-header">
-          <h3>{{ project.title }}</h3>
+          <h3 [title]="project.title">{{ project.title }}</h3>
           <div class="project-badges">
             <span class="badge risk-badge" [ngClass]="getRiskClass(project.risk)">
               {{ getRiskDescription(project.risk) }}
             </span>
             <span class="badge status-badge" [class.fully-funded]="project.isFullyFunded">
               <span *ngIf="project.isFullyFunded">✓ Financiado</span>
-              <span *ngIf="!project.isFullyFunded"> Ativo</span>
+              <span *ngIf="!project.isFullyFunded">Ativo</span>
             </span>
           </div>
         </div>
 
-        <div class="project-space" style="height: 40px;"></div>
-        
-
         <div class="project-details">
-          <div class="detail-row"><span class="label">Taxa de Retorno:</span><span class="value rate">{{ project.rate }}%</span></div>
+          <div class="detail-row"><span class="label">Taxa de Retorno:</span><span class="value">{{ project.rate }}%</span></div>
           <div class="detail-row"><span class="label">Prazo:</span><span class="value">{{ project.term }} meses</span></div>
-          <div class="detail-row"><span class="label">Objetivo:</span><span class="value target">{{ formatCurrency(project.target) }}</span></div>
-          <div class="detail-row"><span class="label">Financiado:</span><span class="value funded">{{ formatCurrency(project.funded) }}</span></div>
-          <div class="detail-row"><span class="label">Falta investir:</span><span class="value remaining">{{ formatCurrency(project.remainingAmount) }}</span></div>
+          <div class="detail-row"><span class="label">Objetivo:</span><span class="value">{{ formatCurrency(project.target) }}</span></div>
+          <div class="detail-row"><span class="label">Financiado:</span><span class="value">{{ formatCurrency(project.funded) }}</span></div>
+          <div class="detail-row"><span class="label">Falta investir:</span><span class="value">{{ formatCurrency(project.remainingAmount) }}</span></div>
 
           <div class="progress-container">
             <div class="progress-bar">
@@ -71,18 +69,14 @@
         </div>
 
         <div class="project-actions">
-          <input type="number" [(ngModel)]="project.investmentAmount" min="1" [max]="project.remainingAmount" placeholder="Montante a investir" [disabled]="project.isFullyFunded" />
-          <button class="btn-invest" [disabled]="project.isFullyFunded || !project.investmentAmount" (click)="invest(project, project.investmentAmount || 0)">
-            <span *ngIf="!project.isFullyFunded">💰 Investir</span>
-            <span *ngIf="project.isFullyFunded">✅ Financiado</span>
-          </button>
-          <button class="btn-details" (click)="toggleDetails(project.id)">
-            {{ isDetailsOpen(project.id) ? 'Esconder Detalhes' : 'Ver Detalhes' }}
-          </button>
-        </div>
-
-        <div *ngIf="isDetailsOpen(project.id)" class="project-description-detalhada">
-          <p>{{ project.description }}</p>
+          <div class="invest-full-row">
+            <input type="number" [(ngModel)]="project.investmentAmount" min="1" [max]="project.remainingAmount" placeholder="Montante" [disabled]="project.isFullyFunded" />
+            <button class="btn-invest" [disabled]="project.isFullyFunded || !project.investmentAmount" (click)="invest(project, project.investmentAmount || 0)">
+              <span *ngIf="!project.isFullyFunded">Investir</span>
+              <span *ngIf="project.isFullyFunded">Financiado</span>
+            </button>
+          </div>
+          <button class="btn-details" (click)="openModal(project)">Ver Detalhes</button>
         </div>
 
         <div class="project-footer">
@@ -102,12 +96,22 @@
       <div class="pagination-info">
         <p>Página {{ currentPage }} de {{ totalPages }} ({{ (currentPage - 1) * pageSize + 1 }} - {{ Math.min(currentPage * pageSize, totalCount) }} de {{ totalCount }} projetos)</p>
       </div>
-
       <div class="pagination-controls">
         <button class="pagination-btn" [disabled]="!hasPreviousPage" (click)="previousPage()">‹ Anterior</button>
-        <button *ngFor="let page of getPageNumbers()" class="pagination-btn page-number" [class.active]="page === currentPage" (click)="goToPage(page)">{{ page }}</button>
+        <button *ngFor="let page of getPageNumbers()" class="pagination-btn page-number" [class.active]="page === currentPage" (click)="goToPage(page)">
+          {{ page }}
+        </button>
         <button class="pagination-btn" [disabled]="!hasNextPage" (click)="nextPage()">Próxima ›</button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" *ngIf="selectedProject" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h2>{{ selectedProject.title }}</h2>
+    <p>{{ selectedProject.description }}</p>
+    <button class="modal-close" (click)="closeModal()">Fechar</button>
   </div>
 </div>

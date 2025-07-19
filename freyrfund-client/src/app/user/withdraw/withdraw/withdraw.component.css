@@ -1,115 +1,117 @@
-.withdraw-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  
-  .withdraw-form-card {
-    background-color: var(--surface-color);
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    transition: var(--transition);
-    overflow: hidden;
-    height: 100%;
-  }
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .withdraw-form-card .card-header {
-    background-color: var(--warning-color);
-    color: white;
-    padding: 15px 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
+body, html {
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f2f5f9;
+}
 
-  .withdraw-form-card .card-body {
-    padding: 25px;
-  }
-  
-  .withdraw-form-card .form-group {
-    margin-bottom: 20px;
-    position: relative;
-  }
+/* Centraliza vertical e horizontalmente */
+.form-page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
 
-  .withdraw-form-card .form-control {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    border-radius: var(--border-radius);
+/* Cartão do formulário */
+.form-card {
+  background-color: #ffffff;
+  padding: 2.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 420px;
+}
+
+/* Cabeçalho */
+.form-card h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #00508d;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Formulário */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Labels e Inputs */
+label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #37474f;
+  margin-bottom: 0.5rem;
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #cfd8dc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+input[type="number"]:focus {
+  outline: none;
+  border-color: #00508d;
+}
+
+/* Botão */
+button[type="submit"] {
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #e65100;
+}
+
+/* Mensagens */
+.message-container {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.success {
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+.error {
+  color: #c62828;
+  font-weight: 500;
+}
+
+  /* Botão */
+  button[type="submit"] {
+    background-color: #00508d;
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
     font-size: 1rem;
-    transition: var(--transition);
-    background-color: var(--surface-color);
-    color: var(--text-color);
-    }
-
-    .withdraw-form-card .form-control:focus {
-        border-color: var(--warning-color);
-        box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2);
-      }
-      
-      .withdraw-form-card .account-selector {
-        margin-bottom: 25px;
-      }
-      
-      .withdraw-form-card .account-card {
-        background-color: rgba(255, 193, 7, 0.05);
-        border-left: 3px solid var(--warning-color);
-        padding: 15px;
-        border-radius: var(--border-radius);
-        margin-bottom: 10px;
-        cursor: pointer;
-        transition: var(--transition);
-        }
-
-        .withdraw-form-card .account-card:hover {
-        background-color: rgba(255, 193, 7, 0.1);
-        }
-
-        .withdraw-form-card .account-card.selected {
-        background-color: rgba(255, 193, 7, 0.15);
-        border-left: 3px solid var(--warning-dark);
-        }
-
-        .withdraw-form-card .form-actions {
-        margin-top: 25px;
-        text-align: center;
-        }
-
-        .withdraw-form-card .btn-warning {
-        background-color: var(--warning-color);
-        color: white;
-        padding: 12px 25px;
-        font-size: 1.1rem;
-        border-radius: 50px;
-        transition: var(--transition);
-        }
-
-        .withdraw-form-card .btn-warning:hover {
-        background-color: var(--warning-dark);
-        transform: translateY(-2px);
-        }
-
-        .withdraw-form-card .btn-warning:disabled {
-        background-color: rgba(255, 152, 0, 0.5);
-        cursor: not-allowed;
-        }
-
-        .withdraw-form-card .add-account-section {
-            margin: 20px 0;
-            padding: 15px;
-            background-color: rgba(255, 193, 7, 0.05);
-            border-radius: var(--border-radius);
-            border-left: 3px solid var(--warning-color);
-          }
-          .withdraw-form-card .info-box {
-            background-color: rgba(255, 193, 7, 0.05);
-            border-left: 3px solid var(--warning-color);
-            padding: 15px;
-            border-radius: var(--border-radius);
-            margin-top: 25px;
-          }
-
-          @media (max-width: 768px) {
-            .withdraw-form-card .btn-warning {
-              width: 100%;
-              padding: 12px;
-            }
-          }
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0071b3;
+  }

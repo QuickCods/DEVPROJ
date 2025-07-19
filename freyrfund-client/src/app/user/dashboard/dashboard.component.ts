@@ -35,6 +35,43 @@ export class DashboardComponent implements OnInit {
   latestTransactions: TransactionDto[] = [];
   selectedFilter: string = 'All';
 
+  showTopUpModal = false;
+showWithdrawModal = false;
+topUpAmount: number = 0;
+withdrawAmount: number = 0;
+
+openTopUpModal() {
+  this.showTopUpModal = true;
+  this.showWithdrawModal = false;
+}
+
+openWithdrawModal() {
+  this.showWithdrawModal = true;
+  this.showTopUpModal = false;
+}
+
+closeModals() {
+  this.showTopUpModal = false;
+  this.showWithdrawModal = false;
+}
+
+submitTopUp() {
+  if (this.topUpAmount > 0) {
+    console.log('Top-Up Amount:', this.topUpAmount);
+    // aqui podes chamar o backend
+    this.closeModals();
+  }
+}
+
+submitWithdraw() {
+  if (this.withdrawAmount > 0) {
+    console.log('Withdraw Amount:', this.withdrawAmount);
+    // aqui também
+    this.closeModals();
+  }
+}
+
+
   get filteredTransactions(): TransactionDto[] {
     if (this.selectedFilter === 'All') {
       return this.latestTransactions;
@@ -117,3 +154,4 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/top-up']);
   }
 }
+

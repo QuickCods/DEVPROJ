@@ -18,8 +18,6 @@
       </div>
   
       <div class="dropdown-menu" *ngIf="menuOpen">
-        <a (click)="goToTopUp()">Top-Up</a>
-        <a (click)="goToWithdraw()">Levantar</a>
         <a (click)="openContactForm()">Contacto</a>
         <a (click)="goToFaq()">FAQ</a>
         <a (click)="deleteAccount()">Eliminar Conta</a>
@@ -31,3 +29,10 @@
   *ngIf="showContactForm"
   (close)="closeContactForm()">
 </app-formulario-contacto>
+
+<div class="modal-overlay" *ngIf="showContactForm" (click)="closeContactForm()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <app-formulario-contacto (close)="closeContactForm()"></app-formulario-contacto>
+    <button class="modal-close" (click)="closeContactForm()">Fechar</button>
+  </div>
+</div>
