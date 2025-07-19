@@ -56,18 +56,76 @@ closeModals() {
 }
 
 submitTopUp() {
-  if (this.topUpAmount > 0) {
-    console.log('Top-Up Amount:', this.topUpAmount);
-    // aqui podes chamar o backend
-    this.closeModals();
+  const userId = this.userService.getUserId();
+  if (userId && this.topUpAmount > 0) {
+    this.userService.topUp(userId, this.topUpAmount).subscribe({
+      next: () => {
+        this.topUpAmount = 0;
+        this.loadUserData(); // recarrega transações e KPIs
+        this.closeModals();
+      },
+      error: (err) => {
+        console.error('Erro ao fazer top-up:', err);
+      }
+    });
   }
+}
+private loadUserData(): void {
+  const userId = this.userService.getUserId();
+  if (!userId) return;
+
+  this.userService.getUserTransactions(userId).subscribe(transactions => {
+    this.latestTransactions = transactions
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 5);
+
+    const investments = transactions.filter(t => t.type === 'Investment' && t.projectId != null);
+    this.totalAssets = Math.abs(investments.reduce((sum, t) => sum + Number(t.amount), 0));
+
+    const deposits = transactions.filter(t => t.type === 'TopUp');
+    const withdrawals = transactions.filter(t => t.type === 'Withdrawal');
+
+    const totalDeposited = deposits.reduce((sum, t) => sum + Number(t.amount), 0);
+    const totalWithdrawn = withdrawals.reduce((sum, t) => sum + Math.abs(Number(t.amount)), 0);
+    const totalInvested = investments.reduce((sum, t) => sum + Math.abs(Number(t.amount)), 0);
+
+    this.totalDeposits = totalDeposited;
+    this.availableBalance = totalDeposited - totalInvested - totalWithdrawn;
+
+    const investedProjectIds = new Set(investments.map(t => t.projectId));
+    this.totalProjectsInvested = investedProjectIds.size;
+
+    this.projectService.getAllProjects().subscribe((res) => {
+      const projectRates: number[] = [];
+      const projects = res.data;
+
+      investedProjectIds.forEach(id => {
+        const project = projects.find((p: Project) => p.id === id);
+        if (project) {
+          projectRates.push(project.rate);
+        }
+      });
+
+      this.averageReturn = projectRates.length > 0
+        ? projectRates.reduce((sum, r) => sum + r, 0) / projectRates.length
+        : 0;
+    });
+  });
 }
 
 submitWithdraw() {
-  if (this.withdrawAmount > 0) {
-    console.log('Withdraw Amount:', this.withdrawAmount);
-    // aqui também
-    this.closeModals();
+  const userId = this.userService.getUserId();
+  if (userId && this.withdrawAmount > 0) {
+    this.userService.withdraw(userId, this.withdrawAmount).subscribe({
+      next: () => {
+        this.withdrawAmount = 0;
+        this.loadUserData(); // recarrega transações e KPIs
+        this.closeModals();
+      },
+      error: (err) => {
+        console.error('Erro ao fazer withdraw:', err);
+      }
+    });
   }
 }
 
@@ -92,6 +150,8 @@ submitWithdraw() {
     
 
   ngOnInit(): void {
+
+    this.loadUserData();
 
     const userId = this.userService.getUserId();
     if (!userId) return;

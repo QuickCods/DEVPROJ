@@ -92,6 +92,31 @@ namespace FreyrFund.Api.Controllers
             return CreatedAtAction(nameof(GetUsers), new { id = domain.Id }, domain);
         }
 
+        // PUT api/admin/users/{id}
+        [HttpPut("users/{id}")]
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserDto dto)
+        {
+            var user = await _db.Users.FindAsync(id);
+            if (user == null)
+                return NotFound();
+
+            if (!DateTime.TryParseExact(dto.DateOfBirth, "dd/MM/yyyy",
+                    CultureInfo.InvariantCulture, DateTimeStyles.None, out var dob))
+            {
+                return BadRequest("Formato de data inválido.");
+            }
+
+            user.FullName = dto.FullName;
+            user.DateOfBirth = dob;
+            user.Nif = dto.Nif;
+            user.Address = dto.Address;
+            user.PhoneNumber = dto.PhoneNumber;
+            user.Role = dto.Role;
+
+            await _db.SaveChangesAsync();
+            return NoContent();
+        }
+
         // DELETE api/admin/users/{id}
         [HttpDelete("users/{id}")]
         public async Task<IActionResult> DeleteUser(int id)

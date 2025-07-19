@@ -106,7 +106,7 @@ export class ProjectService {
        * Obter projetos por nível de risco
        */
     getProjectsByRisk(riskLevel: RiskLevel, page: number = 1, pageSize: number = 10): Observable<PagedResponse<Project[]>> {
-      // Esta funcionalidade pode ser implementada no backend depois
+
       return this.getProjects({ page, pageSize });
     }
 
@@ -116,11 +116,11 @@ export class ProjectService {
     getRiskDescription(risk: RiskLevel): string {
       switch (risk) {
         case RiskLevel.A:
-          return 'Seguro';
+          return 'A'; //Seguro
         case RiskLevel.B:
-          return 'Moderado';
+          return 'B'; //Moderado
         case RiskLevel.C:
-          return 'Inseguro';
+          return 'C'; //Inseguro
         default:
           return 'Desconhecido';
       }

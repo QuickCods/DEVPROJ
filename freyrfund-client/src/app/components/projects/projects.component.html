@@ -14,7 +14,7 @@
         />
         <span class="search-icon"><i class="fas fa-search"></i></span>
       </div>
-      <button (click)="goToTopUp()" class="btn-topup">Top-Up</button>
+      <button (click)="openTopUpModal()" class="btn-topup">Top-Up</button>
     </div>
   </div>
 
@@ -113,5 +113,21 @@
     <h2>{{ selectedProject.title }}</h2>
     <p>{{ selectedProject.description }}</p>
     <button class="modal-close" (click)="closeModal()">Fechar</button>
+  </div>
+</div>
+
+
+<!-- MODAL DE TOP-UP -->
+<div class="modal-overlay" *ngIf="showTopUpModal" (click)="closeTopUpModal()">
+  <div class="modal-content topup-modal" (click)="$event.stopPropagation()">
+    <h2 class="modal-title">Depositar Fundos</h2>
+    <p class="modal-text">Insira o montante:</p>
+
+    <input type="number" [(ngModel)]="topUpAmount" min="1" placeholder="Montante (€)" class="modal-input" />
+
+    <div class="modal-actions">
+      <button (click)="confirmTopUp()" class="btn btn-confirm">Confirmar</button>
+      <button (click)="closeTopUpModal()" class="btn btn-cancel">Cancelar</button>
+    </div>
   </div>
 </div>

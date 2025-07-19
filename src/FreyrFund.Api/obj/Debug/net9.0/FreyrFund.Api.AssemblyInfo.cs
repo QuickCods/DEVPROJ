@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FreyrFund.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+47073e90449569b4d040cd5e48f3850f5865a826")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3757a9b7e65f514f9c0ddaa2c19f38b5bf545579")]
 [assembly: System.Reflection.AssemblyProductAttribute("FreyrFund.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FreyrFund.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

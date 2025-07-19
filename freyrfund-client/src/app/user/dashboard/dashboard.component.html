@@ -91,42 +91,42 @@
   </section>
 
   <!-- MODAL TOP-UP -->
-  <div class="modal-overlay" *ngIf="showTopUpModal" (click)="closeModals()">
-    <div class="modal-content" (click)="$event.stopPropagation()">
-      <h2>Adicionar Fundos</h2>
-      <form (ngSubmit)="submitTopUp()" #topUpForm="ngForm">
-        <input
-          type="number"
-          [(ngModel)]="topUpAmount"
-          name="topUpAmount"
-          min="1"
-          required
-          placeholder="Valor"
-          class="modal-input"
-        />
-        <button type="submit" class="btn-primary" [disabled]="!topUpForm.valid">Confirmar</button>
-      </form>
-      <button class="btn-secondary" (click)="closeModals()">Cancelar</button>
-    </div>
-  </div>
+<div class="modal-overlay" *ngIf="showTopUpModal" (click)="closeModals()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h2>Adicionar Fundos</h2>
+    <p>Insira o montante que deseja adicionar ao saldo:</p>
+    
+    <input type="number"
+           [(ngModel)]="topUpAmount"
+           name="topUpAmount"
+           min="1"
+           placeholder="Montante (€)"
+           class="modal-input" />
 
-  <!-- MODAL WITHDRAW -->
-  <div class="modal-overlay" *ngIf="showWithdrawModal" (click)="closeModals()">
-    <div class="modal-content" (click)="$event.stopPropagation()">
-      <h2>Levantamento</h2>
-      <form (ngSubmit)="submitWithdraw()" #withdrawForm="ngForm">
-        <input
-          type="number"
-          [(ngModel)]="withdrawAmount"
-          name="withdrawAmount"
-          min="1"
-          required
-          placeholder="Valor"
-          class="modal-input"
-        />
-        <button type="submit" class="btn-primary" [disabled]="!withdrawForm.valid">Confirmar</button>
-      </form>
-      <button class="btn-secondary" (click)="closeModals()">Cancelar</button>
+    <div class="modal-buttons">
+      <button (click)="submitTopUp()" class="btn-confirm" [disabled]="topUpAmount <= 0">Confirmar</button>
+      <button class="btn-cancel" (click)="closeModals()">Cancelar</button>
     </div>
   </div>
 </div>
+
+<!-- MODAL WITHDRAW -->
+<div class="modal-overlay" *ngIf="showWithdrawModal" (click)="closeModals()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h2>Levantamento</h2>
+    <p>Insira o montante que deseja levantar:</p>
+
+    <input type="number"
+           [(ngModel)]="withdrawAmount"
+           name="withdrawAmount"
+           min="1"
+           placeholder="Montante (€)"
+           class="modal-input" />
+
+    <div class="modal-buttons">
+      <button (click)="submitWithdraw()" class="btn-confirm" [disabled]="withdrawAmount <= 0">Confirmar</button>
+      <button class="btn-cancel" (click)="closeModals()">Cancelar</button>
+    </div>
+  </div>
+</div>
+

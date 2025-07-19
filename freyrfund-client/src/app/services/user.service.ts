@@ -61,6 +61,11 @@ export class UserService {
     return this.http.post<void>(`${this.baseUrl}/${userId}/withdraw`, amount);
   }
 
+  getUserBalance(userId: number): Observable<number> {
+    return this.http.get<number>(`${this.baseUrl}/${userId}/balance`);
+  }
+  
+
   logout(): void {
     localStorage.removeItem(this.tokenKey);
     window.location.href = '/login'; // ou usar router.navigate

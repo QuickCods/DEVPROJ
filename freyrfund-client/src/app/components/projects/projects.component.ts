@@ -6,6 +6,7 @@ import { AuthService } from '@app/services/auth.service';
 import { response } from 'express';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { MenuComponent } from '@app/menu-component/menu-component.component';
+import { UserService } from '@app/services/user.service';
  
 @Component({
   selector: 'app-projects',
@@ -57,6 +58,7 @@ closeModal(): void {
   constructor(
     private projectService: ProjectService,
     private authService: AuthService,
+    private userService: UserService,
     private router: Router
   ) {}
  
@@ -162,7 +164,7 @@ closeModal(): void {
     if (title.includes('parc')) return 'assets/images/ParqueAlentejanoP1.png';
     if (title.includes('neural') || title.includes('wind')) return 'assets/images/NeuralForgeP2.png';
     if (title.includes('douro reserva') || title.includes('biogas')) return 'assets/images/DouroP3.png';
-    if (title.includes('pollution') || title.includes('biogas')) return 'assets/images/OceanShield.png';
+    if (title.includes('oceanshield') || title.includes('biogas')) return 'assets/images/OceanShield.png';
     if (title.includes('ocean 11') || title.includes('biogas')) return 'assets/images/ocean11.png';
     if (title.includes('nativo') || title.includes('biogas')) return 'assets/images/resort.png';
     if (title.includes('edu') || title.includes('biogas')) return 'assets/images/EduFuture.png';
@@ -173,6 +175,38 @@ closeModal(): void {
   goToTopUp(): void {
     this.router.navigate(['/top-up']);
   }
+
+  showTopUpModal: boolean = false;
+topUpAmount: number | null = null;
+
+openTopUpModal() {
+  this.showTopUpModal = true;
+}
+
+closeTopUpModal() {
+  this.showTopUpModal = false;
+  this.topUpAmount = null;
+}
+
+confirmTopUp() {
+  if (this.topUpAmount && this.topUpAmount > 0) {
+    const userId = this.userService.getUserId(); // busca do próprio serviço
+
+    if (!userId) {
+      alert('Utilizador não autenticado');
+      return;
+    }
+
+    this.userService.topUp(userId, this.topUpAmount).subscribe({
+      next: () => {
+        alert('Depósito realizado com sucesso!');
+        this.closeTopUpModal();
+        // this.reloadBalance(); // opcional
+      },
+      error: () => alert('Erro ao processar o top-up.')
+    });
+  }
+}
 
 
  
@@ -200,7 +234,7 @@ closeModal(): void {
           alert('Investimento realizado com sucesso!');
         },
         error: (error) => {
-          alert('Erro ao realizar investimento: ' + error.message);
+          alert('Saldo insuficiente! Por favor, adicione dinheiro à sua conta!');
           console.error('Erro ao investir:', error);
         }
       });
