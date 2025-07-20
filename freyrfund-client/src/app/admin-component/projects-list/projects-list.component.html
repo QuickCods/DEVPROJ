@@ -27,7 +27,7 @@
           <td>{{ p.term }}m</td>
           <td>{{ p.target | currency:'EUR':'symbol' }}</td>
           <td>
-            {{ p.risk === 0 ? 'A - Seguro' : p.risk === 1 ? 'B - Moderado' : 'C - Arriscado' }}
+            {{ p.risk === 0 ? 'A - Sûr' : p.risk === 1 ? 'B - Modéré' : 'C - Élevé' }}
           </td>
           <td class="actions">
             <button class="icon-btn" (click)="startEdit(p)">✏️</button>
