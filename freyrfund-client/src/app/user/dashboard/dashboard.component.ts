@@ -61,7 +61,7 @@ submitTopUp() {
     this.userService.topUp(userId, this.topUpAmount).subscribe({
       next: () => {
         this.topUpAmount = 0;
-        this.loadUserData(); // recarrega transações e KPIs
+        this.loadUserData(); 
         this.closeModals();
       },
       error: (err) => {
@@ -119,7 +119,7 @@ submitWithdraw() {
     this.userService.withdraw(userId, this.withdrawAmount).subscribe({
       next: () => {
         this.withdrawAmount = 0;
-        this.loadUserData(); // recarrega transações e KPIs
+        this.loadUserData(); 
         this.closeModals();
       },
       error: (err) => {
@@ -159,13 +159,10 @@ submitWithdraw() {
     this.userService.getUserTransactions(userId).subscribe(transactions => {
       console.log('Transactions:', transactions);
 
-      
-      // Últimas 5 transações
       this.latestTransactions = transactions
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         .slice(0, 5);
 
-        //  Total de Assets (somatório de investimentos)
         const investments = transactions.filter(t => t.type === 'Investment' && t.projectId != null);
         this.totalAssets = Math.abs(
           investments.reduce((sum, t) => sum + Number(t.amount), 0)
@@ -180,15 +177,14 @@ submitWithdraw() {
 
         this.totalDeposits = totalDeposited;
         this.availableBalance = totalDeposited - totalInvested - totalWithdrawn;
-        //  Total de projetos únicos investidos
+        
         const investedProjectIds = new Set(investments.map(t => t.projectId));
         this.totalProjectsInvested = investedProjectIds.size;
-    
-        //  Retorno médio
+  
         this.projectService.getAllProjects().subscribe((res) => {
           const projectRates: number[] = [];
         
-          const projects = res.data; // 👈 Certo! Agora está claro que .data é o array
+          const projects = res.data; 
         
           investedProjectIds.forEach(id => {
             const project = projects.find((p: Project) => p.id === id);

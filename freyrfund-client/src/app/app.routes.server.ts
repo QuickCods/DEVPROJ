@@ -24,7 +24,6 @@ export const routes: Routes = [
   
     { path: 'signup', component: SignupComponent },
     { path: 'login',  component: LoginComponent },
-  
     {
       path: 'projects',
       component: ProjectsComponent,
@@ -36,7 +35,6 @@ export const routes: Routes = [
     { path: 'withdraw', component: WithdrawComponent, canActivate: [AuthGuard] },
     { path: 'home', component: DashboardComponent, canActivate: [AuthGuard] },
     { path: 'faq', component: FaqComponent, canActivate: [AuthGuard] },
-  
     {
       path: 'admin',
       component: AdminComponentComponent,
@@ -47,8 +45,6 @@ export const routes: Routes = [
         { path: '', redirectTo: 'users', pathMatch: 'full' }
       ]
     },
-  
     { path: '**', redirectTo: '', pathMatch: 'full' }
-  
-  
+    
 ];

@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-//import { TransactionDto } from '@app/user/portfolio/portfolio/portfolio.component';
 import { jwtDecode } from 'jwt-decode';
 import { Observable } from 'rxjs';
 
@@ -15,7 +14,7 @@ export interface TransactionDto {
 @Injectable({ providedIn: 'root' })
 export class UserService {
   
-  private baseUrl = 'https://localhost:7140/api/User'; // Ajusta se for diferente
+  private baseUrl = 'https://localhost:7140/api/User'; 
   private tokenKey = 'authToken';
 
   constructor(private http: HttpClient) {}
@@ -23,8 +22,6 @@ export class UserService {
   private getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
-
-  //  Extrai o email (unique_name) do token
   public getUserEmail(): string | null {
     const token = this.getToken();
     if (!token) return null;
@@ -36,18 +33,6 @@ export class UserService {
       return null;
     }
   }
-
-  /*public getUserId(): number | null {
-    const token = this.getToken();
-    if (!token) return null;
-
-    try {
-      const payload: any = jwtDecode(token);
-      return Number(payload.sub || payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']);
-    } catch {
-      return null;
-    }
-  }*/
 
   getUserTransactions(userId: number): Observable<TransactionDto[]> {
     return this.http.get<TransactionDto[]>(`https://localhost:7140/api/transactions/user/${userId}`);
@@ -68,7 +53,7 @@ export class UserService {
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
-    window.location.href = '/login'; // ou usar router.navigate
+    window.location.href = '/login';
   }
 
   public getUserId(): number | null {

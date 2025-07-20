@@ -1,17 +1,14 @@
 <nav class="main-navbar">
-    <!-- Esquerda: logo e mensagem -->
     <div class="navbar-left">
       <img src="assets/images/FreyrCoin.png" alt="FreyrFund" class="logo" />
       <span class="welcome-message">Bienvenu, {{ getUserName(email) }}</span>
     </div>
   
-    <!-- Centro: links -->
     <div class="navbar-center">
       <a routerLink="/home" routerLinkActive="active-link">Home</a>
       <a routerLink="/projects" routerLinkActive="active-link">Investir</a>
     </div>
   
-    <!-- Direita: avatar com dropdown -->
     <div class="navbar-right" (clickOutside)="closeMenu()">
       <div class="user-avatar" (click)="toggleMenu()">
         {{ getInitials(email) }}

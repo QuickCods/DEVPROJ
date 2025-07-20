@@ -8,8 +8,6 @@ interface TestResponse { message: string; }
 export class ApiService {
   private baseUrl = 'https://localhost:7140'; //http://localhost:7243
 
-  
-
   constructor(private http: HttpClient) {}
 
   getTest(): Observable<TestResponse> {

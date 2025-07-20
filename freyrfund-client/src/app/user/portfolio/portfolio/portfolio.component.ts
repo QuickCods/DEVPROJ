@@ -35,7 +35,7 @@ export class PortfolioComponent implements OnInit {
     this.userService.getPortfolio(userId).subscribe({
       next: (data) => {
         this.transactions = data;
-        console.log('Transactions recebidas:', this.transactions); //  Verifica aqui
+        console.log('Transactions recebidas:', this.transactions);
       },
       error: (err) => {
         this.errorMessage = 'Erreur lors du chargement du portefeuille.';

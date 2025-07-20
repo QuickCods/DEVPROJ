@@ -7,7 +7,7 @@ import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  standalone: true,                 // ← necessario para standalone component
+  standalone: true,                 
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -32,7 +32,6 @@ export class LoginComponent {
     });
   }
 
-  // ← método submit() fora do construtor
   submit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();

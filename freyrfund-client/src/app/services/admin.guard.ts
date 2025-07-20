@@ -19,11 +19,9 @@ export class AdminGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean | UrlTree {
-    // Só permite se estiver logado **e** for Admin
     if (this.auth.isLoggedIn() && this.auth.getUserRole() === 'Admin') {
       return true;
     }
-    // Senão redireciona para a home (ou login)
     return this.router.createUrlTree(['/']);
   }
 }

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 export interface Project {
   id: number;
   title: string;
-  description: string;  //novo
+  description: string;  
   rate: number;
   term: number;
   target: number;
@@ -13,8 +13,8 @@ export interface Project {
   fundingPercentage: number;
   remainingAmount: number;
   isFullyFunded: boolean;
-  risk: RiskLevel;  //novo
-  riskDescription: string; //novo
+  risk: RiskLevel;  
+  riskDescription: string; 
   createdAt: Date;
   updatedAt: Date;
 
@@ -22,9 +22,9 @@ export interface Project {
 }
 
 export enum RiskLevel {
-  A = 0, // Seguro
-  B = 1, // Mais ou menos
-  C = 2  // Inseguro
+  A = 0, 
+  B = 1, 
+  C = 2  
 }
 
 export interface PagedResponse<T> {
@@ -73,15 +73,10 @@ export class ProjectService {
     return this.http.get<PagedResponse<Project[]>>(this.apiUrl,{params: httpParams });
   }
 
-  /*getAllProjects(): Observable<Project[]> { //novo
-    return this.http.get<Project[]>(`${this.apiUrl}?pageSize=1000`);
-  }*/
   getAllProjects(): Observable<{ data: Project[] }> {
     return this.http.get<{ data: Project[] }>('https://localhost:7140/api/projects');
   }
   
- 
- 
   getProject(id: number): Observable<Project[]> {
     return this.http.get<Project[]>(`${this.apiUrl}/${id}`);
   }
@@ -94,25 +89,15 @@ export class ProjectService {
     return this.http.post<void>(`${this.apiUrl}/${projectId}/invest`, request);
   }
 
-
-    /**
-   * Pesquisar projetos por termo
-   */
     searchProjects(searchTerm: string, page: number = 1, pageSize: number = 10): Observable<PagedResponse<Project[]>> {
       return this.getProjects({ search: searchTerm, page, pageSize });
     }
 
-    /**
-       * Obter projetos por nível de risco
-       */
     getProjectsByRisk(riskLevel: RiskLevel, page: number = 1, pageSize: number = 10): Observable<PagedResponse<Project[]>> {
 
       return this.getProjects({ page, pageSize });
     }
 
-    /**
-     * Obter descrição do risco em português
-     */
     getRiskDescription(risk: RiskLevel): string {
       switch (risk) {
         case RiskLevel.A:
@@ -126,9 +111,6 @@ export class ProjectService {
       }
     }
 
-    /**
-     * Obter classe CSS para o nível de risco
-     */
     getRiskClass(risk: RiskLevel): string {
       switch (risk) {
         case RiskLevel.A:
@@ -142,9 +124,6 @@ export class ProjectService {
       }
     }
 
-    /**
-     * Formatar valor monetário
-     */
     formatCurrency(value: number): string {
       return new Intl.NumberFormat('pt-PT', {
         style: 'currency',
@@ -152,9 +131,6 @@ export class ProjectService {
       }).format(value);
     }
 
-    /**
-     * Calcular tempo restante do projeto (se aplicável)
-     */
     calculateTimeRemaining(createdAt: Date, term: number): { months: number; isExpired: boolean } {
       const created = new Date(createdAt);
       const now = new Date();

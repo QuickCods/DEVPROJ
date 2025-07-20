@@ -78,7 +78,6 @@ export class AuthService {
     if (!token) return null;
     try {
       const payload: any = jwtDecode(token);
-      // o claim pode vir em "role" ou no namespace padrão:
       return payload.role
           || payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
           || null;

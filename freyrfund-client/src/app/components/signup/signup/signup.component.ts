@@ -43,20 +43,16 @@ export class SignupComponent {
     this.loading = true;
     this.error   = null;
   
-    // 1) lê o valor raw do input date (yyyy-MM-dd)
     const rawDate: string = this.form.value.birthDate;  
   
-    // 2) quebra em ano, mês, dia
     const [year, month, day] = rawDate.split('-');
   
-    // 3) monta no formato dd/MM/yyyy (ou dd/MM/yy, se preferires)
-    //    aqui usamos 4 dígitos no ano para simplificar
     const formattedDate = `${day}/${month}/${year}`;
   
-    // 4) monta o DTO com a data já no formato que o backend aceita
+    
     const dto = {
       fullName:    this.form.value.fullName,
-      dateOfBirth: formattedDate,     // agora "25/09/1996"
+      dateOfBirth: formattedDate,     
       nif:         this.form.value.nif,
       address:     this.form.value.address,
       phoneNumber: this.form.value.phone,

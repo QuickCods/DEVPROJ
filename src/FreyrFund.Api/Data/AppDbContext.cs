@@ -16,14 +16,14 @@ namespace FreyrFund.Server.Data
 
         public DbSet<Project> Projects { get; set; }
         public DbSet<Investment> Investments { get; set; }
-        public DbSet<Transaction> Transactions { get; set; }  //adicionado novo
+        public DbSet<Transaction> Transactions { get; set; } 
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
 
-            // Configura 1:1 IdentityUser ↔ User
+            
             builder.Entity<User>()
                 .HasOne(u => u.IdentityUser)
                 .WithOne()

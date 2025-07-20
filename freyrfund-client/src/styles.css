@@ -1,4 +1,3 @@
-/* Variáveis para o tema claro (padrão) */
 :root {
     --primary-color: #3f51b5;
     --primary-dark: #303f9f;
@@ -21,7 +20,6 @@
     --transition: all 0.3s ease;
   }
   
-  /* Variáveis para o tema escuro */
   [data-theme="dark"] {
     --primary-color: #5c6bc0;
     --primary-dark: #3949ab;
@@ -42,7 +40,6 @@
   }
   
   
-  /* Estilos base para cards */
   .card {
     border: none;
     border-radius: var(--border-radius);
@@ -82,7 +79,6 @@
     padding: 25px;
   }
   
-  /* Botões aprimorados */
   .btn {
     padding: 10px 20px;
     border-radius: 50px;
@@ -140,7 +136,6 @@
     border-color: var(--text-color);
   }
   
-  /* Mensagens e alertas */
   .alert {
     padding: 15px;
     border-radius: var(--border-radius);
@@ -167,7 +162,6 @@
     font-size: 1.2rem;
   }
   
-  /* Seção de confirmação */
   .confirmation-section {
     margin-top: 20px;
     padding: 20px;
@@ -192,7 +186,6 @@
     gap: 15px;
   }
   
-  /* Mensagens de aviso */
   .warning-message {
     background-color: rgba(255, 193, 7, 0.1);
     border-left: 4px solid var(--warning-color);
@@ -210,7 +203,6 @@
     font-size: 1.1rem;
   }
   
-  /* Animações */
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -225,7 +217,6 @@
     animation: fadeInUp 0.5s ease-out;
   }
   
-  /* Estilos para o modo escuro */
   [data-theme="dark"] {
     --dark-color: #e0e0e0;
     --text-color: #e0e0e0;
@@ -243,7 +234,6 @@
     --danger-color: #e57373;
   }
   
-  /* Estilos para o dashboard principal */
   .dashboard {
     max-width: 1400px;
     margin: 0 auto;
@@ -290,7 +280,6 @@
     grid-column: span 2;
   }
   
-  /* Estilos para formulários */
   .form-group {
     margin-bottom: 20px;
     position: relative;
@@ -320,7 +309,6 @@
     box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.2);
   }
   
-  /* Estilos para a tabela de portfolio */
   .table-responsive {
     overflow-x: auto;
     margin-top: 20px;
@@ -370,7 +358,6 @@
     font-weight: 500;
   }
   
-  /* Estilos para elementos não encontrados */
   .no-data-container {
     text-align: center;
     padding: 40px 20px;
@@ -388,7 +375,6 @@
     color: var(--text-color);
   }
   
-  /* Estilos para o rodapé */
   .footer {
     background-color: var(--dark-color);
     color: white;
@@ -468,7 +454,6 @@
     color: var(--primary-color);
   }
   
-  /* Estilos para a navegação */
   .navbar {
     background-color: white;
     box-shadow: var(--box-shadow);
@@ -549,7 +534,6 @@
     object-fit: cover;
   }
   
-  /* Estilos para progress bars */
   .progress-container {
     margin: 20px 0;
   }
@@ -591,7 +575,6 @@
     color: var(--text-color);
   }
   
-  /* Estilos para tooltips */
   [title] {
     position: relative;
   }
@@ -614,7 +597,6 @@
     animation: fadeIn 0.2s ease-out forwards;
   }
   
-  /* Estilos para o tema */
   .theme-toggle {
     position: fixed;
     bottom: 30px;
@@ -643,14 +625,13 @@
     font-size: 1.2rem;
   }
   
-  /* Responsive adjustments */
   @media (max-width: 1024px) {
     .delete-account-container, .portfolio-container {
       grid-column: span 1;
     }
   
     .navbar-menu {
-      display: none; /* Você pode querer adicionar um menu hamburger para mobile */
+      display: none; 
     }
   }
   
@@ -668,11 +649,10 @@
     }
   }
   
-  /* Atualiza o ícone com base no tema */
   [data-theme="dark"] .theme-toggle i::before {
-    content: "\f185"; /* Ícone de sol para tema escuro */
+    content: "\f185"; 
   }
   
   [data-theme="light"] .theme-toggle i::before {
-    content: "\f186"; /* Ícone de lua para tema claro */
+    content: "\f186"; 
   }

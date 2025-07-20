@@ -53,10 +53,6 @@ export class ProjectsListComponent implements OnInit {
     this.form.patchValue(p);   // ← popula também o id
   }
 
-  /* cancel(): void {
-    this.editing = false;
-  } */
-
   save(): void {
     this.form.markAllAsTouched();
     console.log('Form value:', this.form.value);

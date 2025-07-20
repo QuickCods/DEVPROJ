@@ -1,17 +1,17 @@
-/* Base colors */
+
 .login-page {
   display: flex;
-  justify-content: center;    /* centraliza horizontalmente */
-  align-items: center;        /* centraliza verticalmente */
+  justify-content: center;    
+  align-items: center;        
   min-height: 100vh;
   font-family: 'Poppins', sans-serif;
   padding: 0 1rem;
   box-sizing: border-box;
 }
 
-/* Left side */
+
 .login-side {
-  flex: 2;                    /* ocupa mais espaço que o card */
+  flex: 2;                    
   max-width: 600px;
   position: relative;
   padding: 3rem;
@@ -51,11 +51,11 @@
   width: 320px;
 }
 
-/* Login card */
+
 .login-card {
-  flex: 1;                    /* ocupa menos espaço que a side */
+  flex: 1;                    
   max-width: 380px;
-  margin-left: -40px;         /* empurra o card para a esquerda */
+  margin-left: -40px;         
   background: #ffffff;
   border-radius: 1.5rem;
   padding: 2.5rem 2rem;

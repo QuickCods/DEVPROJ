@@ -30,7 +30,7 @@ export class TopUpComponent {
   ) {}
 
   onTopUp() {
-    const userId = this.authService.getUserId(); // assumindo que existe este método
+    const userId = this.authService.getUserId(); 
     if (!userId) {
       this.errorMessage = 'Não foi possível determinar o seu ID de utilizador.';
       return;

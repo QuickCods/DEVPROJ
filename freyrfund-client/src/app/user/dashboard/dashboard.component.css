@@ -1,9 +1,9 @@
-/* Fonte global */
+
 body {
   font-family: 'Poppins', sans-serif;
 }
 
-/* Wrapper geral */
+
 .dashboard-wrapper {
   padding: 2rem;
   max-width: 1200px;
@@ -13,7 +13,7 @@ body {
 
 
 
-/* Header */
+
 .dashboard-header {
   display: flex;
   justify-content: space-between;
@@ -105,26 +105,6 @@ body {
   color: #263238;
 }
 
-
-/* Status Cards */
-/* .status-cards {
-  display: flex;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.status-card {
-  flex: 1;
-  background: #ffffff;
-  border-radius: 1rem;
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  font-family: 'Poppins', sans-serif;
-} */
-
 .status-card:hover {
   transform: translateY(-4px);
 }
@@ -156,17 +136,16 @@ body {
   font-size: 1.3rem;
   font-weight: bold;
   color: #1a237e;
-/*   margin-left: 28px;
- */}
+}
 
-/* Dashboard Grid */
+
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
 }
 
-/* Latest Activities */
+
 .latest-activities {
   background: #ffffff;
   border-radius: 12px;

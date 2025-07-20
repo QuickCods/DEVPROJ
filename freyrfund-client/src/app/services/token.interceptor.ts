@@ -1,4 +1,4 @@
-// token.interceptor.ts
+
 import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
@@ -18,7 +18,6 @@ export class TokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const token = this.auth.getToken();
-    // Se existir token, adiciona o header
     if (token) {
       const cloned = req.clone({
         setHeaders: {
@@ -27,7 +26,6 @@ export class TokenInterceptor implements HttpInterceptor {
       });
       return next.handle(cloned);
     }
-    // Caso contrário segue normalmente
     return next.handle(req);
   }
 }

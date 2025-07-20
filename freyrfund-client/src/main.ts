@@ -11,17 +11,12 @@ import { TokenInterceptor }                 from './app/services/token.intercept
 
 bootstrapApplication(AppComponent, {
   providers: [
-    // 1) Registra BrowserModule + HttpClientModule
     importProvidersFrom(BrowserModule, HttpClientModule),
-
-    // 2) Registra o seu interceptor de classe
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
     },
-
-    // 3) Rotas
     provideRouter(routes),
   ]
 }).catch(err => console.error(err));

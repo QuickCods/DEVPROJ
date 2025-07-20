@@ -10,7 +10,6 @@ namespace FreyrFund.Server.Models
     {
         public int Id { get; set; }
 
-        // NOVO: FK para AspNetUsers.Id
         [Required]
         [Column(TypeName = "nvarchar(450)")]
         public string IdentityUserId { get; set; } = string.Empty;
@@ -22,7 +21,7 @@ namespace FreyrFund.Server.Models
         public string FullName { get; set; } = string.Empty;
 
         [Required, DataType(DataType.Date)]
-        // vamos armazenar como DateTime, mas no DTO aceitamos "dd/MM/yy"
+        
         public DateTime DateOfBirth { get; set; }
 
         [Required, RegularExpression(@"^\d{9}$", ErrorMessage = "O NIF deve ter exatamente 9 dígitos.")]
@@ -43,11 +42,11 @@ namespace FreyrFund.Server.Models
         [Required]
         public string Role { get; set; } = "User";
 
-        // NOVO: Saldo atual do utilizador
+        
         [Column(TypeName = "decimal(18,2)")]
         public decimal Balance { get; set; } = 0;
 
-        // NOVO: Marcação de eliminação lógica
+        
         public bool IsDeleted { get; set; } = false;
 
 

@@ -109,20 +109,20 @@ async Task SeedRolesAsync(IServiceProvider services)
     }
 }
 
-// Executa o seed
+
 using (var scope = app.Services.CreateScope())
 {
     await SeedRolesAsync(scope.ServiceProvider);
 }
 
-// após construir o app
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     await SeedRolesAndAdminAsync(services);
 }
 
-// Middleware
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -139,14 +139,14 @@ app.MapControllers();
 app.Run();
 
 
-// método local para fazer o seed
+
 static async Task SeedRolesAndAdminAsync(IServiceProvider services)
 {
-    // resolve os managers
+    
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
 
-    // 1) garante os roles
+    
     string[] roles = new[] { "Admin", "User" };
     foreach (var role in roles)
     {
@@ -154,9 +154,9 @@ static async Task SeedRolesAndAdminAsync(IServiceProvider services)
             await roleManager.CreateAsync(new IdentityRole(role));
     }
 
-    // 2) garante um Admin “hard-coded”
+    
     const string adminEmail    = "admin@freyrfund.com";
-    const string adminPassword = "Admin@123";  // escolheR uma senha forte
+    const string adminPassword = "Admin@123";  
 
     if (await userManager.FindByEmailAsync(adminEmail) is null)
 {
@@ -172,7 +172,7 @@ static async Task SeedRolesAndAdminAsync(IServiceProvider services)
     {
         await userManager.AddToRoleAsync(adminUser, "Admin");
 
-        // Criar perfil na tabela Users
+       
         var dbContext = services.GetRequiredService<AppDbContext>();
         dbContext.Users.Add(new User
         {

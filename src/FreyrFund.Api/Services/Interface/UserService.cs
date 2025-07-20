@@ -85,36 +85,6 @@ namespace FreyrFund.Server.Services
 
             return transactions;
         }
-        
-        /*public async Task<bool> InvestAsync(int userId, int projectId, decimal amount)
-        {
-            var user = await _context.Users.FindAsync(userId);
-            var project = await _context.Projects.FindAsync(projectId);
-
-            if (user == null || user.IsDeleted || project == null) return false;
-            if (user.Balance < amount) return false;
-
-            user.Balance -= amount;
-
-            _context.Investments.Add(new Investment
-            {
-                UserId = userId,
-                ProjectId = projectId,
-                Amount = amount,
-                Date = DateTime.UtcNow
-            });
-
-            _context.Transactions.Add(new Transaction
-            {
-                UserId = user.Id,
-                Amount = -amount,
-                Date = DateTime.UtcNow,
-                Type = TransactionType.Investment
-            });
-
-            await _context.SaveChangesAsync();
-            return true;
-        }*/
 
 
     }

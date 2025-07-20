@@ -124,7 +124,7 @@ public class AuthController : ControllerBase
         }
 
 
-        // Hash da password (exemplo com BCrypt)
+        // Hash da password com BCrypt
         var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
         

@@ -1,9 +1,9 @@
 .signup-page {
   display: flex;
-  justify-content: center;   /* centraliza horizontalmente */
-  align-items: center;       /* centraliza verticalmente */
-  min-height: 100vh;         /* ocupa toda a altura da viewport */
-  padding: 2rem;             /* um pouco de respiro nas laterais */
+  justify-content: center;   
+  align-items: center;       
+  min-height: 100vh;         
+  padding: 2rem;             
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 
@@ -12,24 +12,24 @@
 
 .signup-card {
   width: 100%;
-  max-width: 420px;          /* não expande demais em telas largas */
+  max-width: 420px;          
   background: #ffffff;
   border-radius: 1.5rem;
-  padding: 2.5rem 2rem;      /* padding ajustado para topo/rodapé e laterais */
+  padding: 2.5rem 2rem;      
   box-shadow: 0 10px 30px rgba(0,0,0,0.05);
   text-align: center;
 }
 
 .signup-card h2 {
-  margin-bottom: 1.5rem;     /* espaçamento antes do form */
+  margin-bottom: 1.5rem;     
   font-size: 1.5rem;
   color: #1c3c50;
 }
 
 .signup-card form {
   display: grid;
-  gap: 1rem;                 /* espaço uniforme entre os campos */
-  margin-bottom: 1.5rem;     /* espaço antes do link de login */
+  gap: 1rem;                 
+  margin-bottom: 1.5rem;     
 }
 
 .signup-card form label {

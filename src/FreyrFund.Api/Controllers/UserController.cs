@@ -22,8 +22,6 @@ public class UserController : ControllerBase
         
     }
 
-
-
     [HttpPost("{userId}/topup")]
     public async Task<IActionResult> TopUp(int userId, [FromBody] decimal amount)
     {

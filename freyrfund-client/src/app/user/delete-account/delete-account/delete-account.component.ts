@@ -42,8 +42,8 @@ export class DeleteAccountComponent {
       next: () => {
         this.successMessage = 'Conta eliminada com sucesso.';
         this.errorMessage = '';
-        this.authService.logout(); // <- se tiveres este método
-        this.router.navigate(['/login']); // ou outro caminho
+        this.authService.logout(); 
+        this.router.navigate(['/login']); 
       },
       error: () => {
         this.successMessage = '';

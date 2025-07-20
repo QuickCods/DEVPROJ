@@ -1,4 +1,3 @@
-/* Reset básico */
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +10,6 @@
     background-color: #f2f5f9;
   }
   
-  /* Centraliza tudo na tela */
   .form-page-wrapper {
     display: flex;
     justify-content: center;
@@ -19,7 +17,6 @@
     height: 100%;
   }
   
-  /* Cartão do formulário */
   .form-card {
     background-color: #ffffff;
     padding: 2.5rem 2rem;
@@ -29,7 +26,6 @@
     max-width: 420px;
   }
   
-  /* Cabeçalho */
   .form-card h2 {
     font-size: 1.8rem;
     font-weight: 600;
@@ -38,14 +34,12 @@
     margin-bottom: 2rem;
   }
   
-  /* Formulário */
   form {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
   }
   
-  /* Labels e Inputs */
   label {
     font-size: 0.95rem;
     font-weight: 500;
@@ -67,7 +61,6 @@
     border-color: #00508d;
   }
   
-  /* Botão */
   button[type="submit"] {
     background-color: #00508d;
     color: #ffffff;
@@ -84,7 +77,6 @@
     background-color: #0071b3;
   }
   
-  /* Mensagens */
   .message-container {
     text-align: center;
     margin-top: 1rem;

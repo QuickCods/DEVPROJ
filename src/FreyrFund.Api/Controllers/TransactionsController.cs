@@ -21,7 +21,7 @@ namespace FreyrFund.Server.Controllers
         }
 
         [HttpGet("user/{userId}")]
-        [Authorize] // Opcional: se queres proteger este endpoint
+        [Authorize] 
         public async Task<IActionResult> GetTransactionsByUserId(int userId)
         {
             
@@ -30,7 +30,7 @@ namespace FreyrFund.Server.Controllers
             where t.UserId == userId
             orderby t.Date descending
             join p in _context.Projects on t.ProjectId equals p.Id into projGroup
-            from pg in projGroup.DefaultIfEmpty() // Left join para permitir ProjectId null
+            from pg in projGroup.DefaultIfEmpty() 
             select new TransactionDto
             {
                 Amount = t.Amount,

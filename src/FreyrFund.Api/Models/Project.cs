@@ -1,20 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-
-/*namespace FreyrFund.Server.Models
-{
-    public class Project
-    { 
-        public int Id { get; set; }
-        public string Title { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public decimal ReturnRate { get; set; }
-        public int DurationMonths { get; set; }
-        public decimal AmountRequired { get; set; }
-        public decimal AmountFunded { get; set; }
-
-        public ICollection<Investment>? Investments { get; set; } 
-
-}*/
  
 namespace FreyrFund.Server.Models
 {
@@ -47,7 +31,6 @@ namespace FreyrFund.Server.Models
 
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
-        // Propriedades calculadas
         public decimal FundingPercentage => Target > 0 ? Math.Round((Funded / Target) * 100, 2) : 0;
 
         public decimal RemainingAmount => Target - Funded;

@@ -6,13 +6,13 @@ import { log } from 'console';
 export interface UserDto {
   id?: number;
   fullName: string;
-  dateOfBirth: string;  // "dd/MM/yyyy"
+  dateOfBirth: string;  
   nif: string;
   address: string;
   phoneNumber: string;
   email: string;
   role: string;
-  password?: string;    // só no create
+  password?: string;    
 }
 
 // Para criação/edição (DTO enviado para o backend)
@@ -55,8 +55,8 @@ export class AdminService {
   
     return this.http.get(`${this.base}/export/all`, {
       headers,
-      responseType: 'blob' as 'json' // <- truque necessário para evitar erro TS
-    }) as Observable<Blob>; // <- força tipo da resposta
+      responseType: 'blob' as 'json' // 
+    }) as Observable<Blob>; 
   }
 
   getToken(): string | null {

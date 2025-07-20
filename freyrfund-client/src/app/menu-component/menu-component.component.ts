@@ -54,7 +54,7 @@ export class MenuComponent {
   }
   openContactForm() {
     this.showContactForm = true;
-    this.closeMenu(); // fecha dropdown
+    this.closeMenu();
   }
   closeContactForm() {
     this.showContactForm = false;
@@ -66,7 +66,6 @@ export class MenuComponent {
   
 
   logout() {
-    // Lógica de logout
     this.userService.logout();
   }
 
@@ -87,8 +86,6 @@ export class MenuComponent {
     }
   }
   
-
-  // Fecha o menu ao clicar fora
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
     const target = event.target as HTMLElement;

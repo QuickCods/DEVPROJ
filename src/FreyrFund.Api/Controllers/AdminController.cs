@@ -30,7 +30,7 @@ namespace FreyrFund.Api.Controllers
 
         
 
-        // GET api/admin/users
+        
         [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
         {
@@ -49,12 +49,10 @@ namespace FreyrFund.Api.Controllers
                 .ToListAsync();
             return Ok(list);
         }
-
-        // POST api/admin/users
+        
         [HttpPost("users")]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserDto dto)
         {
-            // 1) IdentityUser
             var iu = new IdentityUser(dto.Email)
             {
                 Email = dto.Email,
@@ -63,12 +61,10 @@ namespace FreyrFund.Api.Controllers
             var res = await _userMgr.CreateAsync(iu, dto.Password);
             if (!res.Succeeded) return BadRequest(res.Errors);
 
-            // 2) Role
             if (!await _roleMgr.RoleExistsAsync(dto.Role))
                 await _roleMgr.CreateAsync(new IdentityRole(dto.Role));
             await _userMgr.AddToRoleAsync(iu, dto.Role);
 
-            // 3) Perfil de domínio
             if (!DateTime.TryParseExact(dto.DateOfBirth, "dd/MM/yyyy",
                     CultureInfo.InvariantCulture,
                     DateTimeStyles.None, out var dob))
@@ -91,8 +87,7 @@ namespace FreyrFund.Api.Controllers
             await _db.SaveChangesAsync();
             return CreatedAtAction(nameof(GetUsers), new { id = domain.Id }, domain);
         }
-
-        // PUT api/admin/users/{id}
+        
         [HttpPut("users/{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserDto dto)
         {
@@ -116,8 +111,7 @@ namespace FreyrFund.Api.Controllers
             await _db.SaveChangesAsync();
             return NoContent();
         }
-
-        // DELETE api/admin/users/{id}
+        
         [HttpDelete("users/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -138,11 +132,7 @@ namespace FreyrFund.Api.Controllers
             // 4) Retorna No Content
             return NoContent();
         }
-
-
-      
-
-        // GET api/admin/projects
+        
         [HttpGet("projects")]
         public async Task<ActionResult<IEnumerable<ProjectViewDto>>> GetProjects()
         {
@@ -170,9 +160,6 @@ namespace FreyrFund.Api.Controllers
             return Ok(result);
 
         }
-
-
-        // GET api/admin/projects/{id}
 
         [HttpGet("projects/{id}")]
         public async Task<ActionResult<ProjectDto>> GetProject(int id)
@@ -215,7 +202,6 @@ namespace FreyrFund.Api.Controllers
             _db.Projects.Add(p);
             await _db.SaveChangesAsync();
 
-            // Agora GetProject existe neste controller
             return CreatedAtAction(nameof(GetProject), new { id = p.Id }, dto);
         }
 
@@ -244,7 +230,6 @@ namespace FreyrFund.Api.Controllers
         }
 
 
-        // DELETE api/admin/projects/{id}]
         [HttpDelete("projects/{id}")]
         public async Task<IActionResult> DeleteProject(int id)
         {
