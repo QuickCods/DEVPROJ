@@ -28,7 +28,7 @@ namespace FreyrFund.Api.Controllers
             _roleMgr = roleMgr;
         }
 
-        // --- USUÁRIOS ---
+        
 
         // GET api/admin/users
         [HttpGet("users")]
@@ -121,7 +121,7 @@ namespace FreyrFund.Api.Controllers
         [HttpDelete("users/{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            // 1) Busca o perfil de domínio
+            // 1) Procura o perfil de domínio
             var domain = await _db.Users.FindAsync(id);
             if (domain == null)
                 return NotFound($"Usuário de domínio com id={id} não encontrado.");
@@ -140,7 +140,7 @@ namespace FreyrFund.Api.Controllers
         }
 
 
-        // --- PROJETOS ---
+      
 
         // GET api/admin/projects
         [HttpGet("projects")]
@@ -170,40 +170,6 @@ namespace FreyrFund.Api.Controllers
             return Ok(result);
 
         }
-
-        // POST api/admin/projects          A DAR ANTES DE COLCOAR O CODIGO DA LISETE
-        /*[HttpPost("projects")]
-        public async Task<IActionResult> CreateProject([FromBody] ProjectDto dto)
-        {
-            var p = new FreyrFund.Server.Models.Project
-            {
-                Title          = dto.Title,
-                Description    = dto.Description,
-                AmountRequired = dto.AmountRequired,
-                AmountFunded   = dto.AmountFunded,
-                ReturnRate     = dto.ReturnRate,
-                DurationMonths = dto.DurationMonths
-            };
-            _db.Projects.Add(p);
-            await _db.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetProjects), new { id = p.Id }, p);
-        }
-
-        // PUT api/admin/projects/{id}
-        [HttpPut("projects/{id}")]
-        public async Task<IActionResult> UpdateProject(int id, [FromBody] ProjectDto dto)
-        {
-            var p = await _db.Projects.FindAsync(id);
-            if (p == null) return NotFound();
-            p.Title          = dto.Title;
-            p.Description    = dto.Description;
-            p.AmountRequired = dto.AmountRequired;
-            p.AmountFunded   = dto.AmountFunded;
-            p.ReturnRate     = dto.ReturnRate;
-            p.DurationMonths = dto.DurationMonths;
-            await _db.SaveChangesAsync();
-            return NoContent();
-        }*/
 
 
         // GET api/admin/projects/{id}

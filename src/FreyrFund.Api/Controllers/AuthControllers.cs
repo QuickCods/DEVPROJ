@@ -43,19 +43,19 @@ public class AuthController : ControllerBase
             || !await _userManager.CheckPasswordAsync(identityUser, request.Password))
             return Unauthorized();
 
-        // → Novo código começa aqui
+
         var domainUser = await _dbContext.Users
         .SingleAsync(u => u.IdentityUserId == identityUser.Id);
-        // → Novo código termina aqui
+       
             
         var roles = await _userManager.GetRolesAsync(identityUser);
         var claims = new List<Claim> {
-            // aqui vai o teu User.Id, que o Angular vai ler como payload.sub
+           
         new Claim(JwtRegisteredClaimNames.Sub, domainUser.Id.ToString()),
         new Claim("userId", domainUser.Id.ToString()),
         new Claim(JwtRegisteredClaimNames.UniqueName, request.Email)
         
-        // antes estava a funcionar com esta linha new Claim(ClaimTypes.Name, request.Email)
+       
     };
         claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
         
@@ -94,13 +94,13 @@ public class AuthController : ControllerBase
         if (!ModelState.IsValid)
         {
             var erros = ModelState
-            // filtra só onde exista Value e tenha Errors
+
             .Where(kvp => kvp.Value?.Errors.Count > 0)
             .Select(kvp => new
             {
-                // Key é string não-nula
+                
                 Campo = kvp.Key,
-                // assegura ao compilador que Value não é null aqui
+                
                 Erros = kvp.Value!.Errors
                             .Select(e => e.ErrorMessage)
                             .ToArray()
@@ -108,7 +108,7 @@ public class AuthController : ControllerBase
 
             return BadRequest(erros);
         }
-        // Converter dd/MM/aa ou dd/MM/aaaa para DateTime
+        
         var formats = new[] { "d/M/yy", "dd/MM/yy", "d/M/yyyy", "dd/MM/yyyy" };
         if (!DateTime.TryParseExact(
                 request.DateOfBirth,
@@ -127,7 +127,7 @@ public class AuthController : ControllerBase
         // Hash da password (exemplo com BCrypt)
         var passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
-        // 1) Cria o usuário no AspNetUsers via Identity
+        
         var identityUser = new IdentityUser(request.Email)
         {
             Email = request.Email,
@@ -137,13 +137,13 @@ public class AuthController : ControllerBase
         if (!createResult.Succeeded)
             return BadRequest(createResult.Errors);
 
-        // 2) Associa à role "User"
+       
         await _userManager.AddToRoleAsync(identityUser, "User");
 
-        // 3) Agora crie o perfil na sua tabela "Users"
+        
         var domainUser = new User
         {
-            IdentityUserId = identityUser.Id,  // FK para AspNetUsers.Id
+            IdentityUserId = identityUser.Id,  
             FullName = request.FullName,
             DateOfBirth = dob,
             Nif = request.Nif,
@@ -174,18 +174,5 @@ public class AuthController : ControllerBase
         return Ok(new { seeded = roles });
     }
     
-    /* [HttpPost("promote/{email}")] 
-    public async Task<IActionResult> PromoteToAdmin(string email)
-    {
-        var user = await _userManager.FindByNameAsync(email);
-        if (user == null) return NotFound("Usuário não encontrado.");
-
-        var result = await _userManager.AddToRoleAsync(user, "Admin");
-        if (!result.Succeeded) return BadRequest(result.Errors);
-
-        return Ok($"{email} agora é Admin.");
-    } 
-    --> agora faz se no painel de admin*/
-
 
 }

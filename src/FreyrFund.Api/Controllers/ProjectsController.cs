@@ -34,7 +34,6 @@ namespace FreyrFund.Api.Controllers
 
             var query = _db.Projects.AsQueryable();
 
-            // Filtro de pesquisa
             if (!string.IsNullOrWhiteSpace(search))
             {
                 query = query.Where(p => p.Title.Contains(search) || p.Description.Contains(search));
@@ -91,7 +90,7 @@ namespace FreyrFund.Api.Controllers
                 {
                     Id = p.Id,
                     Title = p.Title,
-                    Description = p.Description, //novo
+                    Description = p.Description, 
                     Rate = p.Rate,
                     Term = p.Term,
                     Target = p.Target,
@@ -99,8 +98,8 @@ namespace FreyrFund.Api.Controllers
                     RemainingAmount = p.Target - p.Funded,
                     FundingPercentage = p.Target > 0 ? Math.Round((p.Funded / p.Target) * 100, 2) : 0,
                     IsFullyFunded = p.Funded >= p.Target,
-                    Risk = p.Risk, //novo
-                    RiskDescription = GetRiskDescription(p.Risk), //novo
+                    Risk = p.Risk, 
+                    RiskDescription = GetRiskDescription(p.Risk), 
                     CreatedAt = p.CreatedAt,
                     UpdatedAt = p.UpdatedAt
                 })
@@ -120,7 +119,7 @@ namespace FreyrFund.Api.Controllers
         public async Task<IActionResult> UploadImage(IFormFile file)
         {
             if (file == null || file.Length == 0)
-                return BadRequest("Nenhum ficheiro foi enviado.");
+                return BadRequest(" Aucun fichier n’a été envoyé.");
 
             var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
 

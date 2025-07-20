@@ -1,25 +1,25 @@
 <app-navbar></app-navbar>
 
 <div class="dashboard-wrapper">
-  <!-- Header -->
+
   <header class="dashboard-header">
     <div class="header-content">
       <h1>Home Page</h1>
       <div class="topupbutton">
-        <button class="btn-topup" (click)="openTopUpModal()">Top-Up</button>
-        <button class="btn-topup" (click)="openWithdrawModal()">Withdraw</button>
+        <button class="btn-topup" (click)="openTopUpModal()">Dépôt</button>
+        <button class="btn-topup" (click)="openWithdrawModal()">Retrait bancaire</button>
       </div>
     </div>
   </header>
 
   <script src="../../../../assets/scripts/theme.js"></script>
 
-  <!-- Status Cards -->
+ 
   <section class="status-cards">
     <div class="status-card">
       <div class="card-icon"><i class="fas fa-chart-line"></i></div>
       <div class="card-info">
-        <div class="label">Projetos investidos</div>
+        <div class="label">Projets Disponibles</div>
         <div class="value">{{ totalProjectsInvested }}</div>
       </div>
     </div>
@@ -27,7 +27,7 @@
     <div class="status-card">
       <div class="card-icon"><i class="fas fa-wallet"></i></div>
       <div class="card-info">
-        <div class="label">Dinheiro disponível</div>
+        <div class="label">Argent disponible</div>
         <div class="value">€{{ availableBalance | number:'1.0-0' }}</div>
       </div>
     </div>
@@ -35,7 +35,7 @@
     <div class="status-card">
       <div class="card-icon"><i class="fas fa-piggy-bank"></i></div>
       <div class="card-info">
-        <div class="label">Total de Assets</div>
+        <div class="label">Total des actifs</div>
         <div class="value">€{{ totalAssets | number:'1.0-0' }}</div>
       </div>
     </div>
@@ -43,25 +43,25 @@
     <div class="status-card">
       <div class="card-icon"><i class="fas fa-percentage"></i></div>
       <div class="card-info">
-        <div class="label">Retorno médio</div>
+        <div class="label">Retour sur investissement moyen</div>
         <div class="value">{{ averageReturn | number:'1.1-1' }}%</div>
       </div>
     </div>
   </section>
 
-  <!-- Grid com componentes -->
+ 
   <main class="dashboard-grid">
-    <!-- Conteúdo extra aqui -->
+  
   </main>
 
-  <!-- Últimas Atividades -->
+
   <section class="dashboard-item latest-activities">
-    <h2>Últimas Atividades</h2>
+    <h2>Dernières activités</h2>
     <div class="filter-buttons">
-      <button (click)="setFilter('All')" [class.active]="selectedFilter === 'All'">Todos</button>
-      <button (click)="setFilter('Investment')" [class.active]="selectedFilter === 'Investment'">Investimentos</button>
+      <button (click)="setFilter('All')" [class.active]="selectedFilter === 'All'">Tous</button>
+      <button (click)="setFilter('Investment')" [class.active]="selectedFilter === 'Investment'">Investissements</button>
       <button (click)="setFilter('TopUp')" [class.active]="selectedFilter === 'TopUp'">Top-Ups</button>
-      <button (click)="setFilter('Withdrawal')" [class.active]="selectedFilter === 'Withdrawal'">Levantamentos</button>
+      <button (click)="setFilter('Withdrawal')" [class.active]="selectedFilter === 'Withdrawal'">Retraits</button>
     </div>
 
     <ul class="activity-list">
@@ -78,8 +78,8 @@
           <span class="activity-title">
             {{
               tx.type === 'Investment'
-                ? 'Investimento - "' + (tx.projectTitle || 'Projeto') + '"'
-                : (tx.type === 'TopUp' ? 'Depósito' : 'Levantamento')
+                ? 'Investment - "' + (tx.projectTitle || 'Projeto') + '"'
+                : (tx.type === 'TopUp' ? 'Dépôt' : 'Retrait')
             }}
           </span>
           <span class="activity-meta">
@@ -90,11 +90,11 @@
     </ul>
   </section>
 
-  <!-- MODAL TOP-UP -->
+
 <div class="modal-overlay" *ngIf="showTopUpModal" (click)="closeModals()">
   <div class="modal-content" (click)="$event.stopPropagation()">
-    <h2>Adicionar Fundos</h2>
-    <p>Insira o montante que deseja adicionar ao saldo:</p>
+    <h2>Ajouter des fonds</h2>
+    <p>Entrez le montant que vous souhaitez ajouter au solde:</p>
     
     <input type="number"
            [(ngModel)]="topUpAmount"
@@ -104,17 +104,17 @@
            class="modal-input" />
 
     <div class="modal-buttons">
-      <button (click)="submitTopUp()" class="btn-confirm" [disabled]="topUpAmount <= 0">Confirmar</button>
-      <button class="btn-cancel" (click)="closeModals()">Cancelar</button>
+      <button (click)="submitTopUp()" class="btn-confirm" [disabled]="topUpAmount <= 0">Confirmer</button>
+      <button class="btn-cancel" (click)="closeModals()">Annuler</button>
     </div>
   </div>
 </div>
 
-<!-- MODAL WITHDRAW -->
+
 <div class="modal-overlay" *ngIf="showWithdrawModal" (click)="closeModals()">
   <div class="modal-content" (click)="$event.stopPropagation()">
-    <h2>Levantamento</h2>
-    <p>Insira o montante que deseja levantar:</p>
+    <h2>Retrait</h2>
+    <p>Entrez le montant que vous souhaitez retirer:</p>
 
     <input type="number"
            [(ngModel)]="withdrawAmount"
@@ -124,8 +124,8 @@
            class="modal-input" />
 
     <div class="modal-buttons">
-      <button (click)="submitWithdraw()" class="btn-confirm" [disabled]="withdrawAmount <= 0">Confirmar</button>
-      <button class="btn-cancel" (click)="closeModals()">Cancelar</button>
+      <button (click)="submitWithdraw()" class="btn-confirm" [disabled]="withdrawAmount <= 0">Confirmer</button>
+      <button class="btn-cancel" (click)="closeModals()">Annuler</button>
     </div>
   </div>
 </div>

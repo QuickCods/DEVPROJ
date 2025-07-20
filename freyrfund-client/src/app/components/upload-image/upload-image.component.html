@@ -1,10 +1,10 @@
 <div class="upload-container">
-    <h3>Upload de Imagem</h3>
+    <h3>Upload d' image</h3>
     <input type="file" (change)="onFileSelected($event)" />
-    <button (click)="uploadImage()" [disabled]="!selectedFile">Enviar</button>
+    <button (click)="uploadImage()" [disabled]="!selectedFile">Envoyer</button>
   
     <div *ngIf="uploadSuccess" class="success-msg">
-      Upload feito com sucesso!  
+      Upload fait avec du succès!  
       <br />
       <img [src]="imageUrl" alt="Imagem do Projeto" style="max-width: 200px; margin-top: 10px;" />
 

@@ -2,37 +2,37 @@
 
 <div class="projects-container">
   <div class="header-flex">
-    <h1 class="catalog-title">Catálogo de Projetos</h1>
+    <h1 class="catalog-title">Catalogue de Projets</h1>
     <div class="header-right">
       <div class="search-input-container">
         <input
           type="text"
           [(ngModel)]="searchTerm"
           (input)="onSearchChange()"
-          placeholder="Pesquisar projetos..."
+          placeholder="Rechercher des projets..."
           class="search-input"
         />
         <span class="search-icon"><i class="fas fa-search"></i></span>
       </div>
-      <button (click)="openTopUpModal()" class="btn-topup">Top-Up</button>
+      <button (click)="openTopUpModal()" class="btn-topup">Dépôt</button>
     </div>
   </div>
 
   <div class="search-info" *ngIf="!loading">
     <p>
-      <span *ngIf="searchTerm">Resultados para "<strong>{{searchTerm}}</strong>": </span>
-      {{totalCount}} projeto(s) encontrado(s)
+      <span *ngIf="searchTerm">Résultats pour "<strong>{{searchTerm}}</strong>": </span>
+      {{totalCount}} projet(s) trouvé(s)
     </p>
   </div>
 
   <div *ngIf="loading" class="loading">
     <div class="spinner"></div>
-    <p>Carregando projetos...</p>
+    <p>Chargement des projets...</p>
   </div>
 
   <div *ngIf="error" class="error">
     <p>{{ error }}</p>
-    <button (click)="loadProjects()" class="retry-btn">Tentar Novamente</button>
+    <button (click)="loadProjects()" class="retry-btn">Essayer à nouveau</button>
   </div>
 
   <div *ngIf="!loading && !error" class="projects-content">
@@ -47,18 +47,18 @@
               {{ getRiskDescription(project.risk) }}
             </span>
             <span class="badge status-badge" [class.fully-funded]="project.isFullyFunded">
-              <span *ngIf="project.isFullyFunded">✓ Financiado</span>
-              <span *ngIf="!project.isFullyFunded">Ativo</span>
+              <span *ngIf="project.isFullyFunded">✓ Financé </span>
+              <span *ngIf="!project.isFullyFunded">Actif</span>
             </span>
           </div>
         </div>
 
         <div class="project-details">
-          <div class="detail-row"><span class="label">Taxa de Retorno:</span><span class="value">{{ project.rate }}%</span></div>
-          <div class="detail-row"><span class="label">Prazo:</span><span class="value">{{ project.term }} meses</span></div>
-          <div class="detail-row"><span class="label">Objetivo:</span><span class="value">{{ formatCurrency(project.target) }}</span></div>
-          <div class="detail-row"><span class="label">Financiado:</span><span class="value">{{ formatCurrency(project.funded) }}</span></div>
-          <div class="detail-row"><span class="label">Falta investir:</span><span class="value">{{ formatCurrency(project.remainingAmount) }}</span></div>
+          <div class="detail-row"><span class="label">Taux de rendement:</span><span class="value">{{ project.rate }}%</span></div>
+          <div class="detail-row"><span class="label">Délais:</span><span class="value">{{ project.term }} mois</span></div>
+          <div class="detail-row"><span class="label">Objectif:</span><span class="value">{{ formatCurrency(project.target) }}</span></div>
+          <div class="detail-row"><span class="label">Financé:</span><span class="value">{{ formatCurrency(project.funded) }}</span></div>
+          <div class="detail-row"><span class="label">Montant restant à investir:</span><span class="value">{{ formatCurrency(project.remainingAmount) }}</span></div>
 
           <div class="progress-container">
             <div class="progress-bar">
@@ -70,64 +70,64 @@
 
         <div class="project-actions">
           <div class="invest-full-row">
-            <input type="number" [(ngModel)]="project.investmentAmount" min="1" [max]="project.remainingAmount" placeholder="Montante" [disabled]="project.isFullyFunded" />
+            <input type="number" [(ngModel)]="project.investmentAmount" min="1" [max]="project.remainingAmount" placeholder="Montant" [disabled]="project.isFullyFunded" />
             <button class="btn-invest" [disabled]="project.isFullyFunded || !project.investmentAmount" (click)="invest(project, project.investmentAmount || 0)">
               <span *ngIf="!project.isFullyFunded">Investir</span>
-              <span *ngIf="project.isFullyFunded">Financiado</span>
+              <span *ngIf="project.isFullyFunded">Financé</span>
             </button>
           </div>
-          <button class="btn-details" (click)="openModal(project)">Ver Detalhes</button>
+          <button class="btn-details" (click)="openModal(project)">Voir détails</button>
         </div>
 
         <div class="project-footer">
-          <small>Criado em: {{ project.createdAt | date:'dd/MM/yyyy' }}</small>
+          <small>Créé le: {{ project.createdAt | date:'dd/MM/yyyy' }}</small>
         </div>
       </div>
     </div>
 
     <div *ngIf="projects.length === 0" class="no-results">
       <div class="no-results-icon">📋</div>
-      <h3>Nenhum projeto encontrado</h3>
-      <p *ngIf="searchTerm">Tente ajustar sua pesquisa ou <a href="#" (click)="searchTerm=''; onSearchChange()">limpar filtros</a>.</p>
-      <p *ngIf="!searchTerm">Não há projetos disponíveis no momento.</p>
+      <h3>Aucun projet trouvé</h3>
+      <p *ngIf="searchTerm">Essayez d'ajuster votre recherche ou <a href="#" (click)="searchTerm=''; onSearchChange()">réinitialiser les filtres</a>.</p>
+      <p *ngIf="!searchTerm">Aucun projet disponible pour le moment.</p>
     </div>
 
     <div class="pagination-container" *ngIf="totalPages > 1">
       <div class="pagination-info">
-        <p>Página {{ currentPage }} de {{ totalPages }} ({{ (currentPage - 1) * pageSize + 1 }} - {{ Math.min(currentPage * pageSize, totalCount) }} de {{ totalCount }} projetos)</p>
+        <p>Page {{ currentPage }} de {{ totalPages }} ({{ (currentPage - 1) * pageSize + 1 }} - {{ Math.min(currentPage * pageSize, totalCount) }} de {{ totalCount }} projets)</p>
       </div>
       <div class="pagination-controls">
-        <button class="pagination-btn" [disabled]="!hasPreviousPage" (click)="previousPage()">‹ Anterior</button>
+        <button class="pagination-btn" [disabled]="!hasPreviousPage" (click)="previousPage()">‹ Antérieure</button>
         <button *ngFor="let page of getPageNumbers()" class="pagination-btn page-number" [class.active]="page === currentPage" (click)="goToPage(page)">
           {{ page }}
         </button>
-        <button class="pagination-btn" [disabled]="!hasNextPage" (click)="nextPage()">Próxima ›</button>
+        <button class="pagination-btn" [disabled]="!hasNextPage" (click)="nextPage()">Prochaine ›</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODAL -->
+
 <div class="modal-overlay" *ngIf="selectedProject" (click)="closeModal()">
   <div class="modal-content" (click)="$event.stopPropagation()">
     <h2>{{ selectedProject.title }}</h2>
     <p>{{ selectedProject.description }}</p>
-    <button class="modal-close" (click)="closeModal()">Fechar</button>
+    <button class="modal-close" (click)="closeModal()">Fermer</button>
   </div>
 </div>
 
 
-<!-- MODAL DE TOP-UP -->
+
 <div class="modal-overlay" *ngIf="showTopUpModal" (click)="closeTopUpModal()">
   <div class="modal-content topup-modal" (click)="$event.stopPropagation()">
-    <h2 class="modal-title">Depositar Fundos</h2>
-    <p class="modal-text">Insira o montante:</p>
+    <h2 class="modal-title">Déposer des fonds</h2>
+    <p class="modal-text"> Entrez le montant:</p>
 
-    <input type="number" [(ngModel)]="topUpAmount" min="1" placeholder="Montante (€)" class="modal-input" />
+    <input type="number" [(ngModel)]="topUpAmount" min="1" placeholder="Montant (€)" class="modal-input" />
 
     <div class="modal-actions">
-      <button (click)="confirmTopUp()" class="btn btn-confirm">Confirmar</button>
-      <button (click)="closeTopUpModal()" class="btn btn-cancel">Cancelar</button>
+      <button (click)="confirmTopUp()" class="btn btn-confirm">Confirmer</button>
+      <button (click)="closeTopUpModal()" class="btn btn-cancel">Annuler</button>
     </div>
   </div>
 </div>

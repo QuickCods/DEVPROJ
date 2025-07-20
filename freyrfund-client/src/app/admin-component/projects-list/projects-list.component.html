@@ -1,21 +1,21 @@
 <div class="admin-card">
   <div class="admin-card-header">
-    <button class="btn-primary" *ngIf="!editing" (click)="startCreate()">Novo Projeto</button>
+    <button class="btn-primary" *ngIf="!editing" (click)="startCreate()">Nouveau Projet</button>
   </div>
 
-  <!-- Lista de projetos -->
+
   <div *ngIf="!editing" class="admin-card-body">
     <table class="admin-table">
       <thead>
         <tr>
           <th>ID</th>
-          <th>Título</th>
-          <th>Descrição</th>
-          <th>Taxa (%)</th>
-          <th>Prazo</th>
-          <th>Meta</th>
-          <th>Risco</th>
-          <th>Ações</th>
+          <th>Titre</th>
+          <th>Description</th>
+          <th>Taux (%)</th>
+          <th>Délais</th>
+          <th>Objectif</th>
+          <th>Risque</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -40,32 +40,32 @@
     </table>
   </div>
 
-  <!-- Formulário -->
+
   <div *ngIf="editing" class="admin-form-container">
-    <h3>{{ form.value.id ? 'Editar' : 'Criar' }} Projeto</h3>
+    <h3>{{ form.value.id ? 'Editar' : 'Créer' }} Projet</h3>
     <form [formGroup]="form" (ngSubmit)="save()">
       <input type="hidden" formControlName="id" />
 
-      <label>Título <input formControlName="title" /></label>
-      <label>Descrição <textarea formControlName="description" rows="3"></textarea></label>
-      <label>Taxa de Juros (%) <input type="number" formControlName="rate" /></label>
-      <label>Nível de Risco
+      <label>Titre <input formControlName="title" /></label>
+      <label>Description <textarea formControlName="description" rows="3"></textarea></label>
+      <label>Taux d’intérêt (%) <input type="number" formControlName="rate" /></label>
+      <label>Niveau de risque
         <select formControlName="risk">
-          <option [ngValue]="0">A - Seguro</option>
-          <option [ngValue]="1">B - Moderado</option>
-          <option [ngValue]="2">C - Arriscado</option>
+          <option [ngValue]="0">A - Sûr</option>
+          <option [ngValue]="1">B - Modéré</option>
+          <option [ngValue]="2">C - Élevé</option>
         </select>
       </label>
-      <label>Prazo (meses) <input type="number" formControlName="term" /></label>
-      <label>Meta de Financiamento (EUR) <input type="number" formControlName="target" /></label>
-      <label>Imagem do Projeto</label>
+      <label>Délais (mois) <input type="number" formControlName="term" /></label>
+      <label>Objectif de financement (EUR) <input type="number" formControlName="target" /></label>
+      <label>Image du Projet</label>
       <app-upload-image (imageUploaded)="onImageUploaded($event)"></app-upload-image>
 
       <div class="form-actions">
         <button type="submit" class="btn-primary" [disabled]="form.invalid">
-          {{ form.value.id ? 'Atualizar' : 'Criar' }}
+          {{ form.value.id ? 'Atualizar' : 'Créer' }}
         </button>
-        <button type="button" class="btn-secondary" (click)="cancel()">Cancelar</button>
+        <button type="button" class="btn-secondary" (click)="cancel()">Annuler</button>
       </div>
     </form>
   </div>

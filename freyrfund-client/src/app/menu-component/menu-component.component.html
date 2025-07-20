@@ -2,7 +2,7 @@
     <!-- Esquerda: logo e mensagem -->
     <div class="navbar-left">
       <img src="assets/images/FreyrCoin.png" alt="FreyrFund" class="logo" />
-      <span class="welcome-message">Welcome back, {{ getUserName(email) }}</span>
+      <span class="welcome-message">Bienvenu, {{ getUserName(email) }}</span>
     </div>
   
     <!-- Centro: links -->
@@ -18,9 +18,9 @@
       </div>
   
       <div class="dropdown-menu" *ngIf="menuOpen">
-        <a (click)="openContactForm()">Contacto</a>
+        <a (click)="openContactForm()">Contact</a>
         <a (click)="goToFaq()">FAQ</a>
-        <a (click)="deleteAccount()">Eliminar Conta</a>
+        <a (click)="deleteAccount()">Éliminer Compte</a>
         <a (click)="logout()">Logout</a>
       </div>
     </div>
@@ -33,6 +33,6 @@
 <div class="modal-overlay" *ngIf="showContactForm" (click)="closeContactForm()">
   <div class="modal-content" (click)="$event.stopPropagation()">
     <app-formulario-contacto (close)="closeContactForm()"></app-formulario-contacto>
-    <button class="modal-close" (click)="closeContactForm()">Fechar</button>
+    <button class="modal-close" (click)="closeContactForm()">Fermer</button>
   </div>
 </div>

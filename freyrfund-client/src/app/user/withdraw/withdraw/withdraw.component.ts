@@ -34,16 +34,16 @@ export class WithdrawComponent {
 
     if (this.amount <= 0) {
       this.successMessage = '';
-      this.errorMessage = 'Insira um valor válido.';
+      this.errorMessage = 'Entrez une valeur valide.';
       return;
     }
 
     this.userService.withdraw(id, this.amount).subscribe({
       next: () => {
-        this.successMessage = 'Levantamento efetuado com sucesso!';
+        this.successMessage = 'Retrait effectué avec succès!';
         setTimeout(() => {
           this.router.navigate(['/home']);
-        }, 1000); // espera 1 segundo
+        }, 1000); 
         this.errorMessage = '';
         this.amount = 0;
       },

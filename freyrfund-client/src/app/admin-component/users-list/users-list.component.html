@@ -1,6 +1,6 @@
 <div class="admin-card">
   <div class="admin-card-header">
-    <button class="btn-primary" *ngIf="!editing" (click)="startCreate()">Novo Utilizador</button>
+    <button class="btn-primary" *ngIf="!editing" (click)="startCreate()">Nouvel Utilisateur</button>
   </div>
 
   <!-- Lista de utilizadores -->
@@ -9,14 +9,14 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Nome</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Nasc.</th>
+          <th>Nom</th>
+          <th>Courriel</th>
+          <th>Rôle</th>
+          <th>Nais.</th>
           <th>NIF</th>
-          <th>Endereço</th>
-          <th>Telefone</th>
-          <th>Ações</th>
+          <th>Adresse</th>
+          <th>Téléphone</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -40,29 +40,29 @@
 
   <!-- Formulário de criação/edição -->
   <div *ngIf="editing" class="admin-form-container">
-    <h3>{{ form.value.id ? 'Editar' : 'Criar' }} Utilizador</h3>
+    <h3>{{ form.value.id ? 'Editar' : 'Créer' }} Utilisateur</h3>
     <form [formGroup]="form" (ngSubmit)="save()">
       <input type="hidden" formControlName="id" />
 
-      <label>Nome <input formControlName="fullName" /></label>
-      <label>Data Nasc. <input formControlName="dateOfBirth" placeholder="dd/MM/aaaa" /></label>
+      <label>Nom <input formControlName="fullName" /></label>
+      <label>Date Nais. <input formControlName="dateOfBirth" placeholder="dd/MM/aaaa" /></label>
       <label>NIF <input formControlName="nif" /></label>
-      <label>Endereço <input formControlName="address" /></label>
-      <label>Telefone <input formControlName="phoneNumber" /></label>
-      <label>Email <input formControlName="email" /></label>
-      <label>Role
+      <label>Adresse <input formControlName="address" /></label>
+      <label>Téléphone <input formControlName="phoneNumber" /></label>
+      <label>Courriel <input formControlName="email" /></label>
+      <label>Rôle
         <select formControlName="role">
           <option>User</option>
           <option>Admin</option>
         </select>
       </label>
-      <label *ngIf="!form.value.id">Senha <input type="password" formControlName="password" /></label>
+      <label *ngIf="!form.value.id">Mot de passe <input type="password" formControlName="password" /></label>
 
       <div class="form-actions">
         <button type="submit" class="btn-primary" [disabled]="form.invalid">
-          {{ form.value.id ? 'Atualizar' : 'Criar' }}
+          {{ form.value.id ? 'Atualizar' : 'Créer' }}
         </button>
-        <button type="button" class="btn-secondary" (click)="cancel()">Cancelar</button>
+        <button type="button" class="btn-secondary" (click)="cancel()">Annuler</button>
       </div>
     </form>
   </div>

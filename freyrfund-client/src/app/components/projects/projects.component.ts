@@ -31,7 +31,7 @@ closeModal(): void {
   this.selectedProject = null;
 }
 
-  // Função para saber se detalhes estão visíveis
+
   isDetailsOpen(projectId: number): boolean {
     return !!this.detailsOpen[projectId];
   }
@@ -39,7 +39,7 @@ closeModal(): void {
   loading = false;
   error = '';
  
-  // Paginação
+ 
   currentPage = 1;
   pageSize = 6;
   totalPages = 0;
@@ -47,11 +47,11 @@ closeModal(): void {
   hasNextPage = false;
   hasPreviousPage = false;
  
-  // Pesquisa
+
   searchTerm = '';
   searchTimeout: any;
  
-  // Expor Math para uso no template
+
   Math = Math;
 
 
@@ -76,7 +76,7 @@ closeModal(): void {
       search: this.searchTerm || undefined
     }).subscribe({
       next: (response) => {
-        //this.projects = projects;
+
         this.projects = response.data;
         this.currentPage = response.page;
         this.pageSize = response.pageSize;
@@ -97,13 +97,13 @@ closeModal(): void {
 
 
   onSearchChange(): void {
-    // Debounce para evitar muitas chamadas à API
+
     if (this.searchTimeout) {
       clearTimeout(this.searchTimeout);
     }
  
     this.searchTimeout = setTimeout(() => {
-      this.currentPage = 1; // Reset para primeira página
+      this.currentPage = 1; 
       this.loadProjects();
     }, 500);
   }
@@ -190,7 +190,7 @@ closeTopUpModal() {
 
 confirmTopUp() {
   if (this.topUpAmount && this.topUpAmount > 0) {
-    const userId = this.userService.getUserId(); // busca do próprio serviço
+    const userId = this.userService.getUserId(); 
 
     if (!userId) {
       alert('Utilizador não autenticado');
@@ -199,11 +199,11 @@ confirmTopUp() {
 
     this.userService.topUp(userId, this.topUpAmount).subscribe({
       next: () => {
-        alert('Depósito realizado com sucesso!');
+        alert('Dépôt effectué avec succès!');
         this.closeTopUpModal();
-        // this.reloadBalance(); // opcional
+
       },
-      error: () => alert('Erro ao processar o top-up.')
+      error: () => alert('Erreur lors du traitement du dépôt.')
     });
   }
 }
@@ -214,28 +214,28 @@ confirmTopUp() {
       const userId = this.authService.getUserId();
 
       if (!userId) {
-        alert('Não foi possível identificar o utilizador.');
+        alert('Impossible d’identifier l’utilisateur.');
         return;
       }
     
       if (amount == null || amount <= 0) {
-        alert('O valor deve ser positivo');
+        alert('La valeur doit être positive.');
         return;
       }
     
       if (project.funded + amount > project.target) {
-        alert('O valor excede o objetivo do projeto');
+        alert('La valeur dépasse l’objectif du projet.');
         return;
       }
     
       this.projectService.invest(project.id, { userId, amount }).subscribe({
         next: () => {
-          this.loadProjects(); // Recarrega a lista
-          alert('Investimento realizado com sucesso!');
+          this.loadProjects(); 
+          alert('Investissement réalisé avec succès!');
         },
         error: (error) => {
-          alert('Saldo insuficiente! Por favor, adicione dinheiro à sua conta!');
-          console.error('Erro ao investir:', error);
+          alert('Solde insuffisant ! Veuillez ajouter de l’argent à votre compte!');
+          console.error('Erreur lors de l’investissement:', error);
         }
       });
     }
